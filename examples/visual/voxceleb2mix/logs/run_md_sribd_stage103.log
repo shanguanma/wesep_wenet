@@ -1,0 +1,100 @@
+nohup: ignoring input
+Stage 103: export test-set estimated WAVs + run tools/score.sh ...
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-05-08 15:15:05 - INFO - CLI overrides on model YAML model_args.tse_model: visual.features: muse_visual.enabled=True blaze_visual.enabled=False; separator.causal=False
+2026-05-08 15:15:06 - INFO - tse_model=TSE_BSRNN_VISUAL  params=34.00M
+2026-05-08 15:15:06 - INFO - Loading weights from: /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/ema_model.pt
+2026-05-08 15:15:06 - INFO - EMA load: missing=0 unexpected=0
+2026-05-08 15:15:07 - INFO - export_root=/maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export  eval_targets=['lrs3', 'chinese_lips']  num_utts=3000  sr=16000
+2026-05-08 15:15:07 - INFO - ==============================================================================
+2026-05-08 15:15:07 - INFO - EXPORT CORPUS: LRS3
+2026-05-08 15:15:07 - INFO - ==============================================================================
+2026-05-08 15:15:07 - INFO - [online_multi_dataset] LRS3: subsets=('test',) -> 412 speakers, 1321 clips (/F00120240032/lrs3)
+2026-05-08 15:15:07 - INFO - [online_multi_dataset] merged inventory: 412 speakers, 1321 clips
+2026-05-08 15:15:07 - INFO - Inventory: 412 speakers, 1321 clips
+2026-05-08 15:15:07 - INFO - Export pass: up to 3000 utterances (~1000 steps × bs=3).
+2026-05-08 15:15:09 - INFO - First batch mix=(6, 1, 48000) target=(6, 1, 48000) cue_shapes=[(6, 224, 224, 3, 75)]
+2026-05-08 15:17:50 - INFO - Wrote 3000 utterances under /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/lrs3
+2026-05-08 15:17:50 - INFO - Score this corpus with:
+  ./tools/score.sh --dset /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/lrs3/ref_dset --exp_dir /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/lrs3 --fs 16k ...
+2026-05-08 15:17:50 - INFO - ==============================================================================
+2026-05-08 15:17:50 - INFO - EXPORT CORPUS: CHINESE_LIPS
+2026-05-08 15:17:50 - INFO - ==============================================================================
+2026-05-08 15:17:50 - INFO - [online_multi_dataset] Chinese_lips: splits=('test',) -> 21 speakers, 3908 clips (/F00120240032/Chinese_lips)
+2026-05-08 15:17:50 - INFO - [online_multi_dataset] merged inventory: 21 speakers, 3908 clips
+2026-05-08 15:17:50 - INFO - Inventory: 21 speakers, 3908 clips
+2026-05-08 15:17:51 - INFO - Export pass: up to 3000 utterances (~1000 steps × bs=3).
+2026-05-08 15:17:51 - WARNING - Multi-channel audio downmixed to mono (mean over channels) in parse_raw_single_spk
+2026-05-08 15:17:51 - WARNING - Multi-channel audio downmixed to mono (mean over channels) in parse_raw_single_spk
+2026-05-08 15:18:00 - INFO - First batch mix=(5, 1, 48000) target=(5, 1, 48000) cue_shapes=[(5, 224, 224, 3, 75)]
+2026-05-08 15:56:04 - INFO - Wrote 3000 utterances under /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/chinese_lips
+2026-05-08 15:56:04 - INFO - Score this corpus with:
+  ./tools/score.sh --dset /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/chinese_lips/ref_dset --exp_dir /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/chinese_lips --fs 16k ...
+Stage 103: scoring lrs3  --dset /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/lrs3/ref_dset  --exp_dir /maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/lrs3
+==========================================
+Warning: DNSMOS model files are not found.
+Trying to download them from the official repository.
+If this takes too long,
+please manually download the model files
+and put them in the DNSMOS directory.
+==========================================
+--2026-05-08 15:56:28--  https://github.com/microsoft/DNS-Challenge/raw/master/DNSMOS/DNSMOS/sig_bak_ovr.onnx
+Resolving github.com (github.com)... 20.205.243.166
+Connecting to github.com (github.com)|20.205.243.166|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/DNSMOS/DNSMOS/sig_bak_ovr.onnx [following]
+--2026-05-08 15:56:30--  https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/DNSMOS/DNSMOS/sig_bak_ovr.onnx
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.108.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1157965 (1.1M) [application/octet-stream]
+Saving to: ‘DNSMOS/sig_bak_ovr.onnx’
+
+     0K .......... .......... .......... .......... ..........  4%  592K 2s
+    50K .......... .......... .......... .......... ..........  8% 4.91M 1s
+   100K .......... .......... .......... .......... .......... 13% 12.2M 1s
+   150K .......... .......... .......... .......... .......... 17% 20.4M 0s
+   200K .......... .......... .......... .......... .......... 22% 19.3M 0s
+   250K .......... .......... .......... .......... .......... 26% 19.7M 0s
+   300K .......... .......... .......... .......... .......... 30% 13.1M 0s
+   350K .......... .......... .......... .......... .......... 35% 16.8M 0s
+   400K .......... .......... .......... .......... .......... 39% 9.70M 0s
+   450K .......... .......... .......... .......... .......... 44% 15.5M 0s
+   500K .......... .......... .......... .......... .......... 48% 17.2M 0s
+   550K .......... .......... .......... .......... .......... 53% 14.5M 0s
+   600K .......... .......... .......... .......... .......... 57% 19.0M 0s
+   650K .......... .......... .......... .......... .......... 61% 18.5M 0s
+   700K .......... .......... .......... .......... .......... 66% 15.5M 0s
+   750K .......... .......... .......... .......... .......... 70% 15.5M 0s
+   800K .......... .......... .......... .......... .......... 75% 21.8M 0s
+   850K .......... .......... .......... .......... .......... 79% 20.2M 0s
+   900K .......... .......... .......... .......... .......... 84% 13.1M 0s
+   950K .......... .......... .......... .......... .......... 88% 29.1M 0s
+  1000K .......... .......... .......... .......... .......... 92% 12.6M 0s
+  1050K .......... .......... .......... .......... .......... 97% 26.7M 0s
+  1100K .......... .......... ..........                      100% 17.1M=0.2s
+
+2026-05-08 15:56:31 (7.08 MB/s) - ‘DNSMOS/sig_bak_ovr.onnx’ saved [1157965/1157965]
+
+--2026-05-08 15:56:31--  https://github.com/microsoft/DNS-Challenge/raw/master/DNSMOS/DNSMOS/model_v8.onnx
+Resolving github.com (github.com)... 20.205.243.166
+Connecting to github.com (github.com)|20.205.243.166|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/DNSMOS/DNSMOS/model_v8.onnx [following]
+--2026-05-08 15:56:32--  https://raw.githubusercontent.com/microsoft/DNS-Challenge/master/DNSMOS/DNSMOS/model_v8.onnx
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.110.133, 185.199.109.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 224860 (220K) [application/octet-stream]
+Saving to: ‘DNSMOS/model_v8.onnx’
+
+     0K .......... .......... .......... .......... .......... 22%  617K 0s
+    50K .......... .......... .......... .......... .......... 45% 6.46M 0s
+   100K .......... .......... .......... .......... .......... 68% 18.9M 0s
+   150K .......... .......... .......... .......... .......... 91% 18.3M 0s
+   200K .......... .........                                  100%  117M=0.09s
+
+2026-05-08 15:56:33 (2.28 MB/s) - ‘DNSMOS/model_v8.onnx’ saved [224860/224860]
+
+log: '/maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_v2_cue_discrim_v2/stage103_test_export/lrs3/scoring/logdir/tse_scoring.*.log'

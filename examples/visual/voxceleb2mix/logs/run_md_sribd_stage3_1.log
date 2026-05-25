@@ -1,0 +1,646 @@
+nohup: ignoring input
+Start training ...
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+------------------- 0 1
+[ INFO : 2026-05-11 14:38:14,893 ] - exp_dir is: /maduo/exp/wesep_wenet/TSE_BSRNN_VIS
+[ INFO : 2026-05-11 14:38:14,893 ] - <== Passed Arguments ==>
+[ INFO : 2026-05-11 14:38:14,895 ] - {'checkpoint': '/maduo/exp/wesep_wenet/TSE_BSRNN_VIS/models/latest_checkpoint.pt',
+[ INFO : 2026-05-11 14:38:14,895 ] -  'clip_grad': 5.0,
+[ INFO : 2026-05-11 14:38:14,895 ] -  'config': 'confs/tse_bsrnn_visual_sribd.yaml',
+[ INFO : 2026-05-11 14:38:14,895 ] -  'data_type': 'raw',
+[ INFO : 2026-05-11 14:38:14,895 ] -  'dataloader_args': {'batch_size': 4,
+[ INFO : 2026-05-11 14:38:14,896 ] -                      'drop_last': True,
+[ INFO : 2026-05-11 14:38:14,897 ] -                      'num_workers': 2,
+[ INFO : 2026-05-11 14:38:14,897 ] -                      'pin_memory': True,
+[ INFO : 2026-05-11 14:38:14,897 ] -                      'prefetch_factor': 2},
+[ INFO : 2026-05-11 14:38:14,897 ] -  'dataset_args': {'chunk_len': 48000,
+[ INFO : 2026-05-11 14:38:14,898 ] -                   'cue_processing': {'visual': None},
+[ INFO : 2026-05-11 14:38:14,898 ] -                   'cues': {'visual': {'required': True, 'use': True}},
+[ INFO : 2026-05-11 14:38:14,898 ] -                   'noise_lmdb_file': './data/musan/lmdb',
+[ INFO : 2026-05-11 14:38:14,898 ] -                   'noise_prob': 0,
+[ INFO : 2026-05-11 14:38:14,898 ] -                   'resample_rate': 16000,
+[ INFO : 2026-05-11 14:38:14,898 ] -                   'sample_num_per_epoch': 0,
+[ INFO : 2026-05-11 14:38:14,899 ] -                   'shuffle': True,
+[ INFO : 2026-05-11 14:38:14,899 ] -                   'shuffle_args': {'shuffle_size': 2500}},
+[ INFO : 2026-05-11 14:38:14,899 ] -  'enable_amp': False,
+[ INFO : 2026-05-11 14:38:14,899 ] -  'exp_dir': '/maduo/exp/wesep_wenet/TSE_BSRNN_VIS',
+[ INFO : 2026-05-11 14:38:14,899 ] -  'gpus': [0],
+[ INFO : 2026-05-11 14:38:14,899 ] -  'log_batch_interval': 100,
+[ INFO : 2026-05-11 14:38:14,899 ] -  'loss': 'SISDR',
+[ INFO : 2026-05-11 14:38:14,899 ] -  'loss_args': {},
+[ INFO : 2026-05-11 14:38:14,899 ] -  'model': {'tse_model': 'TSE_BSRNN_VISUAL'},
+[ INFO : 2026-05-11 14:38:14,899 ] -  'model_args': {'tse_model': {'separator': {'causal': False,
+[ INFO : 2026-05-11 14:38:14,899 ] -                                             'feature_dim': 128,
+[ INFO : 2026-05-11 14:38:14,899 ] -                                             'nspk': 1,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                             'num_repeat': 6,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                             'sr': 16000,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                             'stride': 128,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                             'win': 512},
+[ INFO : 2026-05-11 14:38:14,900 ] -                               'visual': {'features': {'muse_visual': {'enabled': True,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                                                       'fusion': 'concat',
+[ INFO : 2026-05-11 14:38:14,900 ] -                                                                       'mix_dim': 128,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                                                       'upsample': True,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                                                       'vf_pretrained': '/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/confs/visual_frontend.pt',
+[ INFO : 2026-05-11 14:38:14,900 ] -                                                                       'vtcn_channels': 512,
+[ INFO : 2026-05-11 14:38:14,900 ] -                                                                       'vtcn_layers': 5}}}}},
+[ INFO : 2026-05-11 14:38:14,900 ] -  'model_init': {'discriminator': None, 'spk_model': None, 'tse_model': None},
+[ INFO : 2026-05-11 14:38:14,900 ] -  'num_avg': True,
+[ INFO : 2026-05-11 14:38:14,900 ] -  'num_epochs': 150,
+[ INFO : 2026-05-11 14:38:14,901 ] -  'optimizer': {'tse_model': 'Adam'},
+[ INFO : 2026-05-11 14:38:14,901 ] -  'optimizer_args': {'tse_model': {'lr': 0.001, 'weight_decay': 0.0001}},
+[ INFO : 2026-05-11 14:38:14,901 ] -  'save_epoch_interval': 1,
+[ INFO : 2026-05-11 14:38:14,901 ] -  'scheduler': {'tse_model': 'ExponentialDecrease'},
+[ INFO : 2026-05-11 14:38:14,901 ] -  'scheduler_args': {'tse_model': {'final_lr': 2.5e-05,
+[ INFO : 2026-05-11 14:38:14,901 ] -                                   'initial_lr': 0.001,
+[ INFO : 2026-05-11 14:38:14,901 ] -                                   'warm_from_zero': False,
+[ INFO : 2026-05-11 14:38:14,901 ] -                                   'warm_up_epoch': 0}},
+[ INFO : 2026-05-11 14:38:14,901 ] -  'seed': 42,
+[ INFO : 2026-05-11 14:38:14,901 ] -  'train_cues': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/train/cues.yaml',
+[ INFO : 2026-05-11 14:38:14,901 ] -  'train_data': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/train/raw.list',
+[ INFO : 2026-05-11 14:38:14,901 ] -  'train_samples': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/train/samples.jsonl',
+[ INFO : 2026-05-11 14:38:14,901 ] -  'val_cues': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/val/cues.yaml',
+[ INFO : 2026-05-11 14:38:14,901 ] -  'val_data': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/val/raw.list',
+[ INFO : 2026-05-11 14:38:14,901 ] -  'val_samples': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/val/samples.jsonl'}
+[ INFO : 2026-05-11 14:38:15,133 ] - <== Dataloaders ==>
+[ INFO : 2026-05-11 14:38:15,133 ] - train dataloaders created
+[ INFO : 2026-05-11 14:38:15,133 ] - epoch iteration number: 5000
+[ INFO : 2026-05-11 14:38:15,133 ] - val iteration number: 1250
+[ INFO : 2026-05-11 14:38:15,133 ] - <== Model ==>
+[ INFO : 2026-05-11 14:38:15,465 ] - tse_model size: 34.00 M
+[ INFO : 2026-05-11 14:38:15,467 ] - TSE_BSRNN_VISUAL(
+[ INFO : 2026-05-11 14:38:15,467 ] -   (sep_model): BSRNN(
+[ INFO : 2026-05-11 14:38:15,467 ] -     (stft): STFT()
+[ INFO : 2026-05-11 14:38:15,467 ] -     (band_split): BandSplit()
+[ INFO : 2026-05-11 14:38:15,467 ] -     (subband_norm): SubbandNorm(
+[ INFO : 2026-05-11 14:38:15,467 ] -       (BN): ModuleList(
+[ INFO : 2026-05-11 14:38:15,467 ] -         (0-14): 15 x Sequential(
+[ INFO : 2026-05-11 14:38:15,467 ] -           (0): GroupNorm(1, 6, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,467 ] -           (1): Conv1d(6, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,467 ] -         )
+[ INFO : 2026-05-11 14:38:15,467 ] -         (15-24): 10 x Sequential(
+[ INFO : 2026-05-11 14:38:15,467 ] -           (0): GroupNorm(1, 12, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,467 ] -           (1): Conv1d(12, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,467 ] -         )
+[ INFO : 2026-05-11 14:38:15,467 ] -         (25-29): 5 x Sequential(
+[ INFO : 2026-05-11 14:38:15,467 ] -           (0): GroupNorm(1, 32, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -           (1): Conv1d(32, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,468 ] -         )
+[ INFO : 2026-05-11 14:38:15,468 ] -         (30): Sequential(
+[ INFO : 2026-05-11 14:38:15,468 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -           (1): Conv1d(128, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,468 ] -         )
+[ INFO : 2026-05-11 14:38:15,468 ] -         (31): Sequential(
+[ INFO : 2026-05-11 14:38:15,468 ] -           (0): GroupNorm(1, 16, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -           (1): Conv1d(16, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,468 ] -         )
+[ INFO : 2026-05-11 14:38:15,468 ] -       )
+[ INFO : 2026-05-11 14:38:15,468 ] -     )
+[ INFO : 2026-05-11 14:38:15,468 ] -     (separator): BSRNN_Separator(
+[ INFO : 2026-05-11 14:38:15,468 ] -       (separation): ModuleList(
+[ INFO : 2026-05-11 14:38:15,468 ] -         (0-5): 6 x BSNet(
+[ INFO : 2026-05-11 14:38:15,468 ] -           (band_rnn): ResRNN(
+[ INFO : 2026-05-11 14:38:15,468 ] -             (norm): GroupNorm(1, 128, eps=1e-05, affine=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -             (rnn): LSTM(128, 256, batch_first=True, bidirectional=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -             (proj): Linear(in_features=512, out_features=128, bias=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -           )
+[ INFO : 2026-05-11 14:38:15,468 ] -           (band_comm): ResRNN(
+[ INFO : 2026-05-11 14:38:15,468 ] -             (norm): GroupNorm(1, 128, eps=1e-05, affine=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -             (rnn): LSTM(128, 256, batch_first=True, bidirectional=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -             (proj): Linear(in_features=512, out_features=128, bias=True)
+[ INFO : 2026-05-11 14:38:15,468 ] -           )
+[ INFO : 2026-05-11 14:38:15,468 ] -         )
+[ INFO : 2026-05-11 14:38:15,468 ] -       )
+[ INFO : 2026-05-11 14:38:15,468 ] -     )
+[ INFO : 2026-05-11 14:38:15,469 ] -     (band_masker): BandMasker(
+[ INFO : 2026-05-11 14:38:15,469 ] -       (mask): ModuleList(
+[ INFO : 2026-05-11 14:38:15,469 ] -         (0-14): 15 x Sequential(
+[ INFO : 2026-05-11 14:38:15,469 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,469 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -           (2): Tanh()
+[ INFO : 2026-05-11 14:38:15,469 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -           (4): Tanh()
+[ INFO : 2026-05-11 14:38:15,469 ] -           (5): Conv1d(512, 12, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -         )
+[ INFO : 2026-05-11 14:38:15,469 ] -         (15-24): 10 x Sequential(
+[ INFO : 2026-05-11 14:38:15,469 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,469 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -           (2): Tanh()
+[ INFO : 2026-05-11 14:38:15,469 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -           (4): Tanh()
+[ INFO : 2026-05-11 14:38:15,469 ] -           (5): Conv1d(512, 24, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -         )
+[ INFO : 2026-05-11 14:38:15,469 ] -         (25-29): 5 x Sequential(
+[ INFO : 2026-05-11 14:38:15,469 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,469 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -           (2): Tanh()
+[ INFO : 2026-05-11 14:38:15,469 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -           (4): Tanh()
+[ INFO : 2026-05-11 14:38:15,469 ] -           (5): Conv1d(512, 64, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,469 ] -         )
+[ INFO : 2026-05-11 14:38:15,469 ] -         (30): Sequential(
+[ INFO : 2026-05-11 14:38:15,469 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,470 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,470 ] -           (2): Tanh()
+[ INFO : 2026-05-11 14:38:15,470 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,470 ] -           (4): Tanh()
+[ INFO : 2026-05-11 14:38:15,470 ] -           (5): Conv1d(512, 256, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,470 ] -         )
+[ INFO : 2026-05-11 14:38:15,470 ] -         (31): Sequential(
+[ INFO : 2026-05-11 14:38:15,470 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-11 14:38:15,470 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,470 ] -           (2): Tanh()
+[ INFO : 2026-05-11 14:38:15,470 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,470 ] -           (4): Tanh()
+[ INFO : 2026-05-11 14:38:15,470 ] -           (5): Conv1d(512, 32, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-11 14:38:15,470 ] -         )
+[ INFO : 2026-05-11 14:38:15,470 ] -       )
+[ INFO : 2026-05-11 14:38:15,470 ] -     )
+[ INFO : 2026-05-11 14:38:15,470 ] -     (istft): iSTFT()
+[ INFO : 2026-05-11 14:38:15,470 ] -   )
+[ INFO : 2026-05-11 14:38:15,470 ] -   (visual_ft): VisualFrontend(
+[ INFO : 2026-05-11 14:38:15,470 ] -     (features): ModuleDict(
+[ INFO : 2026-05-11 14:38:15,470 ] -       (muse_visual): MuseVisualFeature(
+[ INFO : 2026-05-11 14:38:15,470 ] -         (roi): Muse_LipROIProcessor()
+[ INFO : 2026-05-11 14:38:15,470 ] -         (visual_frontend): Muse_VisualFrontend(
+[ INFO : 2026-05-11 14:38:15,470 ] -           (frontend3D): Sequential(
+[ INFO : 2026-05-11 14:38:15,470 ] -             (0): Conv3d(1, 64, kernel_size=(5, 7, 7), stride=(1, 2, 2), padding=(2, 3, 3), bias=False)
+[ INFO : 2026-05-11 14:38:15,470 ] -             (1): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,470 ] -             (2): ReLU()
+[ INFO : 2026-05-11 14:38:15,470 ] -             (3): MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), dilation=1, ceil_mode=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -           )
+[ INFO : 2026-05-11 14:38:15,471 ] -           (resnet): ResNet(
+[ INFO : 2026-05-11 14:38:15,471 ] -             (layer1): ResNetLayer(
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv1a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (bn1a): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv2a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (downsample): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (outbna): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv1b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (bn1b): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv2b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (outbnb): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -             )
+[ INFO : 2026-05-11 14:38:15,471 ] -             (layer2): ResNetLayer(
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv1a): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (bn1a): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv2a): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (downsample): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (outbna): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv1b): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (bn1b): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv2b): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (outbnb): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,471 ] -             )
+[ INFO : 2026-05-11 14:38:15,471 ] -             (layer3): ResNetLayer(
+[ INFO : 2026-05-11 14:38:15,471 ] -               (conv1a): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,471 ] -               (bn1a): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv2a): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (downsample): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (outbna): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv1b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (bn1b): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv2b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (outbnb): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -             )
+[ INFO : 2026-05-11 14:38:15,472 ] -             (layer4): ResNetLayer(
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv1a): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (bn1a): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv2a): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (downsample): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (outbna): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv1b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (bn1b): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (conv2b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (outbnb): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -             )
+[ INFO : 2026-05-11 14:38:15,472 ] -             (avgpool): AvgPool2d(kernel_size=(4, 4), stride=(1, 1), padding=0)
+[ INFO : 2026-05-11 14:38:15,472 ] -           )
+[ INFO : 2026-05-11 14:38:15,472 ] -         )
+[ INFO : 2026-05-11 14:38:15,472 ] -         (vtcn): Sequential(
+[ INFO : 2026-05-11 14:38:15,472 ] -           (0): Muse_VisualConv1D(
+[ INFO : 2026-05-11 14:38:15,472 ] -             (net): Sequential(
+[ INFO : 2026-05-11 14:38:15,472 ] -               (0): ReLU()
+[ INFO : 2026-05-11 14:38:15,472 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,472 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-11 14:38:15,473 ] -             )
+[ INFO : 2026-05-11 14:38:15,473 ] -           )
+[ INFO : 2026-05-11 14:38:15,473 ] -           (1): Muse_VisualConv1D(
+[ INFO : 2026-05-11 14:38:15,473 ] -             (net): Sequential(
+[ INFO : 2026-05-11 14:38:15,473 ] -               (0): ReLU()
+[ INFO : 2026-05-11 14:38:15,473 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-11 14:38:15,473 ] -             )
+[ INFO : 2026-05-11 14:38:15,473 ] -           )
+[ INFO : 2026-05-11 14:38:15,473 ] -           (2): Muse_VisualConv1D(
+[ INFO : 2026-05-11 14:38:15,473 ] -             (net): Sequential(
+[ INFO : 2026-05-11 14:38:15,473 ] -               (0): ReLU()
+[ INFO : 2026-05-11 14:38:15,473 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,473 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-11 14:38:15,473 ] -             )
+[ INFO : 2026-05-11 14:38:15,473 ] -           )
+[ INFO : 2026-05-11 14:38:15,473 ] -           (3): Muse_VisualConv1D(
+[ INFO : 2026-05-11 14:38:15,473 ] -             (net): Sequential(
+[ INFO : 2026-05-11 14:38:15,473 ] -               (0): ReLU()
+[ INFO : 2026-05-11 14:38:15,474 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-11 14:38:15,474 ] -             )
+[ INFO : 2026-05-11 14:38:15,474 ] -           )
+[ INFO : 2026-05-11 14:38:15,474 ] -           (4): Muse_VisualConv1D(
+[ INFO : 2026-05-11 14:38:15,474 ] -             (net): Sequential(
+[ INFO : 2026-05-11 14:38:15,474 ] -               (0): ReLU()
+[ INFO : 2026-05-11 14:38:15,474 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-11 14:38:15,474 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-11 14:38:15,474 ] -             )
+[ INFO : 2026-05-11 14:38:15,474 ] -           )
+[ INFO : 2026-05-11 14:38:15,474 ] -         )
+[ INFO : 2026-05-11 14:38:15,474 ] -         (fusionLayer): SpeakerFuseLayer(
+[ INFO : 2026-05-11 14:38:15,474 ] -           (fc): LinearLayer(
+[ INFO : 2026-05-11 14:38:15,474 ] -             (linear): Linear(in_features=640, out_features=128, bias=True)
+[ INFO : 2026-05-11 14:38:15,474 ] -           )
+[ INFO : 2026-05-11 14:38:15,474 ] -         )
+[ INFO : 2026-05-11 14:38:15,474 ] -       )
+[ INFO : 2026-05-11 14:38:15,474 ] -     )
+[ INFO : 2026-05-11 14:38:15,474 ] -   )
+[ INFO : 2026-05-11 14:38:15,474 ] - )
+[ INFO : 2026-05-11 14:38:16,133 ] - <== TSE Model Loss ==>
+[ INFO : 2026-05-11 14:38:16,133 ] - loss criterion is: SISDR
+[ INFO : 2026-05-11 14:38:16,136 ] - <== TSE Model Optimizer ==>
+[ INFO : 2026-05-11 14:38:16,137 ] - optimizer is: Adam
+[ INFO : 2026-05-11 14:38:16,137 ] - <== TSE Model Scheduler ==>
+[ INFO : 2026-05-11 14:38:16,137 ] - scheduler is: ExponentialDecrease
+/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train.py:264: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=configs["enable_amp"])
+[ INFO : 2026-05-11 14:38:17,388 ] - Load checkpoint: /maduo/exp/wesep_wenet/TSE_BSRNN_VIS/models/checkpoint_5.pt
+[ INFO : 2026-05-11 14:38:17,388 ] - start_epoch: 6
+[ INFO : 2026-05-11 14:38:17,397 ] - <========== Training process ==========>
+[ INFO : 2026-05-11 14:38:17,397 ] - +----------+----------+----------+----------+----------+
+[ INFO : 2026-05-11 14:38:17,398 ] - | Train/Val|     Epoch|      iter|      Loss|        LR|
+[ INFO : 2026-05-11 14:38:17,398 ] - +----------+----------+----------+----------+----------+
+[ INFO : 2026-05-11 14:43:10,373 ] - |     TRAIN|         6|       100|    33.353|0.00088387|
+[ INFO : 2026-05-11 14:43:59,959 ] - |     TRAIN|         6|       200|     33.32|0.00088343|
+[ INFO : 2026-05-11 14:44:49,700 ] - |     TRAIN|         6|       300|    33.312|  0.000883|
+[ INFO : 2026-05-11 14:45:39,568 ] - |     TRAIN|         6|       400|    33.284|0.00088256|
+[ INFO : 2026-05-11 14:46:29,762 ] - |     TRAIN|         6|       500|    33.289|0.00088213|
+[ INFO : 2026-05-11 14:47:19,007 ] - |     TRAIN|         6|       600|    33.315| 0.0008817|
+[ INFO : 2026-05-11 14:48:08,322 ] - |     TRAIN|         6|       700|    33.342|0.00088126|
+[ INFO : 2026-05-11 14:48:56,856 ] - |     TRAIN|         6|       800|    33.384|0.00088083|
+[ INFO : 2026-05-11 14:49:46,178 ] - |     TRAIN|         6|       900|      33.4| 0.0008804|
+[ INFO : 2026-05-11 14:50:38,379 ] - |     TRAIN|         6|      1000|    33.379|0.00087996|
+[ INFO : 2026-05-11 14:51:30,762 ] - |     TRAIN|         6|      1100|    33.361|0.00087953|
+[ INFO : 2026-05-11 14:52:22,705 ] - |     TRAIN|         6|      1200|    33.362| 0.0008791|
+[ INFO : 2026-05-11 14:57:41,003 ] - |     TRAIN|         6|      1300|    33.373|0.00087866|
+[ INFO : 2026-05-11 14:58:32,032 ] - |     TRAIN|         6|      1400|    33.394|0.00087823|
+[ INFO : 2026-05-11 14:59:21,557 ] - |     TRAIN|         6|      1500|    33.396| 0.0008778|
+[ INFO : 2026-05-11 15:00:11,078 ] - |     TRAIN|         6|      1600|    33.373|0.00087737|
+[ INFO : 2026-05-11 15:01:00,505 ] - |     TRAIN|         6|      1700|    33.366|0.00087694|
+[ INFO : 2026-05-11 15:01:50,423 ] - |     TRAIN|         6|      1800|     33.34|0.00087651|
+[ INFO : 2026-05-11 15:02:39,543 ] - |     TRAIN|         6|      1900|     33.33|0.00087608|
+[ INFO : 2026-05-11 15:03:28,391 ] - |     TRAIN|         6|      2000|    33.327|0.00087564|
+[ INFO : 2026-05-11 15:04:18,766 ] - |     TRAIN|         6|      2100|    33.344|0.00087521|
+[ INFO : 2026-05-11 15:05:08,964 ] - |     TRAIN|         6|      2200|    33.354|0.00087478|
+[ INFO : 2026-05-11 15:05:58,240 ] - |     TRAIN|         6|      2300|    33.351|0.00087435|
+[ INFO : 2026-05-11 15:06:47,104 ] - |     TRAIN|         6|      2400|    33.376|0.00087392|
+[ INFO : 2026-05-11 15:07:35,592 ] - |     TRAIN|         6|      2500|    33.387|0.00087349|
+[ INFO : 2026-05-11 15:12:31,813 ] - |     TRAIN|         6|      2600|    33.397|0.00087306|
+[ INFO : 2026-05-11 15:13:21,296 ] - |     TRAIN|         6|      2700|    33.414|0.00087264|
+[ INFO : 2026-05-11 15:14:10,401 ] - |     TRAIN|         6|      2800|    33.417|0.00087221|
+[ INFO : 2026-05-11 15:14:58,685 ] - |     TRAIN|         6|      2900|    33.434|0.00087178|
+[ INFO : 2026-05-11 15:15:47,343 ] - |     TRAIN|         6|      3000|    33.447|0.00087135|
+[ INFO : 2026-05-11 15:16:36,479 ] - |     TRAIN|         6|      3100|    33.448|0.00087092|
+[ INFO : 2026-05-11 15:17:25,352 ] - |     TRAIN|         6|      3200|    33.464|0.00087049|
+[ INFO : 2026-05-11 15:18:14,074 ] - |     TRAIN|         6|      3300|    33.468|0.00087006|
+[ INFO : 2026-05-11 15:19:03,036 ] - |     TRAIN|         6|      3400|    33.466|0.00086964|
+[ INFO : 2026-05-11 15:19:52,169 ] - |     TRAIN|         6|      3500|    33.465|0.00086921|
+[ INFO : 2026-05-11 15:20:44,491 ] - |     TRAIN|         6|      3600|    33.465|0.00086878|
+[ INFO : 2026-05-11 15:21:33,660 ] - |     TRAIN|         6|      3700|    33.459|0.00086835|
+[ INFO : 2026-05-11 15:26:40,051 ] - |     TRAIN|         6|      3800|     33.46|0.00086793|
+[ INFO : 2026-05-11 15:27:30,190 ] - |     TRAIN|         6|      3900|    33.459| 0.0008675|
+[ INFO : 2026-05-11 15:28:19,611 ] - |     TRAIN|         6|      4000|    33.465|0.00086707|
+[ INFO : 2026-05-11 15:29:08,461 ] - |     TRAIN|         6|      4100|    33.468|0.00086665|
+[ INFO : 2026-05-11 15:29:57,882 ] - |     TRAIN|         6|      4200|    33.472|0.00086622|
+[ INFO : 2026-05-11 15:30:48,127 ] - |     TRAIN|         6|      4300|    33.464|0.00086579|
+[ INFO : 2026-05-11 15:31:36,643 ] - |     TRAIN|         6|      4400|    33.463|0.00086537|
+[ INFO : 2026-05-11 15:32:30,272 ] - |     TRAIN|         6|      4500|    33.464|0.00086494|
+[ INFO : 2026-05-11 15:33:21,891 ] - |     TRAIN|         6|      4600|    33.467|0.00086452|
+[ INFO : 2026-05-11 15:34:13,213 ] - |     TRAIN|         6|      4700|     33.46|0.00086409|
+[ INFO : 2026-05-11 15:35:03,628 ] - |     TRAIN|         6|      4800|    33.458|0.00086367|
+[ INFO : 2026-05-11 15:35:54,413 ] - |     TRAIN|         6|      4900|    33.456|0.00086324|
+[ INFO : 2026-05-11 15:36:45,188 ] - |     TRAIN|         6|      5000|    33.454|0.00086282|
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.pin_memory() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:46.)
+  return data.pin_memory(device)
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.is_pinned() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:31.)
+  return data.pin_memory(device)
+[ INFO : 2026-05-11 15:38:12,105 ] - |       VAL|         6|       100|    33.363|         -|
+[ INFO : 2026-05-11 15:39:23,929 ] - |       VAL|         6|       200|    33.415|         -|
+[ INFO : 2026-05-11 15:40:41,638 ] - |       VAL|         6|       300|    33.456|         -|
+[ INFO : 2026-05-11 15:42:04,137 ] - |       VAL|         6|       400|    33.486|         -|
+[ INFO : 2026-05-11 15:43:24,275 ] - |       VAL|         6|       500|    33.502|         -|
+[ INFO : 2026-05-11 15:44:40,756 ] - |       VAL|         6|       600|    33.471|         -|
+[ INFO : 2026-05-11 15:45:55,432 ] - |       VAL|         6|       700|    33.491|         -|
+[ INFO : 2026-05-11 15:47:11,216 ] - |       VAL|         6|       800|    33.521|         -|
+[ INFO : 2026-05-11 15:48:29,632 ] - |       VAL|         6|       900|    33.534|         -|
+[ INFO : 2026-05-11 15:49:42,861 ] - |       VAL|         6|      1000|    33.528|         -|
+[ INFO : 2026-05-11 15:50:56,355 ] - |       VAL|         6|      1100|    33.532|         -|
+[ INFO : 2026-05-11 15:52:09,684 ] - |       VAL|         6|      1200|    33.528|         -|
+[ INFO : 2026-05-11 15:52:47,378 ] - Epoch 6 Train info train_loss 33.45414599571228
+[ INFO : 2026-05-11 15:52:47,397 ] - Epoch 6 Val info val_loss 33.50704190673828
+[ INFO : 2026-05-11 15:58:43,392 ] - |     TRAIN|         7|       100|    33.423|0.00086239|
+[ INFO : 2026-05-11 15:59:37,644 ] - |     TRAIN|         7|       200|    33.316|0.00086197|
+[ INFO : 2026-05-11 16:00:31,843 ] - |     TRAIN|         7|       300|    33.388|0.00086155|
+[ INFO : 2026-05-11 16:01:26,719 ] - |     TRAIN|         7|       400|    33.324|0.00086112|
+[ INFO : 2026-05-11 16:02:20,594 ] - |     TRAIN|         7|       500|    33.325| 0.0008607|
+[ INFO : 2026-05-11 16:03:15,576 ] - |     TRAIN|         7|       600|    33.341|0.00086028|
+[ INFO : 2026-05-11 16:04:11,148 ] - |     TRAIN|         7|       700|      33.3|0.00085985|
+[ INFO : 2026-05-11 16:05:08,173 ] - |     TRAIN|         7|       800|    33.284|0.00085943|
+[ INFO : 2026-05-11 16:06:05,836 ] - |     TRAIN|         7|       900|     33.28|0.00085901|
+[ INFO : 2026-05-11 16:07:03,958 ] - |     TRAIN|         7|      1000|    33.277|0.00085859|
+[ INFO : 2026-05-11 16:08:02,307 ] - |     TRAIN|         7|      1100|    33.292|0.00085816|
+[ INFO : 2026-05-11 16:09:00,949 ] - |     TRAIN|         7|      1200|    33.308|0.00085774|
+[ INFO : 2026-05-11 16:16:32,894 ] - |     TRAIN|         7|      1300|    33.324|0.00085732|
+[ INFO : 2026-05-11 16:17:34,650 ] - |     TRAIN|         7|      1400|    33.325| 0.0008569|
+[ INFO : 2026-05-11 16:18:33,940 ] - |     TRAIN|         7|      1500|    33.321|0.00085648|
+[ INFO : 2026-05-11 16:19:28,205 ] - |     TRAIN|         7|      1600|    33.314|0.00085606|
+[ INFO : 2026-05-11 16:20:20,383 ] - |     TRAIN|         7|      1700|    33.303|0.00085563|
+[ INFO : 2026-05-11 16:21:13,192 ] - |     TRAIN|         7|      1800|    33.323|0.00085521|
+[ INFO : 2026-05-11 16:22:06,911 ] - |     TRAIN|         7|      1900|    33.315|0.00085479|
+[ INFO : 2026-05-11 16:22:59,557 ] - |     TRAIN|         7|      2000|    33.318|0.00085437|
+[ INFO : 2026-05-11 16:23:50,883 ] - |     TRAIN|         7|      2100|    33.306|0.00085395|
+[ INFO : 2026-05-11 16:24:43,758 ] - |     TRAIN|         7|      2200|    33.286|0.00085353|
+[ INFO : 2026-05-11 16:25:35,088 ] - |     TRAIN|         7|      2300|    33.291|0.00085311|
+[ INFO : 2026-05-11 16:26:28,220 ] - |     TRAIN|         7|      2400|    33.285|0.00085269|
+[ INFO : 2026-05-11 16:27:20,634 ] - |     TRAIN|         7|      2500|    33.279|0.00085227|
+[ INFO : 2026-05-11 16:33:37,369 ] - |     TRAIN|         7|      2600|     33.27|0.00085186|
+[ INFO : 2026-05-11 16:34:30,848 ] - |     TRAIN|         7|      2700|    33.261|0.00085144|
+[ INFO : 2026-05-11 16:35:24,571 ] - |     TRAIN|         7|      2800|    33.255|0.00085102|
+[ INFO : 2026-05-11 16:36:18,357 ] - |     TRAIN|         7|      2900|    33.248| 0.0008506|
+[ INFO : 2026-05-11 16:37:11,414 ] - |     TRAIN|         7|      3000|    33.249|0.00085018|
+[ INFO : 2026-05-11 16:38:03,843 ] - |     TRAIN|         7|      3100|    33.248|0.00084976|
+[ INFO : 2026-05-11 16:38:57,082 ] - |     TRAIN|         7|      3200|    33.247|0.00084935|
+[ INFO : 2026-05-11 16:39:48,007 ] - |     TRAIN|         7|      3300|    33.239|0.00084893|
+[ INFO : 2026-05-11 16:40:40,135 ] - |     TRAIN|         7|      3400|    33.236|0.00084851|
+[ INFO : 2026-05-11 16:41:32,589 ] - |     TRAIN|         7|      3500|    33.238|0.00084809|
+[ INFO : 2026-05-11 16:42:24,673 ] - |     TRAIN|         7|      3600|    33.231|0.00084768|
+[ INFO : 2026-05-11 16:43:18,318 ] - |     TRAIN|         7|      3700|    33.225|0.00084726|
+[ INFO : 2026-05-11 16:49:03,426 ] - |     TRAIN|         7|      3800|    33.228|0.00084684|
+[ INFO : 2026-05-11 16:49:58,080 ] - |     TRAIN|         7|      3900|    33.225|0.00084643|
+[ INFO : 2026-05-11 16:50:50,240 ] - |     TRAIN|         7|      4000|    33.227|0.00084601|
+[ INFO : 2026-05-11 16:51:42,435 ] - |     TRAIN|         7|      4100|    33.221|0.00084559|
+[ INFO : 2026-05-11 16:52:35,299 ] - |     TRAIN|         7|      4200|    33.222|0.00084518|
+[ INFO : 2026-05-11 16:53:26,585 ] - |     TRAIN|         7|      4300|    33.225|0.00084476|
+[ INFO : 2026-05-11 16:54:18,059 ] - |     TRAIN|         7|      4400|    33.224|0.00084435|
+[ INFO : 2026-05-11 16:55:09,824 ] - |     TRAIN|         7|      4500|    33.225|0.00084393|
+[ INFO : 2026-05-11 16:56:01,318 ] - |     TRAIN|         7|      4600|     33.22|0.00084352|
+[ INFO : 2026-05-11 16:56:51,764 ] - |     TRAIN|         7|      4700|    33.216| 0.0008431|
+[ INFO : 2026-05-11 16:57:42,540 ] - |     TRAIN|         7|      4800|    33.213|0.00084269|
+[ INFO : 2026-05-11 16:58:32,997 ] - |     TRAIN|         7|      4900|    33.214|0.00084227|
+[ INFO : 2026-05-11 16:59:23,910 ] - |     TRAIN|         7|      5000|    33.209|0.00084186|
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.pin_memory() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:46.)
+  return data.pin_memory(device)
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.is_pinned() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:31.)
+  return data.pin_memory(device)
+[ INFO : 2026-05-11 17:00:54,870 ] - |       VAL|         7|       100|    33.234|         -|
+[ INFO : 2026-05-11 17:02:11,557 ] - |       VAL|         7|       200|    33.182|         -|
+[ INFO : 2026-05-11 17:03:29,313 ] - |       VAL|         7|       300|    33.176|         -|
+[ INFO : 2026-05-11 17:04:46,942 ] - |       VAL|         7|       400|    33.177|         -|
+[ INFO : 2026-05-11 17:06:03,562 ] - |       VAL|         7|       500|    33.205|         -|
+[ INFO : 2026-05-11 17:07:17,296 ] - |       VAL|         7|       600|    33.199|         -|
+[ INFO : 2026-05-11 17:08:30,677 ] - |       VAL|         7|       700|    33.205|         -|
+[ INFO : 2026-05-11 17:09:41,749 ] - |       VAL|         7|       800|    33.195|         -|
+[ INFO : 2026-05-11 17:10:50,953 ] - |       VAL|         7|       900|    33.172|         -|
+[ INFO : 2026-05-11 17:12:00,085 ] - |       VAL|         7|      1000|    33.173|         -|
+[ INFO : 2026-05-11 17:13:10,537 ] - |       VAL|         7|      1100|    33.171|         -|
+[ INFO : 2026-05-11 17:14:19,633 ] - |       VAL|         7|      1200|    33.158|         -|
+[ INFO : 2026-05-11 17:14:55,875 ] - Epoch 7 Train info train_loss 33.209197598648075
+[ INFO : 2026-05-11 17:14:55,876 ] - Epoch 7 Val info val_loss 33.13631109161377
+[ INFO : 2026-05-11 17:19:46,994 ] - |     TRAIN|         8|       100|    33.117|0.00084144|
+[ INFO : 2026-05-11 17:20:37,499 ] - |     TRAIN|         8|       200|    33.157|0.00084103|
+[ INFO : 2026-05-11 17:21:31,625 ] - |     TRAIN|         8|       300|    33.172|0.00084062|
+[ INFO : 2026-05-11 17:22:21,122 ] - |     TRAIN|         8|       400|     33.25| 0.0008402|
+[ INFO : 2026-05-11 17:23:11,165 ] - |     TRAIN|         8|       500|    33.261|0.00083979|
+[ INFO : 2026-05-11 17:24:00,349 ] - |     TRAIN|         8|       600|    33.261|0.00083938|
+[ INFO : 2026-05-11 17:24:49,247 ] - |     TRAIN|         8|       700|    33.227|0.00083897|
+[ INFO : 2026-05-11 17:25:38,517 ] - |     TRAIN|         8|       800|    33.172|0.00083855|
+[ INFO : 2026-05-11 17:26:27,528 ] - |     TRAIN|         8|       900|     33.16|0.00083814|
+[ INFO : 2026-05-11 17:27:17,429 ] - |     TRAIN|         8|      1000|    33.153|0.00083773|
+[ INFO : 2026-05-11 17:28:06,624 ] - |     TRAIN|         8|      1100|    33.147|0.00083732|
+[ INFO : 2026-05-11 17:28:55,320 ] - |     TRAIN|         8|      1200|    33.116| 0.0008369|
+[ INFO : 2026-05-11 17:33:47,107 ] - |     TRAIN|         8|      1300|    33.108|0.00083649|
+[ INFO : 2026-05-11 17:34:34,027 ] - |     TRAIN|         8|      1400|    33.109|0.00083608|
+[ INFO : 2026-05-11 17:35:26,072 ] - |     TRAIN|         8|      1500|    33.104|0.00083567|
+[ INFO : 2026-05-11 17:36:17,170 ] - |     TRAIN|         8|      1600|    33.093|0.00083526|
+[ INFO : 2026-05-11 17:37:06,969 ] - |     TRAIN|         8|      1700|    33.087|0.00083485|
+[ INFO : 2026-05-11 17:37:56,724 ] - |     TRAIN|         8|      1800|    33.085|0.00083444|
+[ INFO : 2026-05-11 17:38:46,678 ] - |     TRAIN|         8|      1900|    33.086|0.00083403|
+[ INFO : 2026-05-11 17:39:36,087 ] - |     TRAIN|         8|      2000|     33.09|0.00083362|
+[ INFO : 2026-05-11 17:40:25,934 ] - |     TRAIN|         8|      2100|    33.097|0.00083321|
+[ INFO : 2026-05-11 17:41:15,392 ] - |     TRAIN|         8|      2200|      33.1| 0.0008328|
+[ INFO : 2026-05-11 17:42:06,488 ] - |     TRAIN|         8|      2300|    33.103|0.00083239|
+[ INFO : 2026-05-11 17:42:56,671 ] - |     TRAIN|         8|      2400|    33.103|0.00083198|
+[ INFO : 2026-05-11 17:43:47,627 ] - |     TRAIN|         8|      2500|    33.094|0.00083157|
+[ INFO : 2026-05-11 17:48:42,591 ] - |     TRAIN|         8|      2600|    33.096|0.00083116|
+[ INFO : 2026-05-11 17:49:31,797 ] - |     TRAIN|         8|      2700|    33.106|0.00083075|
+[ INFO : 2026-05-11 17:50:21,494 ] - |     TRAIN|         8|      2800|    33.125|0.00083034|
+[ INFO : 2026-05-11 17:51:10,803 ] - |     TRAIN|         8|      2900|     33.13|0.00082994|
+[ INFO : 2026-05-11 17:51:59,994 ] - |     TRAIN|         8|      3000|    33.132|0.00082953|
+[ INFO : 2026-05-11 17:52:49,236 ] - |     TRAIN|         8|      3100|    33.125|0.00082912|
+[ INFO : 2026-05-11 17:53:38,067 ] - |     TRAIN|         8|      3200|    33.129|0.00082871|
+[ INFO : 2026-05-11 17:54:27,279 ] - |     TRAIN|         8|      3300|    33.127| 0.0008283|
+[ INFO : 2026-05-11 17:55:16,791 ] - |     TRAIN|         8|      3400|    33.123| 0.0008279|
+[ INFO : 2026-05-11 17:56:06,687 ] - |     TRAIN|         8|      3500|    33.124|0.00082749|
+[ INFO : 2026-05-11 17:56:57,294 ] - |     TRAIN|         8|      3600|    33.139|0.00082708|
+[ INFO : 2026-05-11 17:57:47,727 ] - |     TRAIN|         8|      3700|    33.138|0.00082668|
+[ INFO : 2026-05-11 18:03:07,558 ] - |     TRAIN|         8|      3800|    33.141|0.00082627|
+[ INFO : 2026-05-11 18:03:55,588 ] - |     TRAIN|         8|      3900|    33.143|0.00082586|
+[ INFO : 2026-05-11 18:04:48,320 ] - |     TRAIN|         8|      4000|     33.14|0.00082546|
+[ INFO : 2026-05-11 18:05:39,265 ] - |     TRAIN|         8|      4100|    33.148|0.00082505|
+[ INFO : 2026-05-11 18:06:29,842 ] - |     TRAIN|         8|      4200|    33.166|0.00082465|
+[ INFO : 2026-05-11 18:07:20,055 ] - |     TRAIN|         8|      4300|     33.18|0.00082424|
+[ INFO : 2026-05-11 18:08:10,794 ] - |     TRAIN|         8|      4400|    33.191|0.00082384|
+[ INFO : 2026-05-11 18:09:01,870 ] - |     TRAIN|         8|      4500|    33.195|0.00082343|
+[ INFO : 2026-05-11 18:09:52,975 ] - |     TRAIN|         8|      4600|    33.203|0.00082303|
+[ INFO : 2026-05-11 18:10:45,200 ] - |     TRAIN|         8|      4700|    33.204|0.00082262|
+[ INFO : 2026-05-11 18:11:37,559 ] - |     TRAIN|         8|      4800|    33.207|0.00082222|
+[ INFO : 2026-05-11 18:12:28,617 ] - |     TRAIN|         8|      4900|    33.207|0.00082181|
+[ INFO : 2026-05-11 18:13:18,783 ] - |     TRAIN|         8|      5000|    33.205|0.00082141|
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.pin_memory() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:46.)
+  return data.pin_memory(device)
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.is_pinned() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:31.)
+  return data.pin_memory(device)
+[ INFO : 2026-05-11 18:14:45,438 ] - |       VAL|         8|       100|    33.034|         -|
+[ INFO : 2026-05-11 18:16:00,415 ] - |       VAL|         8|       200|    33.157|         -|
+[ INFO : 2026-05-11 18:17:15,270 ] - |       VAL|         8|       300|    33.142|         -|
+[ INFO : 2026-05-11 18:18:28,712 ] - |       VAL|         8|       400|     33.17|         -|
+[ INFO : 2026-05-11 18:19:42,304 ] - |       VAL|         8|       500|    33.202|         -|
+[ INFO : 2026-05-11 18:20:54,561 ] - |       VAL|         8|       600|    33.182|         -|
+[ INFO : 2026-05-11 18:22:06,256 ] - |       VAL|         8|       700|    33.169|         -|
+[ INFO : 2026-05-11 18:23:14,799 ] - |       VAL|         8|       800|    33.165|         -|
+[ INFO : 2026-05-11 18:24:26,560 ] - |       VAL|         8|       900|    33.189|         -|
+[ INFO : 2026-05-11 18:25:36,989 ] - |       VAL|         8|      1000|    33.201|         -|
+[ INFO : 2026-05-11 18:26:47,225 ] - |       VAL|         8|      1100|    33.211|         -|
+[ INFO : 2026-05-11 18:27:57,369 ] - |       VAL|         8|      1200|    33.228|         -|
+[ INFO : 2026-05-11 18:28:34,054 ] - Epoch 8 Train info train_loss 33.204797069549564
+[ INFO : 2026-05-11 18:28:34,055 ] - Epoch 8 Val info val_loss 33.21362451477051
+[ INFO : 2026-05-11 18:33:26,856 ] - |     TRAIN|         9|       100|    33.275|  0.000821|
+[ INFO : 2026-05-11 18:34:16,819 ] - |     TRAIN|         9|       200|    33.247| 0.0008206|
+[ INFO : 2026-05-11 18:35:06,675 ] - |     TRAIN|         9|       300|    33.249| 0.0008202|
+[ INFO : 2026-05-11 18:35:56,347 ] - |     TRAIN|         9|       400|    33.256|0.00081979|
+[ INFO : 2026-05-11 18:36:46,415 ] - |     TRAIN|         9|       500|    33.254|0.00081939|
+[ INFO : 2026-05-11 18:37:35,913 ] - |     TRAIN|         9|       600|    33.197|0.00081899|
+[ INFO : 2026-05-11 18:38:25,850 ] - |     TRAIN|         9|       700|     33.19|0.00081858|
+[ INFO : 2026-05-11 18:39:15,517 ] - |     TRAIN|         9|       800|     33.19|0.00081818|
+[ INFO : 2026-05-11 18:40:05,367 ] - |     TRAIN|         9|       900|    33.205|0.00081778|
+[ INFO : 2026-05-11 18:40:55,343 ] - |     TRAIN|         9|      1000|    33.224|0.00081738|
+[ INFO : 2026-05-11 18:41:45,708 ] - |     TRAIN|         9|      1100|    33.216|0.00081698|
+[ INFO : 2026-05-11 18:42:36,395 ] - |     TRAIN|         9|      1200|    33.218|0.00081657|
+[ INFO : 2026-05-11 18:47:26,815 ] - |     TRAIN|         9|      1300|    33.239|0.00081617|
+[ INFO : 2026-05-11 18:48:17,006 ] - |     TRAIN|         9|      1400|    33.242|0.00081577|
+[ INFO : 2026-05-11 18:49:05,677 ] - |     TRAIN|         9|      1500|     33.26|0.00081537|
+[ INFO : 2026-05-11 18:49:54,779 ] - |     TRAIN|         9|      1600|    33.274|0.00081497|
+[ INFO : 2026-05-11 18:50:43,647 ] - |     TRAIN|         9|      1700|    33.265|0.00081457|
+[ INFO : 2026-05-11 18:51:33,446 ] - |     TRAIN|         9|      1800|    33.276|0.00081417|
+[ INFO : 2026-05-11 18:52:22,420 ] - |     TRAIN|         9|      1900|    33.277|0.00081377|
+[ INFO : 2026-05-11 18:53:12,125 ] - |     TRAIN|         9|      2000|     33.28|0.00081337|
+[ INFO : 2026-05-11 18:54:01,548 ] - |     TRAIN|         9|      2100|    33.272|0.00081297|
+[ INFO : 2026-05-11 18:54:51,130 ] - |     TRAIN|         9|      2200|    33.268|0.00081257|
+[ INFO : 2026-05-11 18:55:42,962 ] - |     TRAIN|         9|      2300|    33.266|0.00081217|
+[ INFO : 2026-05-11 18:56:33,902 ] - |     TRAIN|         9|      2400|    33.255|0.00081177|
+[ INFO : 2026-05-11 18:57:23,965 ] - |     TRAIN|         9|      2500|    33.257|0.00081137|
+[ INFO : 2026-05-11 19:02:19,719 ] - |     TRAIN|         9|      2600|    33.263|0.00081097|
+[ INFO : 2026-05-11 19:03:09,329 ] - |     TRAIN|         9|      2700|    33.257|0.00081057|
+[ INFO : 2026-05-11 19:03:58,201 ] - |     TRAIN|         9|      2800|    33.262|0.00081017|
+[ INFO : 2026-05-11 19:04:47,145 ] - |     TRAIN|         9|      2900|    33.251|0.00080977|
+[ INFO : 2026-05-11 19:05:36,109 ] - |     TRAIN|         9|      3000|    33.231|0.00080938|
+[ INFO : 2026-05-11 19:06:25,372 ] - |     TRAIN|         9|      3100|    33.222|0.00080898|
+[ INFO : 2026-05-11 19:07:13,947 ] - |     TRAIN|         9|      3200|    33.219|0.00080858|
+[ INFO : 2026-05-11 19:08:02,977 ] - |     TRAIN|         9|      3300|    33.207|0.00080818|
+[ INFO : 2026-05-11 19:08:53,160 ] - |     TRAIN|         9|      3400|    33.208|0.00080779|
+[ INFO : 2026-05-11 19:09:42,798 ] - |     TRAIN|         9|      3500|    33.201|0.00080739|
+[ INFO : 2026-05-11 19:10:32,903 ] - |     TRAIN|         9|      3600|    33.204|0.00080699|
+[ INFO : 2026-05-11 19:11:22,659 ] - |     TRAIN|         9|      3700|    33.198|0.00080659|
+[ INFO : 2026-05-11 19:16:17,130 ] - |     TRAIN|         9|      3800|    33.199| 0.0008062|
+[ INFO : 2026-05-11 19:17:07,906 ] - |     TRAIN|         9|      3900|    33.199| 0.0008058|
+[ INFO : 2026-05-11 19:17:57,122 ] - |     TRAIN|         9|      4000|      33.2|0.00080541|
+[ INFO : 2026-05-11 19:18:46,373 ] - |     TRAIN|         9|      4100|    33.193|0.00080501|
+[ INFO : 2026-05-11 19:19:34,680 ] - |     TRAIN|         9|      4200|    33.193|0.00080461|
+[ INFO : 2026-05-11 19:20:23,061 ] - |     TRAIN|         9|      4300|    33.188|0.00080422|
+[ INFO : 2026-05-11 19:21:11,650 ] - |     TRAIN|         9|      4400|    33.191|0.00080382|
+[ INFO : 2026-05-11 19:22:00,633 ] - |     TRAIN|         9|      4500|    33.187|0.00080343|
+[ INFO : 2026-05-11 19:22:51,331 ] - |     TRAIN|         9|      4600|     33.19|0.00080303|
+[ INFO : 2026-05-11 19:23:41,456 ] - |     TRAIN|         9|      4700|    33.195|0.00080264|
+[ INFO : 2026-05-11 19:24:31,043 ] - |     TRAIN|         9|      4800|      33.2|0.00080224|
+[ INFO : 2026-05-11 19:25:20,789 ] - |     TRAIN|         9|      4900|    33.199|0.00080185|
+[ INFO : 2026-05-11 19:26:09,603 ] - |     TRAIN|         9|      5000|    33.188|0.00080145|
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.pin_memory() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:46.)
+  return data.pin_memory(device)
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.is_pinned() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:31.)
+  return data.pin_memory(device)
+[ INFO : 2026-05-11 19:27:30,664 ] - |       VAL|         9|       100|    32.869|         -|
+[ INFO : 2026-05-11 19:28:37,568 ] - |       VAL|         9|       200|    32.959|         -|
+[ INFO : 2026-05-11 19:29:45,902 ] - |       VAL|         9|       300|    33.021|         -|
+[ INFO : 2026-05-11 19:30:54,591 ] - |       VAL|         9|       400|    32.979|         -|
+[ INFO : 2026-05-11 19:32:00,233 ] - |       VAL|         9|       500|    33.033|         -|
+[ INFO : 2026-05-11 19:33:08,255 ] - |       VAL|         9|       600|    33.049|         -|
+[ INFO : 2026-05-11 19:34:14,835 ] - |       VAL|         9|       700|    33.098|         -|
+[ INFO : 2026-05-11 19:35:21,157 ] - |       VAL|         9|       800|    33.115|         -|
+[ INFO : 2026-05-11 19:36:29,600 ] - |       VAL|         9|       900|      33.1|         -|
+[ INFO : 2026-05-11 19:37:37,817 ] - |       VAL|         9|      1000|    33.094|         -|
+[ INFO : 2026-05-11 19:38:46,956 ] - |       VAL|         9|      1100|    33.102|         -|
+[ INFO : 2026-05-11 19:39:54,601 ] - |       VAL|         9|      1200|    33.111|         -|
+[ INFO : 2026-05-11 19:40:30,729 ] - Epoch 9 Train info train_loss 33.1884841632843
+[ INFO : 2026-05-11 19:40:30,729 ] - Epoch 9 Val info val_loss 33.104857865905764
+[ INFO : 2026-05-11 19:45:15,382 ] - |     TRAIN|        10|       100|    33.133|0.00080106|
+[ INFO : 2026-05-11 19:46:05,568 ] - |     TRAIN|        10|       200|    33.065|0.00080067|
+[ INFO : 2026-05-11 19:46:56,814 ] - |     TRAIN|        10|       300|    33.029|0.00080027|
+[ INFO : 2026-05-11 19:47:47,741 ] - |     TRAIN|        10|       400|    33.036|0.00079988|
+[ INFO : 2026-05-11 19:48:39,937 ] - |     TRAIN|        10|       500|    33.061|0.00079949|
+[ INFO : 2026-05-11 19:49:32,095 ] - |     TRAIN|        10|       600|     33.01|0.00079909|
+[ INFO : 2026-05-11 19:50:24,846 ] - |     TRAIN|        10|       700|    32.995| 0.0007987|
+[ INFO : 2026-05-11 19:51:18,738 ] - |     TRAIN|        10|       800|    33.014|0.00079831|
+[ INFO : 2026-05-11 19:52:10,100 ] - |     TRAIN|        10|       900|    33.052|0.00079791|
+[ INFO : 2026-05-11 19:53:01,457 ] - |     TRAIN|        10|      1000|     33.05|0.00079752|
+[ INFO : 2026-05-11 19:53:53,658 ] - |     TRAIN|        10|      1100|     33.05|0.00079713|
+[ INFO : 2026-05-11 19:54:45,637 ] - |     TRAIN|        10|      1200|    33.059|0.00079674|
+[ INFO : 2026-05-11 19:59:36,595 ] - |     TRAIN|        10|      1300|    33.099|0.00079635|
+[ INFO : 2026-05-11 20:00:26,436 ] - |     TRAIN|        10|      1400|    33.117|0.00079595|
+[ INFO : 2026-05-11 20:01:16,903 ] - |     TRAIN|        10|      1500|    33.126|0.00079556|
+[ INFO : 2026-05-11 20:02:06,514 ] - |     TRAIN|        10|      1600|    33.154|0.00079517|
+[ INFO : 2026-05-11 20:02:56,686 ] - |     TRAIN|        10|      1700|    33.161|0.00079478|
+[ INFO : 2026-05-11 20:03:46,489 ] - |     TRAIN|        10|      1800|    33.163|0.00079439|
+[ INFO : 2026-05-11 20:04:36,464 ] - |     TRAIN|        10|      1900|    33.162|  0.000794|
+[ INFO : 2026-05-11 20:05:25,673 ] - |     TRAIN|        10|      2000|    33.176|0.00079361|
+[ INFO : 2026-05-11 20:06:15,198 ] - |     TRAIN|        10|      2100|    33.184|0.00079322|
+[ INFO : 2026-05-11 20:07:04,780 ] - |     TRAIN|        10|      2200|    33.197|0.00079283|
+[ INFO : 2026-05-11 20:07:54,234 ] - |     TRAIN|        10|      2300|      33.2|0.00079244|
+[ INFO : 2026-05-11 20:08:42,831 ] - |     TRAIN|        10|      2400|    33.197|0.00079205|
+[ INFO : 2026-05-11 20:09:31,666 ] - |     TRAIN|        10|      2500|    33.205|0.00079166|
+[ INFO : 2026-05-11 20:14:15,088 ] - |     TRAIN|        10|      2600|    33.206|0.00079127|
+[ INFO : 2026-05-11 20:15:04,199 ] - |     TRAIN|        10|      2700|    33.192|0.00079088|
+[ INFO : 2026-05-11 20:15:53,125 ] - |     TRAIN|        10|      2800|    33.193|0.00079049|
+[ INFO : 2026-05-11 20:16:42,797 ] - |     TRAIN|        10|      2900|     33.19| 0.0007901|
+[ INFO : 2026-05-11 20:17:32,678 ] - |     TRAIN|        10|      3000|    33.184|0.00078971|
+[ INFO : 2026-05-11 20:18:21,551 ] - |     TRAIN|        10|      3100|    33.191|0.00078933|
+[ INFO : 2026-05-11 20:19:10,830 ] - |     TRAIN|        10|      3200|    33.199|0.00078894|
+[ INFO : 2026-05-11 20:19:59,810 ] - |     TRAIN|        10|      3300|      33.2|0.00078855|
+[ INFO : 2026-05-11 20:20:48,904 ] - |     TRAIN|        10|      3400|    33.198|0.00078816|
+[ INFO : 2026-05-11 20:21:38,264 ] - |     TRAIN|        10|      3500|    33.203|0.00078778|
+[ INFO : 2026-05-11 20:22:26,902 ] - |     TRAIN|        10|      3600|    33.206|0.00078739|
+[ INFO : 2026-05-11 20:23:15,659 ] - |     TRAIN|        10|      3700|    33.205|  0.000787|
+[ INFO : 2026-05-11 20:28:04,205 ] - |     TRAIN|        10|      3800|    33.205|0.00078661|
+[ INFO : 2026-05-11 20:28:54,967 ] - |     TRAIN|        10|      3900|    33.208|0.00078623|
+[ INFO : 2026-05-11 20:29:44,528 ] - |     TRAIN|        10|      4000|    33.208|0.00078584|
+[ INFO : 2026-05-11 20:30:34,501 ] - |     TRAIN|        10|      4100|    33.206|0.00078545|
+[ INFO : 2026-05-11 20:31:24,402 ] - |     TRAIN|        10|      4200|    33.212|0.00078507|
+[ INFO : 2026-05-11 20:32:13,988 ] - |     TRAIN|        10|      4300|    33.211|0.00078468|
+[ INFO : 2026-05-11 20:33:02,788 ] - |     TRAIN|        10|      4400|    33.199| 0.0007843|
+[ INFO : 2026-05-11 20:33:52,013 ] - |     TRAIN|        10|      4500|    33.198|0.00078391|
+[ INFO : 2026-05-11 20:34:41,024 ] - |     TRAIN|        10|      4600|    33.194|0.00078352|
+[ INFO : 2026-05-11 20:35:29,542 ] - |     TRAIN|        10|      4700|      33.2|0.00078314|
+[ INFO : 2026-05-11 20:36:18,810 ] - |     TRAIN|        10|      4800|    33.209|0.00078275|
+[ INFO : 2026-05-11 20:37:07,277 ] - |     TRAIN|        10|      4900|    33.207|0.00078237|
+[ INFO : 2026-05-11 20:37:56,425 ] - |     TRAIN|        10|      5000|    33.212|0.00078198|
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.pin_memory() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:46.)
+  return data.pin_memory(device)
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py:57: DeprecationWarning: The argument 'device' of Tensor.is_pinned() is deprecated. Please do not pass this argument. (Triggered internally at /pytorch/aten/src/ATen/native/Memory.cpp:31.)
+  return data.pin_memory(device)
+[ INFO : 2026-05-11 20:39:17,436 ] - |       VAL|        10|       100|    33.432|         -|
+[ INFO : 2026-05-11 20:40:27,429 ] - |       VAL|        10|       200|    33.459|         -|
+[ INFO : 2026-05-11 20:41:37,445 ] - |       VAL|        10|       300|    33.398|         -|
+[ INFO : 2026-05-11 20:42:48,062 ] - |       VAL|        10|       400|    33.422|         -|
+[ INFO : 2026-05-11 20:43:59,170 ] - |       VAL|        10|       500|    33.396|         -|
+[ INFO : 2026-05-11 20:45:09,435 ] - |       VAL|        10|       600|    33.394|         -|
+[ INFO : 2026-05-11 20:46:19,632 ] - |       VAL|        10|       700|    33.412|         -|
+[ INFO : 2026-05-11 20:47:29,387 ] - |       VAL|        10|       800|    33.435|         -|
+[ INFO : 2026-05-11 20:48:39,854 ] - |       VAL|        10|       900|    33.424|         -|
+[ INFO : 2026-05-11 20:49:50,367 ] - |       VAL|        10|      1000|    33.424|         -|
+[ INFO : 2026-05-11 20:51:00,411 ] - |       VAL|        10|      1100|    33.424|         -|
+[ INFO : 2026-05-11 20:52:09,842 ] - |       VAL|        10|      1200|     33.42|         -|
+[ INFO : 2026-05-11 20:52:45,398 ] - Epoch 10 Train info train_loss 33.21163766593933
+[ INFO : 2026-05-11 20:52:45,398 ] - Epoch 10 Val info val_loss 33.42008504638672
+Traceback (most recent call last):
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/multiprocessing/queues.py", line 244, in _feed
+    obj = _ForkingPickler.dumps(obj)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/multiprocessing/reduction.py", line 51, in dumps
+    cls(buf, protocol).dump(obj)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/multiprocessing/reductions.py", line 604, in reduce_storage
+    metadata = storage._share_filename_cpu_()
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/storage.py", line 449, in wrapper
+    return fn(self, *args, **kwargs)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/storage.py", line 528, in _share_filename_cpu_
+    return super()._share_filename_cpu_(*args, **kwargs)
+RuntimeError: unable to allocate shared memory(shm) for file </torch_101202_2567567358_2>: Resource temporarily unavailable (11)

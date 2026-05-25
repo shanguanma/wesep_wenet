@@ -1,0 +1,33 @@
+nohup: ignoring input
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+E0422 10:09:46.090000 485 site-packages/torch/distributed/elastic/multiprocessing/api.py:984] failed (exitcode: -9) local_rank: 0 (pid: 498) of binary: /maduo/miniconda3/envs/wesep_py310_cu126/bin/python3.10
+Traceback (most recent call last):
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/run.py", line 991, in main
+    run(args)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/run.py", line 982, in run
+    elastic_launch(
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+====================================================
+wesep/bin/train_with_transformers_online.py FAILED
+----------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+----------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-04-22_10:09:46
+  host      : e70ne53m2etvq-0
+  rank      : 0 (local_rank: 0)
+  exitcode  : -9 (pid: 498)
+  error_file: <N/A>
+  traceback : Signal 9 (SIGKILL) received by PID 498
+====================================================

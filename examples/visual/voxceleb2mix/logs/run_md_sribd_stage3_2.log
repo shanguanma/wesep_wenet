@@ -1,0 +1,327 @@
+nohup: ignoring input
+1024
+Start training ...
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+------------------- 0 1
+[ INFO : 2026-05-12 16:20:49,802 ] - exp_dir is: /maduo/exp/wesep_wenet/TSE_BSRNN_VIS
+[ INFO : 2026-05-12 16:20:49,803 ] - <== Passed Arguments ==>
+[ INFO : 2026-05-12 16:20:49,804 ] - {'checkpoint': '/maduo/exp/wesep_wenet/TSE_BSRNN_VIS/models/latest_checkpoint.pt',
+[ INFO : 2026-05-12 16:20:49,804 ] -  'clip_grad': 5.0,
+[ INFO : 2026-05-12 16:20:49,804 ] -  'config': 'confs/tse_bsrnn_visual_sribd.yaml',
+[ INFO : 2026-05-12 16:20:49,805 ] -  'data_type': 'raw',
+[ INFO : 2026-05-12 16:20:49,805 ] -  'dataloader_args': {'batch_size': 4,
+[ INFO : 2026-05-12 16:20:49,807 ] -                      'drop_last': True,
+[ INFO : 2026-05-12 16:20:49,807 ] -                      'num_workers': 2,
+[ INFO : 2026-05-12 16:20:49,807 ] -                      'pin_memory': True,
+[ INFO : 2026-05-12 16:20:49,807 ] -                      'prefetch_factor': 2},
+[ INFO : 2026-05-12 16:20:49,807 ] -  'dataset_args': {'chunk_len': 48000,
+[ INFO : 2026-05-12 16:20:49,808 ] -                   'cue_processing': {'visual': None},
+[ INFO : 2026-05-12 16:20:49,808 ] -                   'cues': {'visual': {'required': True, 'use': True}},
+[ INFO : 2026-05-12 16:20:49,808 ] -                   'noise_lmdb_file': './data/musan/lmdb',
+[ INFO : 2026-05-12 16:20:49,808 ] -                   'noise_prob': 0,
+[ INFO : 2026-05-12 16:20:49,808 ] -                   'resample_rate': 16000,
+[ INFO : 2026-05-12 16:20:49,809 ] -                   'sample_num_per_epoch': 0,
+[ INFO : 2026-05-12 16:20:49,809 ] -                   'shuffle': True,
+[ INFO : 2026-05-12 16:20:49,809 ] -                   'shuffle_args': {'shuffle_size': 2500}},
+[ INFO : 2026-05-12 16:20:49,809 ] -  'enable_amp': False,
+[ INFO : 2026-05-12 16:20:49,809 ] -  'exp_dir': '/maduo/exp/wesep_wenet/TSE_BSRNN_VIS',
+[ INFO : 2026-05-12 16:20:49,809 ] -  'gpus': [0],
+[ INFO : 2026-05-12 16:20:49,809 ] -  'log_batch_interval': 100,
+[ INFO : 2026-05-12 16:20:49,809 ] -  'loss': 'SISDR',
+[ INFO : 2026-05-12 16:20:49,809 ] -  'loss_args': {},
+[ INFO : 2026-05-12 16:20:49,809 ] -  'model': {'tse_model': 'TSE_BSRNN_VISUAL'},
+[ INFO : 2026-05-12 16:20:49,809 ] -  'model_args': {'tse_model': {'separator': {'causal': False,
+[ INFO : 2026-05-12 16:20:49,809 ] -                                             'feature_dim': 128,
+[ INFO : 2026-05-12 16:20:49,809 ] -                                             'nspk': 1,
+[ INFO : 2026-05-12 16:20:49,809 ] -                                             'num_repeat': 6,
+[ INFO : 2026-05-12 16:20:49,809 ] -                                             'sr': 16000,
+[ INFO : 2026-05-12 16:20:49,809 ] -                                             'stride': 128,
+[ INFO : 2026-05-12 16:20:49,809 ] -                                             'win': 512},
+[ INFO : 2026-05-12 16:20:49,809 ] -                               'visual': {'features': {'muse_visual': {'enabled': True,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                                                       'fusion': 'concat',
+[ INFO : 2026-05-12 16:20:49,810 ] -                                                                       'mix_dim': 128,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                                                       'upsample': True,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                                                       'vf_pretrained': '/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/confs/visual_frontend.pt',
+[ INFO : 2026-05-12 16:20:49,810 ] -                                                                       'vtcn_channels': 512,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                                                       'vtcn_layers': 5}}}}},
+[ INFO : 2026-05-12 16:20:49,810 ] -  'model_init': {'discriminator': None, 'spk_model': None, 'tse_model': None},
+[ INFO : 2026-05-12 16:20:49,810 ] -  'num_avg': True,
+[ INFO : 2026-05-12 16:20:49,810 ] -  'num_epochs': 150,
+[ INFO : 2026-05-12 16:20:49,810 ] -  'optimizer': {'tse_model': 'Adam'},
+[ INFO : 2026-05-12 16:20:49,810 ] -  'optimizer_args': {'tse_model': {'lr': 0.001, 'weight_decay': 0.0001}},
+[ INFO : 2026-05-12 16:20:49,810 ] -  'save_epoch_interval': 1,
+[ INFO : 2026-05-12 16:20:49,810 ] -  'scheduler': {'tse_model': 'ExponentialDecrease'},
+[ INFO : 2026-05-12 16:20:49,810 ] -  'scheduler_args': {'tse_model': {'final_lr': 2.5e-05,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                   'initial_lr': 0.001,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                   'warm_from_zero': False,
+[ INFO : 2026-05-12 16:20:49,810 ] -                                   'warm_up_epoch': 0}},
+[ INFO : 2026-05-12 16:20:49,810 ] -  'seed': 42,
+[ INFO : 2026-05-12 16:20:49,810 ] -  'train_cues': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/train/cues.yaml',
+[ INFO : 2026-05-12 16:20:49,811 ] -  'train_data': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/train/raw.list',
+[ INFO : 2026-05-12 16:20:49,811 ] -  'train_samples': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/train/samples.jsonl',
+[ INFO : 2026-05-12 16:20:49,811 ] -  'val_cues': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/val/cues.yaml',
+[ INFO : 2026-05-12 16:20:49,811 ] -  'val_data': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/val/raw.list',
+[ INFO : 2026-05-12 16:20:49,811 ] -  'val_samples': '/maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/clean/val/samples.jsonl'}
+[ INFO : 2026-05-12 16:20:50,012 ] - <== Dataloaders ==>
+[ INFO : 2026-05-12 16:20:50,012 ] - train dataloaders created
+[ INFO : 2026-05-12 16:20:50,012 ] - epoch iteration number: 5000
+[ INFO : 2026-05-12 16:20:50,012 ] - val iteration number: 1250
+[ INFO : 2026-05-12 16:20:50,012 ] - <== Model ==>
+[ INFO : 2026-05-12 16:20:50,353 ] - tse_model size: 34.00 M
+[ INFO : 2026-05-12 16:20:50,355 ] - TSE_BSRNN_VISUAL(
+[ INFO : 2026-05-12 16:20:50,356 ] -   (sep_model): BSRNN(
+[ INFO : 2026-05-12 16:20:50,356 ] -     (stft): STFT()
+[ INFO : 2026-05-12 16:20:50,356 ] -     (band_split): BandSplit()
+[ INFO : 2026-05-12 16:20:50,356 ] -     (subband_norm): SubbandNorm(
+[ INFO : 2026-05-12 16:20:50,356 ] -       (BN): ModuleList(
+[ INFO : 2026-05-12 16:20:50,356 ] -         (0-14): 15 x Sequential(
+[ INFO : 2026-05-12 16:20:50,356 ] -           (0): GroupNorm(1, 6, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,356 ] -           (1): Conv1d(6, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,356 ] -         )
+[ INFO : 2026-05-12 16:20:50,356 ] -         (15-24): 10 x Sequential(
+[ INFO : 2026-05-12 16:20:50,356 ] -           (0): GroupNorm(1, 12, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,356 ] -           (1): Conv1d(12, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,356 ] -         )
+[ INFO : 2026-05-12 16:20:50,356 ] -         (25-29): 5 x Sequential(
+[ INFO : 2026-05-12 16:20:50,356 ] -           (0): GroupNorm(1, 32, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,356 ] -           (1): Conv1d(32, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,356 ] -         )
+[ INFO : 2026-05-12 16:20:50,356 ] -         (30): Sequential(
+[ INFO : 2026-05-12 16:20:50,356 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,356 ] -           (1): Conv1d(128, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,356 ] -         )
+[ INFO : 2026-05-12 16:20:50,356 ] -         (31): Sequential(
+[ INFO : 2026-05-12 16:20:50,356 ] -           (0): GroupNorm(1, 16, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,356 ] -           (1): Conv1d(16, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,356 ] -         )
+[ INFO : 2026-05-12 16:20:50,356 ] -       )
+[ INFO : 2026-05-12 16:20:50,357 ] -     )
+[ INFO : 2026-05-12 16:20:50,357 ] -     (separator): BSRNN_Separator(
+[ INFO : 2026-05-12 16:20:50,357 ] -       (separation): ModuleList(
+[ INFO : 2026-05-12 16:20:50,357 ] -         (0-5): 6 x BSNet(
+[ INFO : 2026-05-12 16:20:50,357 ] -           (band_rnn): ResRNN(
+[ INFO : 2026-05-12 16:20:50,357 ] -             (norm): GroupNorm(1, 128, eps=1e-05, affine=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -             (rnn): LSTM(128, 256, batch_first=True, bidirectional=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -             (proj): Linear(in_features=512, out_features=128, bias=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -           )
+[ INFO : 2026-05-12 16:20:50,357 ] -           (band_comm): ResRNN(
+[ INFO : 2026-05-12 16:20:50,357 ] -             (norm): GroupNorm(1, 128, eps=1e-05, affine=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -             (rnn): LSTM(128, 256, batch_first=True, bidirectional=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -             (proj): Linear(in_features=512, out_features=128, bias=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -           )
+[ INFO : 2026-05-12 16:20:50,357 ] -         )
+[ INFO : 2026-05-12 16:20:50,357 ] -       )
+[ INFO : 2026-05-12 16:20:50,357 ] -     )
+[ INFO : 2026-05-12 16:20:50,357 ] -     (band_masker): BandMasker(
+[ INFO : 2026-05-12 16:20:50,357 ] -       (mask): ModuleList(
+[ INFO : 2026-05-12 16:20:50,357 ] -         (0-14): 15 x Sequential(
+[ INFO : 2026-05-12 16:20:50,357 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,357 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,357 ] -           (2): Tanh()
+[ INFO : 2026-05-12 16:20:50,357 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,357 ] -           (4): Tanh()
+[ INFO : 2026-05-12 16:20:50,357 ] -           (5): Conv1d(512, 12, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,357 ] -         )
+[ INFO : 2026-05-12 16:20:50,357 ] -         (15-24): 10 x Sequential(
+[ INFO : 2026-05-12 16:20:50,357 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,358 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (2): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (4): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (5): Conv1d(512, 24, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -         )
+[ INFO : 2026-05-12 16:20:50,358 ] -         (25-29): 5 x Sequential(
+[ INFO : 2026-05-12 16:20:50,358 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,358 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (2): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (4): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (5): Conv1d(512, 64, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -         )
+[ INFO : 2026-05-12 16:20:50,358 ] -         (30): Sequential(
+[ INFO : 2026-05-12 16:20:50,358 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,358 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (2): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (4): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (5): Conv1d(512, 256, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -         )
+[ INFO : 2026-05-12 16:20:50,358 ] -         (31): Sequential(
+[ INFO : 2026-05-12 16:20:50,358 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-05-12 16:20:50,358 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (2): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,358 ] -           (4): Tanh()
+[ INFO : 2026-05-12 16:20:50,358 ] -           (5): Conv1d(512, 32, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-05-12 16:20:50,359 ] -         )
+[ INFO : 2026-05-12 16:20:50,359 ] -       )
+[ INFO : 2026-05-12 16:20:50,359 ] -     )
+[ INFO : 2026-05-12 16:20:50,359 ] -     (istft): iSTFT()
+[ INFO : 2026-05-12 16:20:50,359 ] -   )
+[ INFO : 2026-05-12 16:20:50,359 ] -   (visual_ft): VisualFrontend(
+[ INFO : 2026-05-12 16:20:50,359 ] -     (features): ModuleDict(
+[ INFO : 2026-05-12 16:20:50,359 ] -       (muse_visual): MuseVisualFeature(
+[ INFO : 2026-05-12 16:20:50,359 ] -         (roi): Muse_LipROIProcessor()
+[ INFO : 2026-05-12 16:20:50,359 ] -         (visual_frontend): Muse_VisualFrontend(
+[ INFO : 2026-05-12 16:20:50,359 ] -           (frontend3D): Sequential(
+[ INFO : 2026-05-12 16:20:50,359 ] -             (0): Conv3d(1, 64, kernel_size=(5, 7, 7), stride=(1, 2, 2), padding=(2, 3, 3), bias=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -             (1): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,359 ] -             (2): ReLU()
+[ INFO : 2026-05-12 16:20:50,359 ] -             (3): MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), dilation=1, ceil_mode=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -           )
+[ INFO : 2026-05-12 16:20:50,359 ] -           (resnet): ResNet(
+[ INFO : 2026-05-12 16:20:50,359 ] -             (layer1): ResNetLayer(
+[ INFO : 2026-05-12 16:20:50,359 ] -               (conv1a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (bn1a): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (conv2a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (downsample): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (outbna): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (conv1b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (bn1b): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (conv2b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,359 ] -               (outbnb): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,359 ] -             )
+[ INFO : 2026-05-12 16:20:50,359 ] -             (layer2): ResNetLayer(
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv1a): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (bn1a): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv2a): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (downsample): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (outbna): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv1b): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (bn1b): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv2b): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (outbnb): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -             )
+[ INFO : 2026-05-12 16:20:50,360 ] -             (layer3): ResNetLayer(
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv1a): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (bn1a): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv2a): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (downsample): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (outbna): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv1b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (bn1b): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv2b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (outbnb): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -             )
+[ INFO : 2026-05-12 16:20:50,360 ] -             (layer4): ResNetLayer(
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv1a): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (bn1a): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv2a): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (downsample): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (outbna): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv1b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (bn1b): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,360 ] -               (conv2b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (outbnb): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,361 ] -             )
+[ INFO : 2026-05-12 16:20:50,361 ] -             (avgpool): AvgPool2d(kernel_size=(4, 4), stride=(1, 1), padding=0)
+[ INFO : 2026-05-12 16:20:50,361 ] -           )
+[ INFO : 2026-05-12 16:20:50,361 ] -         )
+[ INFO : 2026-05-12 16:20:50,361 ] -         (vtcn): Sequential(
+[ INFO : 2026-05-12 16:20:50,361 ] -           (0): Muse_VisualConv1D(
+[ INFO : 2026-05-12 16:20:50,361 ] -             (net): Sequential(
+[ INFO : 2026-05-12 16:20:50,361 ] -               (0): ReLU()
+[ INFO : 2026-05-12 16:20:50,361 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-12 16:20:50,361 ] -             )
+[ INFO : 2026-05-12 16:20:50,361 ] -           )
+[ INFO : 2026-05-12 16:20:50,361 ] -           (1): Muse_VisualConv1D(
+[ INFO : 2026-05-12 16:20:50,361 ] -             (net): Sequential(
+[ INFO : 2026-05-12 16:20:50,361 ] -               (0): ReLU()
+[ INFO : 2026-05-12 16:20:50,361 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,361 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-12 16:20:50,361 ] -             )
+[ INFO : 2026-05-12 16:20:50,361 ] -           )
+[ INFO : 2026-05-12 16:20:50,361 ] -           (2): Muse_VisualConv1D(
+[ INFO : 2026-05-12 16:20:50,361 ] -             (net): Sequential(
+[ INFO : 2026-05-12 16:20:50,361 ] -               (0): ReLU()
+[ INFO : 2026-05-12 16:20:50,362 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-12 16:20:50,362 ] -             )
+[ INFO : 2026-05-12 16:20:50,362 ] -           )
+[ INFO : 2026-05-12 16:20:50,362 ] -           (3): Muse_VisualConv1D(
+[ INFO : 2026-05-12 16:20:50,362 ] -             (net): Sequential(
+[ INFO : 2026-05-12 16:20:50,362 ] -               (0): ReLU()
+[ INFO : 2026-05-12 16:20:50,362 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-12 16:20:50,362 ] -             )
+[ INFO : 2026-05-12 16:20:50,362 ] -           )
+[ INFO : 2026-05-12 16:20:50,362 ] -           (4): Muse_VisualConv1D(
+[ INFO : 2026-05-12 16:20:50,362 ] -             (net): Sequential(
+[ INFO : 2026-05-12 16:20:50,362 ] -               (0): ReLU()
+[ INFO : 2026-05-12 16:20:50,362 ] -               (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (3): PReLU(num_parameters=1)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-05-12 16:20:50,362 ] -               (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-05-12 16:20:50,362 ] -             )
+[ INFO : 2026-05-12 16:20:50,362 ] -           )
+[ INFO : 2026-05-12 16:20:50,362 ] -         )
+[ INFO : 2026-05-12 16:20:50,362 ] -         (fusionLayer): SpeakerFuseLayer(
+[ INFO : 2026-05-12 16:20:50,362 ] -           (fc): LinearLayer(
+[ INFO : 2026-05-12 16:20:50,363 ] -             (linear): Linear(in_features=640, out_features=128, bias=True)
+[ INFO : 2026-05-12 16:20:50,363 ] -           )
+[ INFO : 2026-05-12 16:20:50,363 ] -         )
+[ INFO : 2026-05-12 16:20:50,363 ] -       )
+[ INFO : 2026-05-12 16:20:50,363 ] -     )
+[ INFO : 2026-05-12 16:20:50,363 ] -   )
+[ INFO : 2026-05-12 16:20:50,363 ] - )
+[ INFO : 2026-05-12 16:20:51,379 ] - <== TSE Model Loss ==>
+[ INFO : 2026-05-12 16:20:51,380 ] - loss criterion is: SISDR
+[ INFO : 2026-05-12 16:20:51,383 ] - <== TSE Model Optimizer ==>
+[ INFO : 2026-05-12 16:20:51,383 ] - optimizer is: Adam
+[ INFO : 2026-05-12 16:20:51,383 ] - <== TSE Model Scheduler ==>
+[ INFO : 2026-05-12 16:20:51,383 ] - scheduler is: ExponentialDecrease
+/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train.py:264: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=configs["enable_amp"])
+[ INFO : 2026-05-12 16:20:52,335 ] - Load checkpoint: /maduo/exp/wesep_wenet/TSE_BSRNN_VIS/models/checkpoint_10.pt
+[ INFO : 2026-05-12 16:20:52,336 ] - start_epoch: 11
+[ INFO : 2026-05-12 16:20:52,343 ] - <========== Training process ==========>
+[ INFO : 2026-05-12 16:20:52,343 ] - +----------+----------+----------+----------+----------+
+[ INFO : 2026-05-12 16:20:52,343 ] - | Train/Val|     Epoch|      iter|      Loss|        LR|
+[ INFO : 2026-05-12 16:20:52,343 ] - +----------+----------+----------+----------+----------+
+[ INFO : 2026-05-12 16:25:47,405 ] - |     TRAIN|        11|       100|    33.597| 0.0007816|
+[ INFO : 2026-05-12 16:26:39,714 ] - |     TRAIN|        11|       200|    33.611|0.00078122|
+[ INFO : 2026-05-12 16:27:31,480 ] - |     TRAIN|        11|       300|    33.567|0.00078083|
+[ INFO : 2026-05-12 16:28:22,995 ] - |     TRAIN|        11|       400|    33.518|0.00078045|
+[ INFO : 2026-05-12 16:29:14,248 ] - |     TRAIN|        11|       500|    33.509|0.00078006|
+[ INFO : 2026-05-12 16:30:04,690 ] - |     TRAIN|        11|       600|    33.492|0.00077968|
+[ INFO : 2026-05-12 16:30:54,480 ] - |     TRAIN|        11|       700|    33.466| 0.0007793|
+W0512 16:31:14.002000 509 site-packages/torch/distributed/elastic/agent/server/api.py:739] Received Signals.SIGHUP death signal, shutting down workers
+W0512 16:31:14.005000 509 site-packages/torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 522 closing signal SIGHUP
+W0512 16:31:44.007000 509 site-packages/torch/distributed/elastic/multiprocessing/api.py:1029] Unable to shutdown process 522 via Signals.SIGHUP, forcefully exiting via Signals.SIGKILL
+Traceback (most recent call last):
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/run.py", line 991, in main
+    run(args)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/run.py", line 982, in run
+    elastic_launch(
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+    result = agent.run()
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+    result = f(*args, **kwargs)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+    result = self._invoke_run(role)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 509 got signal: 1

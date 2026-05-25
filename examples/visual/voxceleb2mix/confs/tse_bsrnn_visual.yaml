@@ -1,9 +1,11 @@
 dataloader_args:
-  batch_size: 14 #RTX2080 1, V100: 6, A800: 14
+  batch_size: 4 #RTX2080 1, V100: 6, A800: 14, RTX4090D,24GB,4
   drop_last: true
-  num_workers: 6
+  # Video cues are large; high prefetch * workers can exhaust /dev/shm (Bus error).
+  # Use --num_workers 2 (or env WESPE_DATALOADER_NUM_WORKERS) only if /dev/shm is large enough.
+  num_workers: 2
   pin_memory: true
-  prefetch_factor: 6
+  prefetch_factor: 2
 
 dataset_args:
   resample_rate: &sr 16000
@@ -50,7 +52,7 @@ model_args:
       features:
         muse_visual:
           enabled: True
-          vf_pretrained: "/zhangke/junjie/MeMo/src/Model/visual_frontend/visual_frontend.pt"
+          vf_pretrained: "/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/confs/visual_frontend.pt"
           vtcn_channels: 512
           vtcn_layers: 5
           upsample: True

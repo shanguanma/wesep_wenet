@@ -1,0 +1,33 @@
+# Model-only YAML for train_with_transformers_online.py (data / dataloader / loss via CLI).
+model:
+  tse_model: TSE_BSRNN_VISUAL
+model_args:
+  tse_model:
+    separator:
+      sr: 16000
+      win: 512
+      stride: 128
+      feature_dim: 128
+      num_repeat: 6
+      causal: False
+      nspk: 1
+    visual:
+      features:
+        muse_visual:
+          enabled: True
+          vf_pretrained: "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/confs/visual_frontend.pt"
+          vtcn_channels: 512
+          vtcn_layers: 5
+          upsample: True
+          mix_dim: 128
+          fusion: "concat"
+        # BlazeNet64 (causal 3D conv): set muse_visual.enabled: false and blaze_visual.enabled: true
+        blaze_visual:
+          enabled: False
+          causal: True
+          image_size: 128
+          embed_dim: 224
+          upsample: True
+          mix_dim: 128
+          fusion: "concat"
+

@@ -1,0 +1,71 @@
+srun  --job-name=mojo -c 6 --gres=gpu:1 --mem=16G --pty bash
+srun  -c 6 --gres=gpu:1 --mem=16G --pty bash
+
+srun  --job-name=test -c 8 --gres=gpu:1 --mem=16G --pty bash
+srun --jobid=16493 --overlap --pty bash
+new 4090d cluster command: per use can use
+
+=== User Tools ===
+  gpuwatch                       - Show GPU usage, temperature, and running users per GPU across nodes in a SLURM partition.
+  pestat                         - Prints a Slurm cluster status with 1 line per node/partition and job info
+  showjob                        - Show status of Slurm job(s).
+  slmwatch                       - Unified SLURM info viewer, including nodes, QoS, and jobs.
+
+srun --jobid=16607 --overlap --pty bash
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage28.log  run_md.sh --stage 28 --stop-stage 28
+Submitted batch job 17107
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage8_ddp_2.log  run_md.sh --stage 8 --stop-stage 8
+Submitted batch job 16923
+
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp_5.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16729
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp_4.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16728
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp_3.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16727
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp_2.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16726
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage8_ddp_1.log  run_md.sh --stage 8 --stop-stage 8
+Submitted batch job 16722
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage8_ddp_1.log  run_md.sh --stage 8 --stop-stage 8
+Submitted batch job 16718
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp_1.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16717
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp_1.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16712
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage8_ddp.log  run_md.sh --stage 8 --stop-stage 8
+Submitted batch job 16702
+
+ 
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16609
+
+
+sbatch  --gres=gpu:1 --mem=16G -c 8  -o logs/run_stage3_ddp.log  run_md.sh --stage 3 --stop-stage 3
+sbatch  --gres=gpu:2 --mem=32G -c 16  -o logs/run_stage3_ddp.log  run_md.sh --stage 3 --stop-stage 3
+Submitted batch job 16559
+
+sbatch  --gres=gpu:2 --mem=32G -c 16  -o logs/run_stage4_ddp.log  run.sh --stage 4 --stop-stage 4
+Submitted batch job 16496
+

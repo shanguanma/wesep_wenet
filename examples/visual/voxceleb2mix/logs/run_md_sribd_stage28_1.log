@@ -1,0 +1,86 @@
+nohup: ignoring input
+/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/s3prl/upstream/byol_s/byol_a/common.py:20: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  torchaudio.set_audio_backend("sox_io")
+ESPnet is not installed, cannot use espnet_hubert upstream
+2026-04-16 12:38:36 - INFO - tse_model: TSE_ONLINE_AVCROSSNET_MAMBA_VISUAL, params: 23.47M
+2026-04-16 12:38:36 - INFO - loss: OnlineAVCrossNetLoss
+2026-04-16 12:38:36 - INFO - epoch_iter: 6666, val_iter: 1666, num_train_epochs: 150.0
+2026-04-16 12:38:36 - INFO - world_size: 1, batch_size/gpu: 3
+  0%|          | 0/499950 [00:00<?, ?it/s]2026-04-16 12:38:40 - WARNING - Failed to load audio with torchcodec, using torchaudio instead
+2026-04-16 12:38:40 - WARNING - Failed to load audio with torchcodec, using torchaudio instead
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train_with_transformers.py", line 469, in <module>
+[rank0]:     main()
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train_with_transformers.py", line 465, in main
+[rank0]:     train()
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train_with_transformers.py", line 458, in train
+[rank0]:     trainer.train(resume_from_checkpoint=True)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/transformers/trainer.py", line 1424, in train
+[rank0]:     return inner_training_loop(
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/transformers/trainer.py", line 1506, in _inner_training_loop
+[rank0]:     self._run_epoch(
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/transformers/trainer.py", line 1734, in _run_epoch
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/transformers/trainer.py", line 1906, in training_step
+[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train_with_transformers.py", line 170, in compute_loss
+[rank0]:     outputs = model(mix, cues)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/models/tse_online_avcrossnet_mamba_visual.py", line 900, in forward
+[rank0]:     fused = block(fused)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/models/tse_online_avcrossnet_mamba_visual.py", line 560, in forward
+[rank0]:     x = x + self.cross_band(x)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/models/tse_online_avcrossnet_mamba_visual.py", line 512, in forward
+[rank0]:     x = self.norm(x)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/modules/normalization.py", line 313, in forward
+[rank0]:     return F.group_norm(input, self.num_groups, self.weight, self.bias, self.eps)
+[rank0]:   File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/nn/functional.py", line 2965, in group_norm
+[rank0]:     return torch.group_norm(
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 72.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 16.81 MiB is free. Process 494 has 21.61 GiB memory in use. Process 122522 has 43.70 GiB memory in use. Including non-PyTorch memory, this process has 13.89 GiB memory in use. Of the allocated memory 12.32 GiB is allocated by PyTorch, and 1.07 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+E0416 12:52:40.607000 143751 site-packages/torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: -9) local_rank: 0 (pid: 143791) of binary: /maduo/miniconda3/envs/wesep_py310_cu118/bin/python3.10
+Traceback (most recent call last):
+  File "/maduo/miniconda3/envs/wesep_py310_cu118/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+  File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in main
+    run(args)
+  File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/distributed/run.py", line 883, in run
+    elastic_launch(
+  File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 139, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/maduo/miniconda3/envs/wesep_py310_cu118/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+=======================================================
+wesep/bin/train_with_transformers.py FAILED
+-------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+-------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-04-16_12:52:40
+  host      : 954nbtg2es58h-0
+  rank      : 0 (local_rank: 0)
+  exitcode  : -9 (pid: 143791)
+  error_file: <N/A>
+  traceback : Signal 9 (SIGKILL) received by PID 143791
+=======================================================

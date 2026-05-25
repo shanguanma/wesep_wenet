@@ -1,0 +1,343 @@
+
+nohup bash run_md_sribd.sh --stage 114 --stop-stage 114 > logs/run_md_sribd_stage114_5.log 2>&1 &
+[3] 558
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115_5.log 2>&1 &
+[2] 492
+
+
+nohup bash run_md_sribd.sh --stage 116 --stop-stage 116 > logs/run_md_sribd_stage116_4.log 2>&1 &
+[1] 457
+
+
+
+nohup bash run_md_sribd.sh --stage 116 --stop-stage 116 > logs/run_md_sribd_stage116_3.log 2>&1 &
+[3] 558
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115_4.log 2>&1 &
+[2] 492
+
+
+nohup bash run_md_sribd.sh --stage 114 --stop-stage 114 > logs/run_md_sribd_stage114_4.log 2>&1 &
+[1] 457
+
+
+
+nohup bash run_md_sribd.sh --stage 114 --stop-stage 114 > logs/run_md_sribd_stage114_3.log 2>&1 &
+[3] 700861
+
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115_3.log 2>&1 &
+[2] 700758
+
+
+
+nohup bash run_md_sribd.sh --stage 116 --stop-stage 116 > logs/run_md_sribd_stage116_2.log 2>&1 &
+[1] 700669
+
+
+
+nohup bash run_md_sribd.sh --stage 116 --stop-stage 116 > logs/run_md_sribd_stage116_1.log 2>&1 &
+[3] 563
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115_2.log 2>&1 &
+[2] 482
+
+
+
+nohup bash run_md_sribd.sh --stage 114 --stop-stage 114 > logs/run_md_sribd_stage114_2.log 2>&1 &
+[1] 459
+
+
+
+nohup bash run_md_sribd.sh --stage 116 --stop-stage 116 > logs/run_md_sribd_stage116.log 2>&1 &
+[3] 3124
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115_1.log 2>&1 &
+[2] 976
+
+
+nohup bash run_md_sribd.sh --stage 114 --stop-stage 114 > logs/run_md_sribd_stage114_1.log 2>&1 &
+[1] 464
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115.log 2>&1 &
+[1] 1768675
+
+
+nohup bash run_md_sribd.sh --stage 115 --stop-stage 115 > logs/run_md_sribd_stage115.log 2>&1 &
+[1] 1766069
+
+
+nohup bash run_md_sribd.sh --stage 111 --stop-stage 111 > logs/run_md_sribd_stage111_3.log 2>&1 &
+[3] 1753600
+
+
+nohup bash run_md_sribd.sh --stage 114 --stop-stage 114 > logs/run_md_sribd_stage114.log 2>&1 &
+[2] 1741510
+
+
+nohup bash run_md_sribd.sh --stage 111 --stop-stage 111 > logs/run_md_sribd_stage111_2.log 2>&1 &
+[1] 1594853
+
+
+nohup bash run_md_sribd.sh --stage 112 --stop-stage 112 > logs/run_md_sribd_stage112.log 2>&1 &
+[2] 1556426
+
+
+nohup bash run_md_sribd.sh --stage 111 --stop-stage 111 > logs/run_md_sribd_stage111_1.log 2>&1 &
+[1] 1545878
+
+
+nohup bash run_md_sribd.sh --stage 111 --stop-stage 111 > logs/run_md_sribd_stage111.log 2>&1 &
+[2] 924506
+
+
+nohup bash run_md_sribd.sh --stage 110 --stop-stage 110 > logs/run_md_sribd_stage110.log 2>&1 &
+[1] 846600
+
+
+nohup bash run_md_sribd.sh --stage 109 --stop-stage 109 > logs/run_md_sribd_stage109.log 2>&1 &
+[2] 733338
+
+
+nohup bash run_md_sribd.sh --stage 108 --stop-stage 108 > logs/run_md_sribd_stage108.log 2>&1 &
+[1] 117478
+
+
+nohup bash run_md_sribd.sh --stage 102 --stop-stage 102 > logs/run_md_sribd_stage102_5.log 2>&1 &
+[1] 50458
+
+
+nohup bash run_md_sribd.sh --stage 3 --stop-stage 3 > logs/run_md_sribd_stage3_4.log 2>&1 &
+[2] 492
+
+
+
+nohup bash run_md_sribd.sh --stage 102 --stop-stage 102 > logs/run_md_sribd_stage102_4.log 2>&1 &
+[1] 457
+
+
+nohup bash run_md_sribd.sh --stage 102 --stop-stage 102 > logs/run_md_sribd_stage102_3.log 2>&1 &
+[3] 201988
+
+
+nohup bash run_md_sribd.sh --stage 102 --stop-stage 102 > logs/run_md_sribd_stage102_2.log 2>&1 &
+[2] 200431
+
+
+nohup bash run_md_sribd.sh --stage 102 --stop-stage 102 > logs/run_md_sribd_stage102_1.log 2>&1 &
+[2] 198508
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_5.log 2>&1 &
+[1] 195321
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_4.log 2>&1 &
+[1] 184684
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_4.log 2>&1 &
+[1] 20704
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_4.log 2>&1 &
+[2] 3839
+
+
+nohup bash run_md_sribd.sh --stage 3 --stop-stage 3 > logs/run_md_sribd_stage3_3.log 2>&1 &
+[1] 3752
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_3.log 2>&1 &
+[2] 574
+
+
+nohup bash run_md_sribd.sh --stage 3 --stop-stage 3 > logs/run_md_sribd_stage3_2.log 2>&1 &
+[1] 486
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_2.log 2>&1 &
+[4] 362869
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_2.log 2>&1 &
+[7] 355203
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107_1.log 2>&1 &
+[6] 354961
+
+
+nohup bash run_md_sribd.sh --stage 3 --stop-stage 3 > logs/run_md_sribd_stage3_1.log 2>&1 &[3] 13571
+
+
+nohup bash run_md_sribd.sh --stage 107 --stop-stage 107 > logs/run_md_sribd_stage107.log 2>&1 &
+[2] 11818
+
+
+nohup bash run_md_sribd.sh --stage 3 --stop-stage 3 > logs/run_md_sribd_stage3.log 2>&1 &
+[1] 4878
+
+
+
+nohup bash run_md_sribd.sh --stage 103 --stop-stage 103 > logs/run_md_sribd_stage103.log 2>&1 &
+[1] 12749
+
+
+bash run_md_sribd.sh --stage 103 --stop-stage 103 > logs/run_md_sribd_stage103.log 2>&1 &
+[1] 9931
+
+
+nohup bash run_md_sribd.sh --stage 102 --stop-stage 102 > logs/run_md_sribd_stage102.log 2>&1 &
+[1] 718
+
+
+nohup bash run_md_sribd.sh --stage 101 --stop-stage 101 > logs/run_md_sribd_stage101.log 2>&1 &
+[1] 900219
+
+
+nohup bash run_md_sribd.sh --stage 100 --stop-stage 100 > logs/run_md_sribd_stage100.log 2>&1 &
+[2] 659663
+
+
+nohup bash run_md_sribd.sh --stage 99 --stop-stage 99   > logs/run_md_sribd_stage99.log 2>&1 &
+[2] 184262
+
+
+nohup bash run_md_sribd.sh --stage 99 --stop-stage 99   > logs/run_md_sribd_stage99.log 2>&1 &
+[2] 176227
+
+
+nohup bash run_md_sribd.sh --stage 98 --stop-stage 98   > logs/run_md_sribd_stage98.log 2>&1 &
+[1] 173929
+
+
+nohup bash run_md_sribd.sh --stage 98 --stop-stage 98   > logs/run_md_sribd_stage98.log 2>&1 &
+[1] 172245
+
+
+nohup ./run_md_sribd.sh --stage 98 --stop-stage 98 \
+  > logs/run_md_sribd_stage98.log 2>&1 &
+[1] 172135
+
+
+
+nohup bash run_md_sribd.sh --stage 88 --stop-stage 88 > logs/run_md_sribd_stage88.log 2>&1 &
+[3] 24461
+
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68_4.log 2>&1 &
+[2] 17168
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68_4.log 2>&1 &
+[2] 4778
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68_4.log 2>&1 &
+[2] 2527
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68_3.log 2>&1 &
+[2] 497
+
+nohup bash run_md_sribd.sh --stage 78 --stop-stage 78 > logs/run_md_sribd_stage78_1.log 2>&1 &
+[1] 462
+
+
+
+nohup bash run_md_sribd.sh --stage 78 --stop-stage 78 > logs/run_md_sribd_stage78.log 2>&1 &
+[5] 140467
+
+
+nohup bash run_md_sribd.sh --stage 78 --stop-stage 78 > logs/run_md_sribd_stage78.log 2>&1 &
+[5] 137346
+
+
+nohup bash run_md_sribd.sh --stage 78 --stop-stage 78 > logs/run_md_sribd_stage78.log 2>&1 &
+[5] 129413
+
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68_2.log 2>&1 &
+[4] 20437
+
+
+
+nohup bash run_md_sribd.sh --stage 48 --stop-stage 48 > logs/run_md_sribd_stage48_1.log 2>&1 &
+[3] 615
+
+
+nohup bash run_md_sribd.sh --stage 58 --stop-stage 58 > logs/run_md_sribd_stage58_1.log 2>&1 &
+[2] 503
+
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68_1.log 2>&1 &
+[1] 468
+
+
+
+nohup bash run_md_sribd.sh --stage 68 --stop-stage 68 > logs/run_md_sribd_stage68.log 2>&1 &
+[3] 45678
+
+
+nohup bash run_md_sribd.sh --stage 58 --stop-stage 58 > logs/run_md_sribd_stage58.log 2>&1 &
+[2] 24123
+
+
+nohup bash run_md_sribd.sh --stage 48 --stop-stage 48 > logs/run_md_sribd_stage48.log 2>&1 &
+[1] 544
+
+
+nohup bash run_md_sribd.sh --stage 38 --stop-stage 38 > logs/run_md_sribd_stage38_2.log 2>&1 &
+[1] 471
+
+
+nohup bash run_md_sribd.sh --stage 38 --stop-stage 38 > logs/run_md_sribd_stage38_1.log 2>&1 &
+[1] 122122
+
+
+nohup bash run_md_sribd.sh --stage 38 --stop-stage 38 > logs/run_md_sribd_stage38.log 2>&1 &
+[1] 103211
+
+
+nohup bash run_md_sribd.sh --stage 28 --stop-stage 28 > logs/run_md_sribd_stage28_4.log 2>&1 &
+[2] 285767
+
+
+
+nohup bash run_md_sribd.sh --stage 28 --stop-stage 28 > logs/run_md_sribd_stage28_3.log 2>&1 &
+[2] 152527
+
+
+nohup bash run_md_sribd.sh --stage 28 --stop-stage 28 > logs/run_md_sribd_stage28_2.log 2>&1 &
+[2] 145483
+
+
+nohup bash run_md_sribd.sh --stage 28 --stop-stage 28 > logs/run_md_sribd_stage28_1.log 2>&1 &
+[2] 143723
+
+
+
+
+nohup bash run_md_sribd.sh --stage 28 --stop-stage 28 > logs/run_md_sribd_stage28.log 2>&1 &
+[2] 122445
+
+
+nohup bash run_md_sribd.sh --stage 28 --stop-stage 28 > logs/run_md_sribd_stage28.log 2>&1 &
+[2] 38946
+
+
+nohup bash run_md_sribd.sh --stage 18 --stop-stage 18 > logs/run_md_sribd_stage18_1.log 2>&1 &
+[1] 468
+
+
+nohup bash run_md_sribd.sh --stage 18 --stop-stage 18 > logs/run_md_sribd_stage18.log 2>&1 &
+[1] 23282
+
+
+nohup bash run_md_sribd.sh --stage 8 --stop-stage 8 > logs/run_md_sribd_stage8.log 2>&1 &
+[1] 1474

@@ -1,0 +1,46 @@
+# Stage 98+ model YAML.
+# Goal: revert to the configuration that produced the best historical eval_loss
+# in this repo (stage 48 single-source ~27.34, stage 58 multi-data ~27.51 with
+# bs=3) — i.e. non-causal muse_visual frontend + non-causal BSRNN separator —
+# while leaving the original tse_bsrnn_visual_model.yaml untouched so stages
+# 38/48/58/68/78/88 reproduce bit-for-bit.
+#
+# Differences vs confs/tse_bsrnn_visual_model.yaml:
+#   * separator.causal: explicitly False (was already False, kept explicit here)
+#   * visual.features.muse_visual.enabled: True (default)
+#   * visual.features.blaze_visual.enabled: False
+#   * visual.features.blaze_visual.causal: False (defensive; not used because disabled)
+#
+# This YAML is intentionally disjoint from the original: stages 78/88 still
+# refer to confs/tse_bsrnn_visual_model.yaml (with CLI overrides), so none of
+# their checkpoints or training behavior can be polluted.
+model:
+  tse_model: TSE_BSRNN_VISUAL
+model_args:
+  tse_model:
+    separator:
+      sr: 16000
+      win: 512
+      stride: 128
+      feature_dim: 128
+      num_repeat: 6
+      causal: False
+      nspk: 1
+    visual:
+      features:
+        muse_visual:
+          enabled: True
+          vf_pretrained: "/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/confs/visual_frontend.pt"
+          vtcn_channels: 512
+          vtcn_layers: 5
+          upsample: True
+          mix_dim: 128
+          fusion: "concat"
+        blaze_visual:
+          enabled: False
+          causal: False
+          image_size: 128
+          embed_dim: 224
+          upsample: True
+          mix_dim: 128
+          fusion: "concat"

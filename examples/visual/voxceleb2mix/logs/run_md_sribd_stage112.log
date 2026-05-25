@@ -1,0 +1,55 @@
+nohup: ignoring input
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+2026-05-15 10:02:43 - INFO - CLI overrides on model YAML model_args.tse_model: visual.features: muse_visual.enabled=True blaze_visual.enabled=False; separator.causal=False
+2026-05-15 10:02:43 - INFO - Online mix flags: deterministic=True av_align=True force_two_speaker=False clean_dry=False noise_prob=0.0 reverb_prob=0.0 snr_range=[-5.0, 10.0] gain_range=[-12.0, 0.0] dist=[0.0, 1.0, 0.0]
+2026-05-15 10:03:51 - INFO - [online_multi_dataset] VoxCeleb2-style scan: 5994 speakers, 1091725 clips
+2026-05-15 10:03:51 - INFO - [online_multi_dataset] LRS3: lrs3_root ends with subset 'trainval' — scanning /F00120240032/lrs3/trainval directly (avoid .../trainval/trainval)
+2026-05-15 10:03:53 - INFO - [online_multi_dataset] LRS3: subsets=('trainval',) -> 4004 speakers, 31982 clips (/F00120240032/lrs3/trainval)
+2026-05-15 10:03:53 - INFO - [online_multi_dataset] merged train inventory: 7998 speakers, 902402 clips
+2026-05-15 10:03:53 - INFO - [online_multi_dataset] merged val inventory: 2000 speakers, 221305 clips
+2026-05-15 10:03:53 - INFO - tse_model: TSE_BSRNN_VISUAL, params: 34.00M
+2026-05-15 10:03:53 - INFO - train: OnlineMixIterableDataset multi-source use_voxceleb2=True use_lrs3=True use_chinese_lips=False mp4_dir_of_voxceleb2='/F00120240032/voxceleb2_zk_mixture/mp4/train' lrs3_root='/F00120240032/lrs3/trainval' chinese_lips_root='/F00120240032/Chinese_lips' train_speaker_fraction=0.8 train_speakers=7998 val_speakers=2000 skip_visual_decode=False visual_resize=224 visual_spatial_size=(224, 224) visual_max_frames=75
+2026-05-15 10:03:53 - INFO - Note: collate expands along speakers, so effective rows per micro-batch ≈ sum of num_speaker per mixture; 3–4-speaker mixes use more VRAM than offline with the same per_device_train_batch_size. Use --visual_max_frames, --visual_resize (multi-corpus), --num_speakers_distribution / --num_speakers_max, or --bf16 to reduce memory.
+2026-05-15 10:03:53 - INFO - online val: train_mixtures/epoch=60000 val_mixtures/epoch=300 (default ratio 20k:5k unless overridden)
+2026-05-15 10:03:53 - INFO - loss: SISDR_MRSTFT
+2026-05-15 10:03:53 - INFO - epoch_iter: 20000, val_iter: 100, num_train_epochs: 200000.0
+2026-05-15 10:03:53 - INFO - world_size: 1, batch_size/gpu: 3
+2026-05-15 10:03:53 - INFO - DataLoader num_workers=2 prefetch_factor=1 persistent_workers=True worker_start_method='spawn' visual_torchcodec_cuda=True (spawn avoids fork-after-CUDA in workers; tensors still use /dev/shm — RuntimeError shm → workers 0 or larger --shm-size)
+2026-05-15 10:03:53 - INFO - Note: spawn workers each perform a fresh Python import + CUDA/TorchCodec init — first training step after start can lag at 0%% tqdm for tens of minutes. For quicker cold start vs spawn, prefer --visual_decode_cuda false (fork workers decode on CPU).
+  0%|          | 0/200000 [00:00<?, ?it/s]/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/kaldiio/__init__.py:2: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/multiprocessing/resource_tracker.py:224: UserWarning: resource_tracker: There appear to be 14 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+E0515 10:09:18.686000 1556458 site-packages/torch/distributed/elastic/multiprocessing/api.py:984] failed (exitcode: -9) local_rank: 0 (pid: 1556578) of binary: /maduo/miniconda3/envs/wesep_py310_cu126/bin/python3.10
+Traceback (most recent call last):
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/run.py", line 991, in main
+    run(args)
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/run.py", line 982, in run
+    elastic_launch(
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/maduo/miniconda3/envs/wesep_py310_cu126/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+wesep/bin/train_with_transformers_multi_data_online.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-05-15_10:09:18
+  host      : cfgm4h4dm0gcf-0
+  rank      : 0 (local_rank: 0)
+  exitcode  : -9 (pid: 1556578)
+  error_file: <N/A>
+  traceback : Signal 9 (SIGKILL) received by PID 1556578
+============================================================

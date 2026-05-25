@@ -1,0 +1,952 @@
+Start training ...
+ESPnet is not installed, cannot use espnet_hubert upstream
+------------------- 0 1
+[ INFO : 2026-04-02 14:15:30,796 ] - exp_dir is: /share/workspace3/maduo/exp/TSE_BSRNN_VIS
+[ INFO : 2026-04-02 14:15:30,796 ] - <== Passed Arguments ==>
+[ INFO : 2026-04-02 14:15:30,797 ] - {'clip_grad': 5.0,
+[ INFO : 2026-04-02 14:15:30,797 ] -  'config': 'confs/tse_bsrnn_visual.yaml',
+[ INFO : 2026-04-02 14:15:30,797 ] -  'data_type': 'raw',
+[ INFO : 2026-04-02 14:15:30,797 ] -  'dataloader_args': {'batch_size': 4,
+[ INFO : 2026-04-02 14:15:30,797 ] -                      'drop_last': True,
+[ INFO : 2026-04-02 14:15:30,797 ] -                      'num_workers': 2,
+[ INFO : 2026-04-02 14:15:30,797 ] -                      'pin_memory': True,
+[ INFO : 2026-04-02 14:15:30,797 ] -                      'prefetch_factor': 6},
+[ INFO : 2026-04-02 14:15:30,797 ] -  'dataset_args': {'chunk_len': 48000,
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'cue_processing': {'visual': None},
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'cues': {'visual': {'required': True, 'use': True}},
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'noise_lmdb_file': './data/musan/lmdb',
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'noise_prob': 0,
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'resample_rate': 16000,
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'sample_num_per_epoch': 0,
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'shuffle': True,
+[ INFO : 2026-04-02 14:15:30,797 ] -                   'shuffle_args': {'shuffle_size': 2500}},
+[ INFO : 2026-04-02 14:15:30,797 ] -  'enable_amp': False,
+[ INFO : 2026-04-02 14:15:30,797 ] -  'exp_dir': '/share/workspace3/maduo/exp/TSE_BSRNN_VIS',
+[ INFO : 2026-04-02 14:15:30,797 ] -  'gpus': [0],
+[ INFO : 2026-04-02 14:15:30,797 ] -  'log_batch_interval': 100,
+[ INFO : 2026-04-02 14:15:30,797 ] -  'loss': 'SISDR',
+[ INFO : 2026-04-02 14:15:30,797 ] -  'loss_args': {},
+[ INFO : 2026-04-02 14:15:30,797 ] -  'model': {'tse_model': 'TSE_BSRNN_VISUAL'},
+[ INFO : 2026-04-02 14:15:30,797 ] -  'model_args': {'tse_model': {'separator': {'causal': False,
+[ INFO : 2026-04-02 14:15:30,797 ] -                                             'feature_dim': 128,
+[ INFO : 2026-04-02 14:15:30,797 ] -                                             'nspk': 1,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                             'num_repeat': 6,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                             'sr': 16000,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                             'stride': 128,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                             'win': 512},
+[ INFO : 2026-04-02 14:15:30,798 ] -                               'visual': {'features': {'muse_visual': {'enabled': True,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                                                       'fusion': 'concat',
+[ INFO : 2026-04-02 14:15:30,798 ] -                                                                       'mix_dim': 128,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                                                       'upsample': True,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                                                       'vf_pretrained': '/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/confs/visual_frontend.pt',
+[ INFO : 2026-04-02 14:15:30,798 ] -                                                                       'vtcn_channels': 512,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                                                       'vtcn_layers': 5}}}}},
+[ INFO : 2026-04-02 14:15:30,798 ] -  'model_init': {'discriminator': None, 'spk_model': None, 'tse_model': None},
+[ INFO : 2026-04-02 14:15:30,798 ] -  'num_avg': 10,
+[ INFO : 2026-04-02 14:15:30,798 ] -  'num_epochs': 150,
+[ INFO : 2026-04-02 14:15:30,798 ] -  'optimizer': {'tse_model': 'Adam'},
+[ INFO : 2026-04-02 14:15:30,798 ] -  'optimizer_args': {'tse_model': {'lr': 0.001, 'weight_decay': 0.0001}},
+[ INFO : 2026-04-02 14:15:30,798 ] -  'save_epoch_interval': 1,
+[ INFO : 2026-04-02 14:15:30,798 ] -  'scheduler': {'tse_model': 'ExponentialDecrease'},
+[ INFO : 2026-04-02 14:15:30,798 ] -  'scheduler_args': {'tse_model': {'final_lr': 2.5e-05,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                   'initial_lr': 0.001,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                   'warm_from_zero': False,
+[ INFO : 2026-04-02 14:15:30,798 ] -                                   'warm_up_epoch': 0}},
+[ INFO : 2026-04-02 14:15:30,798 ] -  'seed': 42,
+[ INFO : 2026-04-02 14:15:30,798 ] -  'train_cues': '/share/workspace3/maduo/datasets/voxceleb2mix/data/clean/train/cues.yaml',
+[ INFO : 2026-04-02 14:15:30,798 ] -  'train_data': '/share/workspace3/maduo/datasets/voxceleb2mix/data/clean/train/raw.list',
+[ INFO : 2026-04-02 14:15:30,798 ] -  'train_samples': '/share/workspace3/maduo/datasets/voxceleb2mix/data/clean/train/samples.jsonl',
+[ INFO : 2026-04-02 14:15:30,798 ] -  'val_cues': '/share/workspace3/maduo/datasets/voxceleb2mix/data/clean/val/cues.yaml',
+[ INFO : 2026-04-02 14:15:30,798 ] -  'val_data': '/share/workspace3/maduo/datasets/voxceleb2mix/data/clean/val/raw.list',
+[ INFO : 2026-04-02 14:15:30,798 ] -  'val_samples': '/share/workspace3/maduo/datasets/voxceleb2mix/data/clean/val/samples.jsonl'}
+[ INFO : 2026-04-02 14:15:31,058 ] - <== Dataloaders ==>
+[ INFO : 2026-04-02 14:15:31,058 ] - train dataloaders created
+[ INFO : 2026-04-02 14:15:31,058 ] - epoch iteration number: 5000
+[ INFO : 2026-04-02 14:15:31,058 ] - val iteration number: 1250
+[ INFO : 2026-04-02 14:15:31,058 ] - <== Model ==>
+[ INFO : 2026-04-02 14:15:32,029 ] - tse_model size: 34.00 M
+[ INFO : 2026-04-02 14:15:32,031 ] - TSE_BSRNN_VISUAL(
+[ INFO : 2026-04-02 14:15:32,031 ] -   (sep_model): BSRNN(
+[ INFO : 2026-04-02 14:15:32,031 ] -     (stft): STFT()
+[ INFO : 2026-04-02 14:15:32,031 ] -     (band_split): BandSplit()
+[ INFO : 2026-04-02 14:15:32,031 ] -     (subband_norm): SubbandNorm(
+[ INFO : 2026-04-02 14:15:32,031 ] -       (BN): ModuleList(
+[ INFO : 2026-04-02 14:15:32,031 ] -         (0-14): 15 x Sequential(
+[ INFO : 2026-04-02 14:15:32,031 ] -           (0): GroupNorm(1, 6, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -           (1): Conv1d(6, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,031 ] -         )
+[ INFO : 2026-04-02 14:15:32,031 ] -         (15-24): 10 x Sequential(
+[ INFO : 2026-04-02 14:15:32,031 ] -           (0): GroupNorm(1, 12, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -           (1): Conv1d(12, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,031 ] -         )
+[ INFO : 2026-04-02 14:15:32,031 ] -         (25-29): 5 x Sequential(
+[ INFO : 2026-04-02 14:15:32,031 ] -           (0): GroupNorm(1, 32, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -           (1): Conv1d(32, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,031 ] -         )
+[ INFO : 2026-04-02 14:15:32,031 ] -         (30): Sequential(
+[ INFO : 2026-04-02 14:15:32,031 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -           (1): Conv1d(128, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,031 ] -         )
+[ INFO : 2026-04-02 14:15:32,031 ] -         (31): Sequential(
+[ INFO : 2026-04-02 14:15:32,031 ] -           (0): GroupNorm(1, 16, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -           (1): Conv1d(16, 128, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,031 ] -         )
+[ INFO : 2026-04-02 14:15:32,031 ] -       )
+[ INFO : 2026-04-02 14:15:32,031 ] -     )
+[ INFO : 2026-04-02 14:15:32,031 ] -     (separator): BSRNN_Separator(
+[ INFO : 2026-04-02 14:15:32,031 ] -       (separation): ModuleList(
+[ INFO : 2026-04-02 14:15:32,031 ] -         (0-5): 6 x BSNet(
+[ INFO : 2026-04-02 14:15:32,031 ] -           (band_rnn): ResRNN(
+[ INFO : 2026-04-02 14:15:32,031 ] -             (norm): GroupNorm(1, 128, eps=1e-05, affine=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -             (rnn): LSTM(128, 256, batch_first=True, bidirectional=True)
+[ INFO : 2026-04-02 14:15:32,031 ] -             (proj): Linear(in_features=512, out_features=128, bias=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           )
+[ INFO : 2026-04-02 14:15:32,032 ] -           (band_comm): ResRNN(
+[ INFO : 2026-04-02 14:15:32,032 ] -             (norm): GroupNorm(1, 128, eps=1e-05, affine=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -             (rnn): LSTM(128, 256, batch_first=True, bidirectional=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -             (proj): Linear(in_features=512, out_features=128, bias=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           )
+[ INFO : 2026-04-02 14:15:32,032 ] -         )
+[ INFO : 2026-04-02 14:15:32,032 ] -       )
+[ INFO : 2026-04-02 14:15:32,032 ] -     )
+[ INFO : 2026-04-02 14:15:32,032 ] -     (band_masker): BandMasker(
+[ INFO : 2026-04-02 14:15:32,032 ] -       (mask): ModuleList(
+[ INFO : 2026-04-02 14:15:32,032 ] -         (0-14): 15 x Sequential(
+[ INFO : 2026-04-02 14:15:32,032 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (2): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (4): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (5): Conv1d(512, 12, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -         )
+[ INFO : 2026-04-02 14:15:32,032 ] -         (15-24): 10 x Sequential(
+[ INFO : 2026-04-02 14:15:32,032 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (2): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (4): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (5): Conv1d(512, 24, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -         )
+[ INFO : 2026-04-02 14:15:32,032 ] -         (25-29): 5 x Sequential(
+[ INFO : 2026-04-02 14:15:32,032 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (2): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (4): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (5): Conv1d(512, 64, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -         )
+[ INFO : 2026-04-02 14:15:32,032 ] -         (30): Sequential(
+[ INFO : 2026-04-02 14:15:32,032 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (2): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (4): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (5): Conv1d(512, 256, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -         )
+[ INFO : 2026-04-02 14:15:32,032 ] -         (31): Sequential(
+[ INFO : 2026-04-02 14:15:32,032 ] -           (0): GroupNorm(1, 128, eps=1.1920928955078125e-07, affine=True)
+[ INFO : 2026-04-02 14:15:32,032 ] -           (1): Conv1d(128, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (2): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (3): Conv1d(512, 512, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -           (4): Tanh()
+[ INFO : 2026-04-02 14:15:32,032 ] -           (5): Conv1d(512, 32, kernel_size=(1,), stride=(1,))
+[ INFO : 2026-04-02 14:15:32,032 ] -         )
+[ INFO : 2026-04-02 14:15:32,032 ] -       )
+[ INFO : 2026-04-02 14:15:32,032 ] -     )
+[ INFO : 2026-04-02 14:15:32,032 ] -     (istft): iSTFT()
+[ INFO : 2026-04-02 14:15:32,032 ] -   )
+[ INFO : 2026-04-02 14:15:32,032 ] -   (visual_ft): VisualFrontend(
+[ INFO : 2026-04-02 14:15:32,032 ] -     (muse_visual): MuseVisualFeature(
+[ INFO : 2026-04-02 14:15:32,033 ] -       (roi): Muse_LipROIProcessor()
+[ INFO : 2026-04-02 14:15:32,033 ] -       (visual_frontend): Muse_VisualFrontend(
+[ INFO : 2026-04-02 14:15:32,033 ] -         (frontend3D): Sequential(
+[ INFO : 2026-04-02 14:15:32,033 ] -           (0): Conv3d(1, 64, kernel_size=(5, 7, 7), stride=(1, 2, 2), padding=(2, 3, 3), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -           (1): BatchNorm3d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -           (2): ReLU()
+[ INFO : 2026-04-02 14:15:32,033 ] -           (3): MaxPool3d(kernel_size=(1, 3, 3), stride=(1, 2, 2), padding=(0, 1, 1), dilation=1, ceil_mode=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -         )
+[ INFO : 2026-04-02 14:15:32,033 ] -         (resnet): ResNet(
+[ INFO : 2026-04-02 14:15:32,033 ] -           (layer1): ResNetLayer(
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1a): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (downsample): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbna): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1b): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbnb): BatchNorm2d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -           )
+[ INFO : 2026-04-02 14:15:32,033 ] -           (layer2): ResNetLayer(
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1a): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1a): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2a): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (downsample): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbna): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1b): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1b): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2b): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbnb): BatchNorm2d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -           )
+[ INFO : 2026-04-02 14:15:32,033 ] -           (layer3): ResNetLayer(
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1a): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1a): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2a): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (downsample): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbna): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1b): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2b): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbnb): BatchNorm2d(256, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -           )
+[ INFO : 2026-04-02 14:15:32,033 ] -           (layer4): ResNetLayer(
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1a): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1a): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2a): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (downsample): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbna): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv1b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (bn1b): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (conv2b): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+[ INFO : 2026-04-02 14:15:32,033 ] -             (outbnb): BatchNorm2d(512, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,033 ] -           )
+[ INFO : 2026-04-02 14:15:32,033 ] -           (avgpool): AvgPool2d(kernel_size=(4, 4), stride=(1, 1), padding=0)
+[ INFO : 2026-04-02 14:15:32,033 ] -         )
+[ INFO : 2026-04-02 14:15:32,033 ] -       )
+[ INFO : 2026-04-02 14:15:32,033 ] -       (vtcn): Sequential(
+[ INFO : 2026-04-02 14:15:32,034 ] -         (0): Muse_VisualConv1D(
+[ INFO : 2026-04-02 14:15:32,034 ] -           (net): Sequential(
+[ INFO : 2026-04-02 14:15:32,034 ] -             (0): ReLU()
+[ INFO : 2026-04-02 14:15:32,034 ] -             (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (3): PReLU(num_parameters=1)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -           )
+[ INFO : 2026-04-02 14:15:32,034 ] -         )
+[ INFO : 2026-04-02 14:15:32,034 ] -         (1): Muse_VisualConv1D(
+[ INFO : 2026-04-02 14:15:32,034 ] -           (net): Sequential(
+[ INFO : 2026-04-02 14:15:32,034 ] -             (0): ReLU()
+[ INFO : 2026-04-02 14:15:32,034 ] -             (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (3): PReLU(num_parameters=1)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -           )
+[ INFO : 2026-04-02 14:15:32,034 ] -         )
+[ INFO : 2026-04-02 14:15:32,034 ] -         (2): Muse_VisualConv1D(
+[ INFO : 2026-04-02 14:15:32,034 ] -           (net): Sequential(
+[ INFO : 2026-04-02 14:15:32,034 ] -             (0): ReLU()
+[ INFO : 2026-04-02 14:15:32,034 ] -             (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (3): PReLU(num_parameters=1)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -           )
+[ INFO : 2026-04-02 14:15:32,034 ] -         )
+[ INFO : 2026-04-02 14:15:32,034 ] -         (3): Muse_VisualConv1D(
+[ INFO : 2026-04-02 14:15:32,034 ] -           (net): Sequential(
+[ INFO : 2026-04-02 14:15:32,034 ] -             (0): ReLU()
+[ INFO : 2026-04-02 14:15:32,034 ] -             (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (3): PReLU(num_parameters=1)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -           )
+[ INFO : 2026-04-02 14:15:32,034 ] -         )
+[ INFO : 2026-04-02 14:15:32,034 ] -         (4): Muse_VisualConv1D(
+[ INFO : 2026-04-02 14:15:32,034 ] -           (net): Sequential(
+[ INFO : 2026-04-02 14:15:32,034 ] -             (0): ReLU()
+[ INFO : 2026-04-02 14:15:32,034 ] -             (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (2): Conv1d(512, 512, kernel_size=(3,), stride=(1,), padding=(1,), groups=512, bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (3): PReLU(num_parameters=1)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (4): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -             (5): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-04-02 14:15:32,034 ] -           )
+[ INFO : 2026-04-02 14:15:32,034 ] -         )
+[ INFO : 2026-04-02 14:15:32,034 ] -       )
+[ INFO : 2026-04-02 14:15:32,034 ] -       (fusionLayer): SpeakerFuseLayer(
+[ INFO : 2026-04-02 14:15:32,034 ] -         (fc): LinearLayer(
+[ INFO : 2026-04-02 14:15:32,034 ] -           (linear): Linear(in_features=640, out_features=128, bias=True)
+[ INFO : 2026-04-02 14:15:32,034 ] -         )
+[ INFO : 2026-04-02 14:15:32,034 ] -       )
+[ INFO : 2026-04-02 14:15:32,034 ] -     )
+[ INFO : 2026-04-02 14:15:32,035 ] -   )
+[ INFO : 2026-04-02 14:15:32,035 ] - )
+[ INFO : 2026-04-02 14:15:32,777 ] - <== TSE Model Loss ==>
+[ INFO : 2026-04-02 14:15:32,777 ] - loss criterion is: SISDR
+[ INFO : 2026-04-02 14:15:32,778 ] - <== TSE Model Optimizer ==>
+[ INFO : 2026-04-02 14:15:32,778 ] - optimizer is: Adam
+[ INFO : 2026-04-02 14:15:32,778 ] - <== TSE Model Scheduler ==>
+[ INFO : 2026-04-02 14:15:32,778 ] - scheduler is: ExponentialDecrease
+[ INFO : 2026-04-02 14:15:32,778 ] - Train model from scratch ...
+[ INFO : 2026-04-02 14:15:32,778 ] - start_epoch: 1
+[ INFO : 2026-04-02 14:15:32,822 ] - <========== Training process ==========>
+[ INFO : 2026-04-02 14:15:32,822 ] - +----------+----------+----------+----------+----------+
+[ INFO : 2026-04-02 14:15:32,822 ] - | Train/Val|     Epoch|      iter|      Loss|        LR|
+[ INFO : 2026-04-02 14:15:32,823 ] - +----------+----------+----------+----------+----------+
+[ INFO : 2026-04-02 14:22:39,049 ] - |     TRAIN|         1|       100|    36.118|0.00099951|
+[ INFO : 2026-04-02 14:24:42,046 ] - |     TRAIN|         1|       200|    34.994|0.00099902|
+[ INFO : 2026-04-02 14:26:45,584 ] - |     TRAIN|         1|       300|    34.426|0.00099853|
+[ INFO : 2026-04-02 14:28:51,234 ] - |     TRAIN|         1|       400|    34.113|0.00099804|
+[ INFO : 2026-04-02 14:30:58,585 ] - |     TRAIN|         1|       500|    33.999|0.00099755|
+[ INFO : 2026-04-02 14:33:07,324 ] - |     TRAIN|         1|       600|    33.895|0.00099706|
+[ INFO : 2026-04-02 14:35:12,873 ] - |     TRAIN|         1|       700|    33.825|0.00099657|
+[ INFO : 2026-04-02 14:37:22,123 ] - |     TRAIN|         1|       800|    33.803|0.00099608|
+[ INFO : 2026-04-02 14:39:26,802 ] - |     TRAIN|         1|       900|    33.709|0.00099559|
+[ INFO : 2026-04-02 14:41:48,940 ] - |     TRAIN|         1|      1000|    33.657| 0.0009951|
+[ INFO : 2026-04-02 14:44:19,817 ] - |     TRAIN|         1|      1100|    33.597|0.00099461|
+[ INFO : 2026-04-02 14:46:55,030 ] - |     TRAIN|         1|      1200|    33.578|0.00099412|
+[ INFO : 2026-04-02 14:53:23,716 ] - |     TRAIN|         1|      1300|    33.523|0.00099363|
+[ INFO : 2026-04-02 14:55:28,921 ] - |     TRAIN|         1|      1400|    33.502|0.00099314|
+[ INFO : 2026-04-02 14:57:37,598 ] - |     TRAIN|         1|      1500|    33.469|0.00099265|
+[ INFO : 2026-04-02 14:59:47,897 ] - |     TRAIN|         1|      1600|    33.446|0.00099217|
+[ INFO : 2026-04-02 15:01:57,468 ] - |     TRAIN|         1|      1700|    33.443|0.00099168|
+[ INFO : 2026-04-02 15:04:06,212 ] - |     TRAIN|         1|      1800|    33.445|0.00099119|
+[ INFO : 2026-04-02 15:06:13,243 ] - |     TRAIN|         1|      1900|    33.461| 0.0009907|
+[ INFO : 2026-04-02 15:08:26,896 ] - |     TRAIN|         1|      2000|    33.467|0.00099022|
+[ INFO : 2026-04-02 15:10:36,377 ] - |     TRAIN|         1|      2100|    33.482|0.00098973|
+[ INFO : 2026-04-02 15:12:48,087 ] - |     TRAIN|         1|      2200|    33.478|0.00098924|
+[ INFO : 2026-04-02 15:15:16,781 ] - |     TRAIN|         1|      2300|    33.493|0.00098876|
+[ INFO : 2026-04-02 15:17:51,539 ] - |     TRAIN|         1|      2400|    33.508|0.00098827|
+[ INFO : 2026-04-02 15:20:19,623 ] - |     TRAIN|         1|      2500|    33.527|0.00098778|
+[ INFO : 2026-04-02 15:26:21,905 ] - |     TRAIN|         1|      2600|    33.521| 0.0009873|
+[ INFO : 2026-04-02 15:28:23,007 ] - |     TRAIN|         1|      2700|    33.513|0.00098681|
+[ INFO : 2026-04-02 15:30:25,363 ] - |     TRAIN|         1|      2800|    33.509|0.00098633|
+[ INFO : 2026-04-02 15:32:32,391 ] - |     TRAIN|         1|      2900|    33.497|0.00098584|
+[ INFO : 2026-04-02 15:34:35,513 ] - |     TRAIN|         1|      3000|    33.497|0.00098536|
+[ INFO : 2026-04-02 15:36:39,578 ] - |     TRAIN|         1|      3100|     33.49|0.00098487|
+[ INFO : 2026-04-02 15:38:39,313 ] - |     TRAIN|         1|      3200|      33.5|0.00098439|
+[ INFO : 2026-04-02 15:40:42,855 ] - |     TRAIN|         1|      3300|    33.497| 0.0009839|
+[ INFO : 2026-04-02 15:42:42,224 ] - |     TRAIN|         1|      3400|    33.498|0.00098342|
+[ INFO : 2026-04-02 15:44:58,316 ] - |     TRAIN|         1|      3500|    33.498|0.00098294|
+[ INFO : 2026-04-02 15:47:22,657 ] - |     TRAIN|         1|      3600|    33.504|0.00098245|
+[ INFO : 2026-04-02 15:49:49,458 ] - |     TRAIN|         1|      3700|    33.492|0.00098197|
+[ INFO : 2026-04-02 15:55:40,803 ] - |     TRAIN|         1|      3800|    33.485|0.00098149|
+[ INFO : 2026-04-02 15:57:36,025 ] - |     TRAIN|         1|      3900|    33.475|0.00098101|
+[ INFO : 2026-04-02 15:59:32,699 ] - |     TRAIN|         1|      4000|    33.468|0.00098052|
+[ INFO : 2026-04-02 16:01:32,291 ] - |     TRAIN|         1|      4100|    33.456|0.00098004|
+[ INFO : 2026-04-02 16:03:29,165 ] - |     TRAIN|         1|      4200|    33.456|0.00097956|
+[ INFO : 2026-04-02 16:05:27,611 ] - |     TRAIN|         1|      4300|    33.446|0.00097908|
+[ INFO : 2026-04-02 16:07:29,064 ] - |     TRAIN|         1|      4400|    33.439| 0.0009786|
+[ INFO : 2026-04-02 16:09:29,137 ] - |     TRAIN|         1|      4500|    33.426|0.00097811|
+[ INFO : 2026-04-02 16:11:26,802 ] - |     TRAIN|         1|      4600|    33.413|0.00097763|
+[ INFO : 2026-04-02 16:13:28,201 ] - |     TRAIN|         1|      4700|     33.41|0.00097715|
+[ INFO : 2026-04-02 16:15:49,306 ] - |     TRAIN|         1|      4800|    33.406|0.00097667|
+[ INFO : 2026-04-02 16:18:13,735 ] - |     TRAIN|         1|      4900|    33.401|0.00097619|
+[ INFO : 2026-04-02 16:20:41,128 ] - |     TRAIN|         1|      5000|    33.392|0.00097571|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-02 16:23:15,183 ] - |       VAL|         1|       100|    32.927|         -|
+[ INFO : 2026-04-02 16:25:25,654 ] - |       VAL|         1|       200|    33.027|         -|
+[ INFO : 2026-04-02 16:27:37,468 ] - |       VAL|         1|       300|    33.079|         -|
+[ INFO : 2026-04-02 16:29:50,355 ] - |       VAL|         1|       400|    33.188|         -|
+[ INFO : 2026-04-02 16:32:01,888 ] - |       VAL|         1|       500|    33.171|         -|
+[ INFO : 2026-04-02 16:34:06,520 ] - |       VAL|         1|       600|    33.148|         -|
+[ INFO : 2026-04-02 16:36:12,992 ] - |       VAL|         1|       700|    33.136|         -|
+[ INFO : 2026-04-02 16:38:22,999 ] - |       VAL|         1|       800|    33.173|         -|
+[ INFO : 2026-04-02 16:40:37,095 ] - |       VAL|         1|       900|    33.161|         -|
+[ INFO : 2026-04-02 16:42:43,079 ] - |       VAL|         1|      1000|     33.13|         -|
+[ INFO : 2026-04-02 16:44:51,656 ] - |       VAL|         1|      1100|    33.117|         -|
+[ INFO : 2026-04-02 16:47:03,242 ] - |       VAL|         1|      1200|    33.111|         -|
+[ INFO : 2026-04-02 16:48:11,967 ] - Epoch 1 Train info train_loss 33.39220065498352
+[ INFO : 2026-04-02 16:48:11,968 ] - Epoch 1 Val info val_loss 33.085447929382326
+[ DEBUG : 2026-04-02 16:48:14,391 ] - Loaded backend agg version v2.2.
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-02 16:54:08,737 ] - |     TRAIN|         2|       100|    33.144|0.00097523|
+[ INFO : 2026-04-02 16:56:07,270 ] - |     TRAIN|         2|       200|    33.137|0.00097475|
+[ INFO : 2026-04-02 16:58:04,510 ] - |     TRAIN|         2|       300|    33.051|0.00097427|
+[ INFO : 2026-04-02 17:00:06,534 ] - |     TRAIN|         2|       400|    33.125|0.00097379|
+[ INFO : 2026-04-02 17:02:05,061 ] - |     TRAIN|         2|       500|    33.276|0.00097332|
+[ INFO : 2026-04-02 17:04:01,625 ] - |     TRAIN|         2|       600|    33.418|0.00097284|
+[ INFO : 2026-04-02 17:06:03,253 ] - |     TRAIN|         2|       700|    33.459|0.00097236|
+[ INFO : 2026-04-02 17:08:07,834 ] - |     TRAIN|         2|       800|    33.495|0.00097188|
+[ INFO : 2026-04-02 17:10:12,714 ] - |     TRAIN|         2|       900|    33.559| 0.0009714|
+[ INFO : 2026-04-02 17:12:27,125 ] - |     TRAIN|         2|      1000|    33.599|0.00097092|
+[ INFO : 2026-04-02 17:14:52,997 ] - |     TRAIN|         2|      1100|    33.648|0.00097045|
+[ INFO : 2026-04-02 17:17:17,348 ] - |     TRAIN|         2|      1200|    33.684|0.00096997|
+[ INFO : 2026-04-02 17:23:49,375 ] - |     TRAIN|         2|      1300|    33.714|0.00096949|
+[ INFO : 2026-04-02 17:25:48,923 ] - |     TRAIN|         2|      1400|    33.725|0.00096902|
+[ INFO : 2026-04-02 17:27:52,884 ] - |     TRAIN|         2|      1500|    33.745|0.00096854|
+[ INFO : 2026-04-02 17:29:54,693 ] - |     TRAIN|         2|      1600|    33.751|0.00096806|
+[ INFO : 2026-04-02 17:32:00,341 ] - |     TRAIN|         2|      1700|    33.732|0.00096759|
+[ INFO : 2026-04-02 17:34:09,286 ] - |     TRAIN|         2|      1800|    33.733|0.00096711|
+[ INFO : 2026-04-02 17:36:18,818 ] - |     TRAIN|         2|      1900|    33.729|0.00096664|
+[ INFO : 2026-04-02 17:38:20,373 ] - |     TRAIN|         2|      2000|    33.731|0.00096616|
+[ INFO : 2026-04-02 17:40:20,597 ] - |     TRAIN|         2|      2100|     33.73|0.00096569|
+[ INFO : 2026-04-02 17:42:34,688 ] - |     TRAIN|         2|      2200|    33.719|0.00096521|
+[ INFO : 2026-04-02 17:44:52,829 ] - |     TRAIN|         2|      2300|     33.71|0.00096474|
+[ INFO : 2026-04-02 17:47:20,657 ] - |     TRAIN|         2|      2400|     33.72|0.00096426|
+[ INFO : 2026-04-02 17:49:47,151 ] - |     TRAIN|         2|      2500|    33.731|0.00096379|
+[ INFO : 2026-04-02 17:55:51,665 ] - |     TRAIN|         2|      2600|    33.732|0.00096331|
+[ INFO : 2026-04-02 17:57:56,531 ] - |     TRAIN|         2|      2700|    33.745|0.00096284|
+[ INFO : 2026-04-02 17:59:58,811 ] - |     TRAIN|         2|      2800|    33.739|0.00096237|
+[ INFO : 2026-04-02 18:02:03,763 ] - |     TRAIN|         2|      2900|    33.735|0.00096189|
+[ INFO : 2026-04-02 18:04:03,997 ] - |     TRAIN|         2|      3000|    33.736|0.00096142|
+[ INFO : 2026-04-02 18:06:05,581 ] - |     TRAIN|         2|      3100|     33.74|0.00096095|
+[ INFO : 2026-04-02 18:08:11,246 ] - |     TRAIN|         2|      3200|    33.733|0.00096048|
+[ INFO : 2026-04-02 18:10:21,626 ] - |     TRAIN|         2|      3300|    33.736|   0.00096|
+[ INFO : 2026-04-02 18:12:30,867 ] - |     TRAIN|         2|      3400|    33.736|0.00095953|
+[ INFO : 2026-04-02 18:14:54,609 ] - |     TRAIN|         2|      3500|    33.741|0.00095906|
+[ INFO : 2026-04-02 18:17:29,003 ] - |     TRAIN|         2|      3600|     33.74|0.00095859|
+[ INFO : 2026-04-02 18:20:14,513 ] - |     TRAIN|         2|      3700|    33.743|0.00095812|
+[ INFO : 2026-04-02 18:26:55,484 ] - |     TRAIN|         2|      3800|     33.74|0.00095765|
+[ INFO : 2026-04-02 18:29:03,678 ] - |     TRAIN|         2|      3900|    33.746|0.00095717|
+[ INFO : 2026-04-02 18:31:17,299 ] - |     TRAIN|         2|      4000|    33.744| 0.0009567|
+[ INFO : 2026-04-02 18:33:23,078 ] - |     TRAIN|         2|      4100|    33.746|0.00095623|
+[ INFO : 2026-04-02 18:35:30,687 ] - |     TRAIN|         2|      4200|    33.745|0.00095576|
+[ INFO : 2026-04-02 18:37:43,882 ] - |     TRAIN|         2|      4300|    33.746|0.00095529|
+[ INFO : 2026-04-02 18:39:58,200 ] - |     TRAIN|         2|      4400|    33.746|0.00095482|
+[ INFO : 2026-04-02 18:42:07,994 ] - |     TRAIN|         2|      4500|     33.75|0.00095435|
+[ INFO : 2026-04-02 18:44:22,672 ] - |     TRAIN|         2|      4600|    33.747|0.00095388|
+[ INFO : 2026-04-02 18:46:36,818 ] - |     TRAIN|         2|      4700|    33.748|0.00095342|
+[ INFO : 2026-04-02 18:49:15,782 ] - |     TRAIN|         2|      4800|    33.753|0.00095295|
+[ INFO : 2026-04-02 18:52:01,997 ] - |     TRAIN|         2|      4900|    33.754|0.00095248|
+[ INFO : 2026-04-02 18:54:43,418 ] - |     TRAIN|         2|      5000|    33.748|0.00095201|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-02 18:57:35,598 ] - |       VAL|         2|       100|    33.859|         -|
+[ INFO : 2026-04-02 19:00:07,562 ] - |       VAL|         2|       200|     33.71|         -|
+[ INFO : 2026-04-02 19:02:38,881 ] - |       VAL|         2|       300|    33.656|         -|
+[ INFO : 2026-04-02 19:05:12,300 ] - |       VAL|         2|       400|    33.648|         -|
+[ INFO : 2026-04-02 19:07:47,009 ] - |       VAL|         2|       500|    33.645|         -|
+[ INFO : 2026-04-02 19:10:14,795 ] - |       VAL|         2|       600|     33.65|         -|
+[ INFO : 2026-04-02 19:12:33,448 ] - |       VAL|         2|       700|    33.681|         -|
+[ INFO : 2026-04-02 19:14:54,616 ] - |       VAL|         2|       800|    33.657|         -|
+[ INFO : 2026-04-02 19:17:28,631 ] - |       VAL|         2|       900|    33.643|         -|
+[ INFO : 2026-04-02 19:19:59,419 ] - |       VAL|         2|      1000|    33.644|         -|
+[ INFO : 2026-04-02 19:22:32,763 ] - |       VAL|         2|      1100|    33.642|         -|
+[ INFO : 2026-04-02 19:24:59,621 ] - |       VAL|         2|      1200|    33.651|         -|
+[ INFO : 2026-04-02 19:26:14,334 ] - Epoch 2 Train info train_loss 33.74839778518677
+[ INFO : 2026-04-02 19:26:14,335 ] - Epoch 2 Val info val_loss 33.63816136169434
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-02 19:29:37,355 ] - |     TRAIN|         3|       100|    33.761|0.00095154|
+[ INFO : 2026-04-02 19:31:38,720 ] - |     TRAIN|         3|       200|     33.76|0.00095107|
+[ INFO : 2026-04-02 19:33:49,111 ] - |     TRAIN|         3|       300|    33.754|0.00095061|
+[ INFO : 2026-04-02 19:35:40,272 ] - |     TRAIN|         3|       400|    33.774|0.00095014|
+[ INFO : 2026-04-02 19:37:35,537 ] - |     TRAIN|         3|       500|    33.781|0.00094967|
+[ INFO : 2026-04-02 19:39:32,394 ] - |     TRAIN|         3|       600|    33.745| 0.0009492|
+[ INFO : 2026-04-02 19:41:34,434 ] - |     TRAIN|         3|       700|    33.739|0.00094874|
+[ INFO : 2026-04-02 19:43:34,066 ] - |     TRAIN|         3|       800|    33.756|0.00094827|
+[ INFO : 2026-04-02 19:45:28,409 ] - |     TRAIN|         3|       900|    33.735| 0.0009478|
+[ INFO : 2026-04-02 19:47:39,600 ] - |     TRAIN|         3|      1000|    33.734|0.00094734|
+[ INFO : 2026-04-02 19:50:06,089 ] - |     TRAIN|         3|      1100|    33.724|0.00094687|
+[ INFO : 2026-04-02 19:52:29,447 ] - |     TRAIN|         3|      1200|     33.71|0.00094641|
+[ INFO : 2026-04-02 19:55:48,277 ] - |     TRAIN|         3|      1300|    33.693|0.00094594|
+[ INFO : 2026-04-02 19:57:38,312 ] - |     TRAIN|         3|      1400|    33.694|0.00094548|
+[ INFO : 2026-04-02 19:59:31,720 ] - |     TRAIN|         3|      1500|    33.712|0.00094501|
+[ INFO : 2026-04-02 20:01:19,140 ] - |     TRAIN|         3|      1600|    33.713|0.00094455|
+[ INFO : 2026-04-02 20:03:08,518 ] - |     TRAIN|         3|      1700|    33.705|0.00094408|
+[ INFO : 2026-04-02 20:05:04,054 ] - |     TRAIN|         3|      1800|    33.694|0.00094362|
+[ INFO : 2026-04-02 20:06:56,892 ] - |     TRAIN|         3|      1900|    33.668|0.00094315|
+[ INFO : 2026-04-02 20:08:49,013 ] - |     TRAIN|         3|      2000|    33.659|0.00094269|
+[ INFO : 2026-04-02 20:10:40,257 ] - |     TRAIN|         3|      2100|    33.654|0.00094223|
+[ INFO : 2026-04-02 20:12:44,685 ] - |     TRAIN|         3|      2200|    33.645|0.00094176|
+[ INFO : 2026-04-02 20:14:59,614 ] - |     TRAIN|         3|      2300|    33.644| 0.0009413|
+[ INFO : 2026-04-02 20:17:20,904 ] - |     TRAIN|         3|      2400|    33.648|0.00094084|
+[ INFO : 2026-04-02 20:19:37,541 ] - |     TRAIN|         3|      2500|    33.654|0.00094038|
+[ INFO : 2026-04-02 20:22:38,658 ] - |     TRAIN|         3|      2600|     33.67|0.00093991|
+[ INFO : 2026-04-02 20:24:31,001 ] - |     TRAIN|         3|      2700|    33.674|0.00093945|
+[ INFO : 2026-04-02 20:26:25,450 ] - |     TRAIN|         3|      2800|    33.676|0.00093899|
+[ INFO : 2026-04-02 20:28:17,437 ] - |     TRAIN|         3|      2900|    33.676|0.00093853|
+[ INFO : 2026-04-02 20:30:05,257 ] - |     TRAIN|         3|      3000|     33.67|0.00093807|
+[ INFO : 2026-04-02 20:31:58,488 ] - |     TRAIN|         3|      3100|     33.67| 0.0009376|
+[ INFO : 2026-04-02 20:33:50,314 ] - |     TRAIN|         3|      3200|    33.676|0.00093714|
+[ INFO : 2026-04-02 20:35:38,958 ] - |     TRAIN|         3|      3300|    33.699|0.00093668|
+[ INFO : 2026-04-02 20:37:33,235 ] - |     TRAIN|         3|      3400|    33.718|0.00093622|
+[ INFO : 2026-04-02 20:39:40,795 ] - |     TRAIN|         3|      3500|    33.738|0.00093576|
+[ INFO : 2026-04-02 20:41:57,999 ] - |     TRAIN|         3|      3600|    33.748| 0.0009353|
+[ INFO : 2026-04-02 20:44:17,721 ] - |     TRAIN|         3|      3700|     33.76|0.00093484|
+[ INFO : 2026-04-02 20:47:31,482 ] - |     TRAIN|         3|      3800|    33.776|0.00093438|
+[ INFO : 2026-04-02 20:49:19,446 ] - |     TRAIN|         3|      3900|    33.786|0.00093392|
+[ INFO : 2026-04-02 20:51:07,875 ] - |     TRAIN|         3|      4000|    33.797|0.00093346|
+[ INFO : 2026-04-02 20:52:59,857 ] - |     TRAIN|         3|      4100|    33.806|  0.000933|
+[ INFO : 2026-04-02 20:54:47,476 ] - |     TRAIN|         3|      4200|    33.811|0.00093255|
+[ INFO : 2026-04-02 20:56:42,846 ] - |     TRAIN|         3|      4300|    33.808|0.00093209|
+[ INFO : 2026-04-02 20:58:34,386 ] - |     TRAIN|         3|      4400|    33.808|0.00093163|
+[ INFO : 2026-04-02 21:00:28,480 ] - |     TRAIN|         3|      4500|    33.804|0.00093117|
+[ INFO : 2026-04-02 21:02:23,229 ] - |     TRAIN|         3|      4600|      33.8|0.00093071|
+[ INFO : 2026-04-02 21:04:13,981 ] - |     TRAIN|         3|      4700|    33.796|0.00093025|
+[ INFO : 2026-04-02 21:06:28,937 ] - |     TRAIN|         3|      4800|    33.797| 0.0009298|
+[ INFO : 2026-04-02 21:08:42,938 ] - |     TRAIN|         3|      4900|    33.791|0.00092934|
+[ INFO : 2026-04-02 21:10:56,840 ] - |     TRAIN|         3|      5000|    33.785|0.00092888|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-02 21:13:37,934 ] - |       VAL|         3|       100|    33.206|         -|
+[ INFO : 2026-04-02 21:15:53,359 ] - |       VAL|         3|       200|    33.382|         -|
+[ INFO : 2026-04-02 21:18:04,546 ] - |       VAL|         3|       300|    33.529|         -|
+[ INFO : 2026-04-02 21:19:55,272 ] - |       VAL|         3|       400|     33.55|         -|
+[ INFO : 2026-04-02 21:21:45,648 ] - |       VAL|         3|       500|    33.591|         -|
+[ INFO : 2026-04-02 21:23:30,909 ] - |       VAL|         3|       600|    33.584|         -|
+[ INFO : 2026-04-02 21:25:12,933 ] - |       VAL|         3|       700|    33.585|         -|
+[ INFO : 2026-04-02 21:26:58,801 ] - |       VAL|         3|       800|    33.606|         -|
+[ INFO : 2026-04-02 21:28:45,805 ] - |       VAL|         3|       900|    33.622|         -|
+[ INFO : 2026-04-02 21:30:27,435 ] - |       VAL|         3|      1000|     33.63|         -|
+[ INFO : 2026-04-02 21:32:13,658 ] - |       VAL|         3|      1100|    33.626|         -|
+[ INFO : 2026-04-02 21:33:57,581 ] - |       VAL|         3|      1200|    33.635|         -|
+[ INFO : 2026-04-02 21:34:53,128 ] - Epoch 3 Train info train_loss 33.78542438735962
+[ INFO : 2026-04-02 21:34:53,128 ] - Epoch 3 Val info val_loss 33.626514762878415
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-02 21:37:00,668 ] - |     TRAIN|         4|       100|    33.793|0.00092843|
+[ INFO : 2026-04-02 21:38:54,761 ] - |     TRAIN|         4|       200|    33.733|0.00092797|
+[ INFO : 2026-04-02 21:40:51,871 ] - |     TRAIN|         4|       300|    33.648|0.00092751|
+[ INFO : 2026-04-02 21:42:47,611 ] - |     TRAIN|         4|       400|    33.669|0.00092706|
+[ INFO : 2026-04-02 21:44:44,053 ] - |     TRAIN|         4|       500|    33.649| 0.0009266|
+[ INFO : 2026-04-02 21:46:35,323 ] - |     TRAIN|         4|       600|    33.628|0.00092615|
+[ INFO : 2026-04-02 21:48:31,155 ] - |     TRAIN|         4|       700|    33.578|0.00092569|
+[ INFO : 2026-04-02 21:50:26,636 ] - |     TRAIN|         4|       800|    33.562|0.00092524|
+[ INFO : 2026-04-02 21:52:22,982 ] - |     TRAIN|         4|       900|     33.61|0.00092478|
+[ INFO : 2026-04-02 21:54:29,663 ] - |     TRAIN|         4|      1000|    33.599|0.00092433|
+[ INFO : 2026-04-02 21:56:59,577 ] - |     TRAIN|         4|      1100|    33.627|0.00092387|
+[ INFO : 2026-04-02 21:59:15,904 ] - |     TRAIN|         4|      1200|    33.624|0.00092342|
+[ INFO : 2026-04-02 22:01:45,279 ] - |     TRAIN|         4|      1300|    33.609|0.00092296|
+[ INFO : 2026-04-02 22:03:36,138 ] - |     TRAIN|         4|      1400|    33.597|0.00092251|
+[ INFO : 2026-04-02 22:05:26,855 ] - |     TRAIN|         4|      1500|    33.596|0.00092205|
+[ INFO : 2026-04-02 22:07:20,936 ] - |     TRAIN|         4|      1600|    33.595| 0.0009216|
+[ INFO : 2026-04-02 22:09:11,506 ] - |     TRAIN|         4|      1700|    33.587|0.00092115|
+[ INFO : 2026-04-02 22:11:02,451 ] - |     TRAIN|         4|      1800|    33.588| 0.0009207|
+[ INFO : 2026-04-02 22:13:02,282 ] - |     TRAIN|         4|      1900|    33.586|0.00092024|
+[ INFO : 2026-04-02 22:15:03,945 ] - |     TRAIN|         4|      2000|    33.576|0.00091979|
+[ INFO : 2026-04-02 22:17:00,762 ] - |     TRAIN|         4|      2100|    33.569|0.00091934|
+[ INFO : 2026-04-02 22:19:00,752 ] - |     TRAIN|         4|      2200|    33.582|0.00091889|
+[ INFO : 2026-04-02 22:21:15,437 ] - |     TRAIN|         4|      2300|    33.583|0.00091843|
+[ INFO : 2026-04-02 22:23:37,533 ] - |     TRAIN|         4|      2400|    33.586|0.00091798|
+[ INFO : 2026-04-02 22:25:59,957 ] - |     TRAIN|         4|      2500|    33.585|0.00091753|
+[ INFO : 2026-04-02 22:28:20,531 ] - |     TRAIN|         4|      2600|    33.584|0.00091708|
+[ INFO : 2026-04-02 22:30:15,966 ] - |     TRAIN|         4|      2700|    33.591|0.00091663|
+[ INFO : 2026-04-02 22:32:11,718 ] - |     TRAIN|         4|      2800|    33.598|0.00091618|
+[ INFO : 2026-04-02 22:34:03,386 ] - |     TRAIN|         4|      2900|    33.598|0.00091573|
+[ INFO : 2026-04-02 22:36:01,917 ] - |     TRAIN|         4|      3000|    33.599|0.00091528|
+[ INFO : 2026-04-02 22:38:04,999 ] - |     TRAIN|         4|      3100|    33.587|0.00091483|
+[ INFO : 2026-04-02 22:40:00,114 ] - |     TRAIN|         4|      3200|    33.575|0.00091438|
+[ INFO : 2026-04-02 22:42:00,577 ] - |     TRAIN|         4|      3300|    33.566|0.00091393|
+[ INFO : 2026-04-02 22:44:04,537 ] - |     TRAIN|         4|      3400|    33.554|0.00091348|
+[ INFO : 2026-04-02 22:46:09,834 ] - |     TRAIN|         4|      3500|    33.544|0.00091303|
+[ INFO : 2026-04-02 22:48:28,850 ] - |     TRAIN|         4|      3600|    33.535|0.00091258|
+[ INFO : 2026-04-02 22:50:50,263 ] - |     TRAIN|         4|      3700|     33.53|0.00091213|
+[ INFO : 2026-04-02 22:53:26,924 ] - |     TRAIN|         4|      3800|    33.523|0.00091168|
+[ INFO : 2026-04-02 22:55:13,161 ] - |     TRAIN|         4|      3900|    33.521|0.00091123|
+[ INFO : 2026-04-02 22:57:04,639 ] - |     TRAIN|         4|      4000|    33.519|0.00091079|
+[ INFO : 2026-04-02 22:58:54,548 ] - |     TRAIN|         4|      4100|     33.51|0.00091034|
+[ INFO : 2026-04-02 23:00:43,574 ] - |     TRAIN|         4|      4200|    33.507|0.00090989|
+[ INFO : 2026-04-02 23:02:36,543 ] - |     TRAIN|         4|      4300|    33.502|0.00090944|
+[ INFO : 2026-04-02 23:04:27,496 ] - |     TRAIN|         4|      4400|    33.497|  0.000909|
+[ INFO : 2026-04-02 23:06:20,747 ] - |     TRAIN|         4|      4500|     33.49|0.00090855|
+[ INFO : 2026-04-02 23:08:10,361 ] - |     TRAIN|         4|      4600|    33.482| 0.0009081|
+[ INFO : 2026-04-02 23:10:06,045 ] - |     TRAIN|         4|      4700|     33.48|0.00090766|
+[ INFO : 2026-04-02 23:12:26,140 ] - |     TRAIN|         4|      4800|    33.477|0.00090721|
+[ INFO : 2026-04-02 23:15:04,208 ] - |     TRAIN|         4|      4900|    33.464|0.00090676|
+[ INFO : 2026-04-02 23:17:44,268 ] - |     TRAIN|         4|      5000|    33.456|0.00090632|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-02 23:20:39,361 ] - |       VAL|         4|       100|    33.309|         -|
+[ INFO : 2026-04-02 23:23:11,435 ] - |       VAL|         4|       200|    33.372|         -|
+[ INFO : 2026-04-02 23:25:45,451 ] - |       VAL|         4|       300|    33.298|         -|
+[ INFO : 2026-04-02 23:28:18,226 ] - |       VAL|         4|       400|    33.225|         -|
+[ INFO : 2026-04-02 23:30:49,323 ] - |       VAL|         4|       500|     33.23|         -|
+[ INFO : 2026-04-02 23:33:12,161 ] - |       VAL|         4|       600|     33.21|         -|
+[ INFO : 2026-04-02 23:35:37,220 ] - |       VAL|         4|       700|    33.236|         -|
+[ INFO : 2026-04-02 23:38:05,892 ] - |       VAL|         4|       800|    33.243|         -|
+[ INFO : 2026-04-02 23:40:37,382 ] - |       VAL|         4|       900|    33.243|         -|
+[ INFO : 2026-04-02 23:43:05,068 ] - |       VAL|         4|      1000|    33.236|         -|
+[ INFO : 2026-04-02 23:45:37,272 ] - |       VAL|         4|      1100|    33.229|         -|
+[ INFO : 2026-04-02 23:48:09,140 ] - |       VAL|         4|      1200|    33.242|         -|
+[ INFO : 2026-04-02 23:49:31,058 ] - Epoch 4 Train info train_loss 33.45643879585266
+[ INFO : 2026-04-02 23:49:31,058 ] - Epoch 4 Val info val_loss 33.23260013122559
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-02 23:57:00,742 ] - |     TRAIN|         5|       100|    33.045|0.00090587|
+[ INFO : 2026-04-02 23:59:21,092 ] - |     TRAIN|         5|       200|    33.368|0.00090543|
+[ INFO : 2026-04-03 00:01:32,617 ] - |     TRAIN|         5|       300|    33.334|0.00090498|
+[ INFO : 2026-04-03 00:03:54,620 ] - |     TRAIN|         5|       400|    33.316|0.00090454|
+[ INFO : 2026-04-03 00:06:04,542 ] - |     TRAIN|         5|       500|    33.259|0.00090409|
+[ INFO : 2026-04-03 00:08:26,895 ] - |     TRAIN|         5|       600|    33.239|0.00090365|
+[ INFO : 2026-04-03 00:10:41,596 ] - |     TRAIN|         5|       700|    33.273| 0.0009032|
+[ INFO : 2026-04-03 00:12:53,359 ] - |     TRAIN|         5|       800|    33.319|0.00090276|
+[ INFO : 2026-04-03 00:15:08,635 ] - |     TRAIN|         5|       900|    33.331|0.00090231|
+[ INFO : 2026-04-03 00:17:31,594 ] - |     TRAIN|         5|      1000|    33.324|0.00090187|
+[ INFO : 2026-04-03 00:20:08,321 ] - |     TRAIN|         5|      1100|    33.315|0.00090143|
+[ INFO : 2026-04-03 00:22:45,953 ] - |     TRAIN|         5|      1200|    33.298|0.00090098|
+[ INFO : 2026-04-03 00:30:26,166 ] - |     TRAIN|         5|      1300|    33.308|0.00090054|
+[ INFO : 2026-04-03 00:32:36,721 ] - |     TRAIN|         5|      1400|    33.347| 0.0009001|
+[ INFO : 2026-04-03 00:34:45,135 ] - |     TRAIN|         5|      1500|    33.349|0.00089966|
+[ INFO : 2026-04-03 00:36:55,393 ] - |     TRAIN|         5|      1600|    33.348|0.00089921|
+[ INFO : 2026-04-03 00:39:10,052 ] - |     TRAIN|         5|      1700|    33.333|0.00089877|
+[ INFO : 2026-04-03 00:41:20,833 ] - |     TRAIN|         5|      1800|    33.316|0.00089833|
+[ INFO : 2026-04-03 00:43:31,704 ] - |     TRAIN|         5|      1900|    33.339|0.00089789|
+[ INFO : 2026-04-03 00:45:52,881 ] - |     TRAIN|         5|      2000|    33.358|0.00089745|
+[ INFO : 2026-04-03 00:48:09,316 ] - |     TRAIN|         5|      2100|    33.369|  0.000897|
+[ INFO : 2026-04-03 00:50:31,158 ] - |     TRAIN|         5|      2200|    33.385|0.00089656|
+[ INFO : 2026-04-03 00:53:05,337 ] - |     TRAIN|         5|      2300|    33.396|0.00089612|
+[ INFO : 2026-04-03 00:55:58,104 ] - |     TRAIN|         5|      2400|    33.403|0.00089568|
+[ INFO : 2026-04-03 00:58:32,826 ] - |     TRAIN|         5|      2500|    33.422|0.00089524|
+[ INFO : 2026-04-03 01:05:58,452 ] - |     TRAIN|         5|      2600|     33.45| 0.0008948|
+[ INFO : 2026-04-03 01:08:09,149 ] - |     TRAIN|         5|      2700|    33.442|0.00089436|
+[ INFO : 2026-04-03 01:10:26,242 ] - |     TRAIN|         5|      2800|    33.446|0.00089392|
+[ INFO : 2026-04-03 01:12:39,872 ] - |     TRAIN|         5|      2900|    33.452|0.00089348|
+[ INFO : 2026-04-03 01:14:57,013 ] - |     TRAIN|         5|      3000|    33.452|0.00089304|
+[ INFO : 2026-04-03 01:17:11,267 ] - |     TRAIN|         5|      3100|    33.451| 0.0008926|
+[ INFO : 2026-04-03 01:19:28,192 ] - |     TRAIN|         5|      3200|    33.457|0.00089216|
+[ INFO : 2026-04-03 01:21:39,864 ] - |     TRAIN|         5|      3300|    33.457|0.00089173|
+[ INFO : 2026-04-03 01:23:50,332 ] - |     TRAIN|         5|      3400|    33.456|0.00089129|
+[ INFO : 2026-04-03 01:26:22,529 ] - |     TRAIN|         5|      3500|    33.456|0.00089085|
+[ INFO : 2026-04-03 01:29:15,740 ] - |     TRAIN|         5|      3600|    33.454|0.00089041|
+[ INFO : 2026-04-03 01:32:07,024 ] - |     TRAIN|         5|      3700|     33.46|0.00088997|
+[ INFO : 2026-04-03 01:39:38,465 ] - |     TRAIN|         5|      3800|    33.458|0.00088954|
+[ INFO : 2026-04-03 01:41:49,166 ] - |     TRAIN|         5|      3900|     33.46| 0.0008891|
+[ INFO : 2026-04-03 01:43:53,963 ] - |     TRAIN|         5|      4000|    33.468|0.00088866|
+[ INFO : 2026-04-03 01:46:12,600 ] - |     TRAIN|         5|      4100|    33.467|0.00088822|
+[ INFO : 2026-04-03 01:48:27,200 ] - |     TRAIN|         5|      4200|    33.461|0.00088779|
+[ INFO : 2026-04-03 01:50:48,262 ] - |     TRAIN|         5|      4300|    33.462|0.00088735|
+[ INFO : 2026-04-03 01:53:01,625 ] - |     TRAIN|         5|      4400|    33.466|0.00088691|
+[ INFO : 2026-04-03 01:55:24,568 ] - |     TRAIN|         5|      4500|    33.466|0.00088648|
+[ INFO : 2026-04-03 01:57:44,061 ] - |     TRAIN|         5|      4600|    33.463|0.00088604|
+[ INFO : 2026-04-03 02:00:16,786 ] - |     TRAIN|         5|      4700|    33.457|0.00088561|
+[ INFO : 2026-04-03 02:03:04,097 ] - |     TRAIN|         5|      4800|    33.456|0.00088517|
+[ INFO : 2026-04-03 02:05:55,304 ] - |     TRAIN|         5|      4900|    33.458|0.00088474|
+[ INFO : 2026-04-03 02:08:42,888 ] - |     TRAIN|         5|      5000|    33.459| 0.0008843|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-03 02:11:55,235 ] - |       VAL|         5|       100|    33.377|         -|
+[ INFO : 2026-04-03 02:14:36,977 ] - |       VAL|         5|       200|    33.407|         -|
+[ INFO : 2026-04-03 02:17:18,850 ] - |       VAL|         5|       300|    33.396|         -|
+[ INFO : 2026-04-03 02:20:06,174 ] - |       VAL|         5|       400|    33.432|         -|
+[ INFO : 2026-04-03 02:22:50,099 ] - |       VAL|         5|       500|    33.422|         -|
+[ INFO : 2026-04-03 02:25:29,257 ] - |       VAL|         5|       600|    33.433|         -|
+[ INFO : 2026-04-03 02:28:07,060 ] - |       VAL|         5|       700|     33.43|         -|
+[ INFO : 2026-04-03 02:30:46,780 ] - |       VAL|         5|       800|    33.447|         -|
+[ INFO : 2026-04-03 02:33:26,592 ] - |       VAL|         5|       900|    33.439|         -|
+[ INFO : 2026-04-03 02:36:06,602 ] - |       VAL|         5|      1000|    33.436|         -|
+[ INFO : 2026-04-03 02:38:44,407 ] - |       VAL|         5|      1100|    33.454|         -|
+[ INFO : 2026-04-03 02:41:21,696 ] - |       VAL|         5|      1200|    33.464|         -|
+[ INFO : 2026-04-03 02:42:50,773 ] - Epoch 5 Train info train_loss 33.45892729682922
+[ INFO : 2026-04-03 02:42:50,774 ] - Epoch 5 Val info val_loss 33.467525706481936
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-03 02:46:37,911 ] - |     TRAIN|         6|       100|    33.445|0.00088387|
+[ INFO : 2026-04-03 02:48:38,532 ] - |     TRAIN|         6|       200|    33.489|0.00088343|
+[ INFO : 2026-04-03 02:50:39,168 ] - |     TRAIN|         6|       300|    33.504|  0.000883|
+[ INFO : 2026-04-03 02:52:40,652 ] - |     TRAIN|         6|       400|     33.51|0.00088256|
+[ INFO : 2026-04-03 02:54:52,679 ] - |     TRAIN|         6|       500|    33.526|0.00088213|
+[ INFO : 2026-04-03 02:56:56,682 ] - |     TRAIN|         6|       600|    33.582| 0.0008817|
+[ INFO : 2026-04-03 02:59:02,277 ] - |     TRAIN|         6|       700|    33.573|0.00088126|
+[ INFO : 2026-04-03 03:01:01,248 ] - |     TRAIN|         6|       800|    33.552|0.00088083|
+[ INFO : 2026-04-03 03:03:13,263 ] - |     TRAIN|         6|       900|    33.523| 0.0008804|
+[ INFO : 2026-04-03 03:05:38,064 ] - |     TRAIN|         6|      1000|    33.538|0.00087996|
+[ INFO : 2026-04-03 03:08:19,206 ] - |     TRAIN|         6|      1100|    33.568|0.00087953|
+[ INFO : 2026-04-03 03:11:00,354 ] - |     TRAIN|         6|      1200|    33.596| 0.0008791|
+[ INFO : 2026-04-03 03:15:07,692 ] - |     TRAIN|         6|      1300|    33.602|0.00087866|
+[ INFO : 2026-04-03 03:17:04,058 ] - |     TRAIN|         6|      1400|    33.581|0.00087823|
+[ INFO : 2026-04-03 03:19:08,439 ] - |     TRAIN|         6|      1500|    33.555| 0.0008778|
+[ INFO : 2026-04-03 03:21:19,658 ] - |     TRAIN|         6|      1600|    33.542|0.00087737|
+[ INFO : 2026-04-03 03:23:21,625 ] - |     TRAIN|         6|      1700|    33.522|0.00087694|
+[ INFO : 2026-04-03 03:25:29,797 ] - |     TRAIN|         6|      1800|    33.516|0.00087651|
+[ INFO : 2026-04-03 03:27:34,074 ] - |     TRAIN|         6|      1900|    33.498|0.00087608|
+[ INFO : 2026-04-03 03:29:35,739 ] - |     TRAIN|         6|      2000|      33.5|0.00087564|
+[ INFO : 2026-04-03 03:31:39,021 ] - |     TRAIN|         6|      2100|    33.498|0.00087521|
+[ INFO : 2026-04-03 03:33:51,711 ] - |     TRAIN|         6|      2200|    33.479|0.00087478|
+[ INFO : 2026-04-03 03:36:20,177 ] - |     TRAIN|         6|      2300|    33.463|0.00087435|
+[ INFO : 2026-04-03 03:38:52,432 ] - |     TRAIN|         6|      2400|     33.45|0.00087392|
+[ INFO : 2026-04-03 03:41:21,875 ] - |     TRAIN|         6|      2500|    33.445|0.00087349|
+[ INFO : 2026-04-03 03:45:09,699 ] - |     TRAIN|         6|      2600|    33.443|0.00087306|
+[ INFO : 2026-04-03 03:47:13,013 ] - |     TRAIN|         6|      2700|     33.45|0.00087264|
+[ INFO : 2026-04-03 03:49:22,515 ] - |     TRAIN|         6|      2800|    33.445|0.00087221|
+[ INFO : 2026-04-03 03:51:25,433 ] - |     TRAIN|         6|      2900|    33.445|0.00087178|
+[ INFO : 2026-04-03 03:53:23,888 ] - |     TRAIN|         6|      3000|    33.438|0.00087135|
+[ INFO : 2026-04-03 03:55:24,089 ] - |     TRAIN|         6|      3100|    33.426|0.00087092|
+[ INFO : 2026-04-03 03:57:24,444 ] - |     TRAIN|         6|      3200|    33.419|0.00087049|
+[ INFO : 2026-04-03 03:59:33,876 ] - |     TRAIN|         6|      3300|    33.412|0.00087006|
+[ INFO : 2026-04-03 04:01:34,072 ] - |     TRAIN|         6|      3400|    33.417|0.00086964|
+[ INFO : 2026-04-03 04:03:53,286 ] - |     TRAIN|         6|      3500|    33.443|0.00086921|
+[ INFO : 2026-04-03 04:06:31,970 ] - |     TRAIN|         6|      3600|     33.46|0.00086878|
+[ INFO : 2026-04-03 04:09:25,801 ] - |     TRAIN|         6|      3700|    33.464|0.00086835|
+[ INFO : 2026-04-03 04:17:35,788 ] - |     TRAIN|         6|      3800|    33.468|0.00086793|
+[ INFO : 2026-04-03 04:19:55,249 ] - |     TRAIN|         6|      3900|    33.471| 0.0008675|
+[ INFO : 2026-04-03 04:22:14,594 ] - |     TRAIN|         6|      4000|    33.473|0.00086707|
+[ INFO : 2026-04-03 04:24:30,093 ] - |     TRAIN|         6|      4100|    33.471|0.00086665|
+[ INFO : 2026-04-03 04:26:59,973 ] - |     TRAIN|         6|      4200|    33.477|0.00086622|
+[ INFO : 2026-04-03 04:29:17,303 ] - |     TRAIN|         6|      4300|    33.483|0.00086579|
+[ INFO : 2026-04-03 04:31:42,050 ] - |     TRAIN|         6|      4400|    33.483|0.00086537|
+[ INFO : 2026-04-03 04:34:14,149 ] - |     TRAIN|         6|      4500|    33.491|0.00086494|
+[ INFO : 2026-04-03 04:36:37,382 ] - |     TRAIN|         6|      4600|    33.503|0.00086452|
+[ INFO : 2026-04-03 04:39:11,475 ] - |     TRAIN|         6|      4700|    33.507|0.00086409|
+[ INFO : 2026-04-03 04:41:54,828 ] - |     TRAIN|         6|      4800|    33.508|0.00086367|
+[ INFO : 2026-04-03 04:44:44,603 ] - |     TRAIN|         6|      4900|    33.509|0.00086324|
+[ INFO : 2026-04-03 04:47:29,789 ] - |     TRAIN|         6|      5000|    33.508|0.00086282|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-03 04:50:49,348 ] - |       VAL|         6|       100|     33.85|         -|
+[ INFO : 2026-04-03 04:53:46,071 ] - |       VAL|         6|       200|    33.634|         -|
+[ INFO : 2026-04-03 04:56:43,045 ] - |       VAL|         6|       300|    33.574|         -|
+[ INFO : 2026-04-03 04:59:45,541 ] - |       VAL|         6|       400|    33.518|         -|
+[ INFO : 2026-04-03 05:02:44,415 ] - |       VAL|         6|       500|    33.563|         -|
+[ INFO : 2026-04-03 05:05:27,435 ] - |       VAL|         6|       600|     33.55|         -|
+[ INFO : 2026-04-03 05:08:14,422 ] - |       VAL|         6|       700|    33.583|         -|
+[ INFO : 2026-04-03 05:11:04,335 ] - |       VAL|         6|       800|    33.619|         -|
+[ INFO : 2026-04-03 05:14:05,043 ] - |       VAL|         6|       900|    33.625|         -|
+[ INFO : 2026-04-03 05:16:55,620 ] - |       VAL|         6|      1000|    33.601|         -|
+[ INFO : 2026-04-03 05:19:41,521 ] - |       VAL|         6|      1100|    33.592|         -|
+[ INFO : 2026-04-03 05:22:20,717 ] - |       VAL|         6|      1200|    33.579|         -|
+[ INFO : 2026-04-03 05:23:36,933 ] - Epoch 6 Train info train_loss 33.5080725402832
+[ INFO : 2026-04-03 05:23:36,933 ] - Epoch 6 Val info val_loss 33.581157905578614
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-03 05:28:02,655 ] - |     TRAIN|         7|       100|    33.898|0.00086239|
+[ INFO : 2026-04-03 05:29:58,456 ] - |     TRAIN|         7|       200|    33.804|0.00086197|
+[ INFO : 2026-04-03 05:31:58,127 ] - |     TRAIN|         7|       300|    33.701|0.00086155|
+[ INFO : 2026-04-03 05:34:03,261 ] - |     TRAIN|         7|       400|    33.695|0.00086112|
+[ INFO : 2026-04-03 10:42:50,828 ] - |     TRAIN|         7|       500|    33.646| 0.0008607|
+[ INFO : 2026-04-03 10:44:51,726 ] - |     TRAIN|         7|       600|    33.648|0.00086028|
+[ INFO : 2026-04-03 10:46:45,326 ] - |     TRAIN|         7|       700|    33.651|0.00085985|
+[ INFO : 2026-04-03 10:48:45,321 ] - |     TRAIN|         7|       800|    33.649|0.00085943|
+[ INFO : 2026-04-03 10:50:40,163 ] - |     TRAIN|         7|       900|    33.649|0.00085901|
+[ INFO : 2026-04-03 10:52:49,563 ] - |     TRAIN|         7|      1000|    33.639|0.00085859|
+[ INFO : 2026-04-03 10:55:05,212 ] - |     TRAIN|         7|      1100|    33.649|0.00085816|
+[ INFO : 2026-04-03 10:57:20,268 ] - |     TRAIN|         7|      1200|    33.665|0.00085774|
+[ INFO : 2026-04-03 11:00:43,632 ] - |     TRAIN|         7|      1300|    33.685|0.00085732|
+[ INFO : 2026-04-03 11:02:32,014 ] - |     TRAIN|         7|      1400|    33.681| 0.0008569|
+[ INFO : 2026-04-03 11:04:22,637 ] - |     TRAIN|         7|      1500|    33.696|0.00085648|
+[ INFO : 2026-04-03 11:06:15,769 ] - |     TRAIN|         7|      1600|    33.702|0.00085606|
+[ INFO : 2026-04-03 11:08:09,176 ] - |     TRAIN|         7|      1700|    33.704|0.00085563|
+[ INFO : 2026-04-03 11:10:03,710 ] - |     TRAIN|         7|      1800|    33.685|0.00085521|
+[ INFO : 2026-04-03 11:11:59,815 ] - |     TRAIN|         7|      1900|     33.68|0.00085479|
+[ INFO : 2026-04-03 11:13:55,532 ] - |     TRAIN|         7|      2000|    33.657|0.00085437|
+[ INFO : 2026-04-03 11:15:50,280 ] - |     TRAIN|         7|      2100|    33.637|0.00085395|
+[ INFO : 2026-04-03 11:17:50,122 ] - |     TRAIN|         7|      2200|    33.623|0.00085353|
+[ INFO : 2026-04-03 11:20:00,630 ] - |     TRAIN|         7|      2300|    33.614|0.00085311|
+[ INFO : 2026-04-03 11:22:16,691 ] - |     TRAIN|         7|      2400|    33.607|0.00085269|
+[ INFO : 2026-04-03 11:24:36,428 ] - |     TRAIN|         7|      2500|    33.614|0.00085227|
+[ INFO : 2026-04-03 11:29:37,270 ] - |     TRAIN|         7|      2600|     33.61|0.00085186|
+[ INFO : 2026-04-03 11:31:31,597 ] - |     TRAIN|         7|      2700|    33.611|0.00085144|
+[ INFO : 2026-04-03 11:33:24,341 ] - |     TRAIN|         7|      2800|    33.608|0.00085102|
+[ INFO : 2026-04-03 11:35:19,990 ] - |     TRAIN|         7|      2900|    33.613| 0.0008506|
+[ INFO : 2026-04-03 11:37:17,827 ] - |     TRAIN|         7|      3000|    33.615|0.00085018|
+[ INFO : 2026-04-03 11:39:18,319 ] - |     TRAIN|         7|      3100|    33.618|0.00084976|
+[ INFO : 2026-04-03 11:41:12,231 ] - |     TRAIN|         7|      3200|    33.607|0.00084935|
+[ INFO : 2026-04-03 11:43:08,072 ] - |     TRAIN|         7|      3300|    33.607|0.00084893|
+[ INFO : 2026-04-03 11:45:05,605 ] - |     TRAIN|         7|      3400|    33.598|0.00084851|
+[ INFO : 2026-04-03 11:47:13,954 ] - |     TRAIN|         7|      3500|    33.588|0.00084809|
+[ INFO : 2026-04-03 11:49:39,467 ] - |     TRAIN|         7|      3600|    33.581|0.00084768|
+[ INFO : 2026-04-03 11:52:06,239 ] - |     TRAIN|         7|      3700|    33.577|0.00084726|
+[ INFO : 2026-04-03 11:56:30,438 ] - |     TRAIN|         7|      3800|    33.584|0.00084684|
+[ INFO : 2026-04-03 11:58:22,828 ] - |     TRAIN|         7|      3900|    33.584|0.00084643|
+[ INFO : 2026-04-03 12:00:12,878 ] - |     TRAIN|         7|      4000|    33.576|0.00084601|
+[ INFO : 2026-04-03 12:02:09,838 ] - |     TRAIN|         7|      4100|    33.572|0.00084559|
+[ INFO : 2026-04-03 12:04:06,928 ] - |     TRAIN|         7|      4200|    33.575|0.00084518|
+[ INFO : 2026-04-03 12:06:00,264 ] - |     TRAIN|         7|      4300|    33.576|0.00084476|
+[ INFO : 2026-04-03 12:07:58,067 ] - |     TRAIN|         7|      4400|    33.579|0.00084435|
+[ INFO : 2026-04-03 12:09:53,818 ] - |     TRAIN|         7|      4500|    33.576|0.00084393|
+[ INFO : 2026-04-03 12:11:52,892 ] - |     TRAIN|         7|      4600|    33.572|0.00084352|
+[ INFO : 2026-04-03 12:13:51,480 ] - |     TRAIN|         7|      4700|    33.566| 0.0008431|
+[ INFO : 2026-04-03 12:15:59,891 ] - |     TRAIN|         7|      4800|    33.556|0.00084269|
+[ INFO : 2026-04-03 12:18:20,925 ] - |     TRAIN|         7|      4900|    33.555|0.00084227|
+[ INFO : 2026-04-03 12:20:43,128 ] - |     TRAIN|         7|      5000|    33.549|0.00084186|
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py:187: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=enable_amp):
+[ INFO : 2026-04-03 12:23:09,498 ] - |       VAL|         7|       100|    33.213|         -|
+[ INFO : 2026-04-03 12:25:18,885 ] - |       VAL|         7|       200|    33.194|         -|
+[ INFO : 2026-04-03 12:27:27,490 ] - |       VAL|         7|       300|     33.16|         -|
+[ INFO : 2026-04-03 12:29:38,006 ] - |       VAL|         7|       400|    33.144|         -|
+[ INFO : 2026-04-03 12:31:46,515 ] - |       VAL|         7|       500|    33.208|         -|
+[ INFO : 2026-04-03 12:33:47,445 ] - |       VAL|         7|       600|    33.205|         -|
+[ INFO : 2026-04-03 12:37:28,864 ] - |       VAL|         7|       700|    33.224|         -|
+[ INFO : 2026-04-03 12:41:11,187 ] - |       VAL|         7|       800|    33.221|         -|
+[ INFO : 2026-04-03 12:44:42,095 ] - |       VAL|         7|       900|    33.224|         -|
+[ INFO : 2026-04-03 12:46:45,418 ] - |       VAL|         7|      1000|    33.254|         -|
+[ INFO : 2026-04-03 12:48:49,152 ] - |       VAL|         7|      1100|    33.256|         -|
+[ INFO : 2026-04-03 12:50:51,645 ] - |       VAL|         7|      1200|    33.255|         -|
+[ INFO : 2026-04-03 12:51:57,971 ] - Epoch 7 Train info train_loss 33.548675938797
+[ INFO : 2026-04-03 12:51:57,971 ] - Epoch 7 Val info val_loss 33.26984301300049
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+[ INFO : 2026-04-03 12:56:48,523 ] - |     TRAIN|         8|       100|    33.044|0.00084144|
+[ INFO : 2026-04-03 12:58:45,253 ] - |     TRAIN|         8|       200|    33.144|0.00084103|
+[ INFO : 2026-04-03 13:00:35,076 ] - |     TRAIN|         8|       300|     33.06|0.00084062|
+[ INFO : 2026-04-03 13:02:27,435 ] - |     TRAIN|         8|       400|    33.086| 0.0008402|
+[ INFO : 2026-04-03 13:04:20,591 ] - |     TRAIN|         8|       500|    33.142|0.00083979|
+[ INFO : 2026-04-03 13:06:18,346 ] - |     TRAIN|         8|       600|    33.149|0.00083938|
+[ INFO : 2026-04-03 13:08:17,070 ] - |     TRAIN|         8|       700|     33.14|0.00083897|
+[ INFO : 2026-04-03 13:10:14,022 ] - |     TRAIN|         8|       800|    33.145|0.00083855|
+[ INFO : 2026-04-03 13:12:09,578 ] - |     TRAIN|         8|       900|    33.161|0.00083814|
+[ INFO : 2026-04-03 13:14:17,586 ] - |     TRAIN|         8|      1000|    33.176|0.00083773|
+[ INFO : 2026-04-03 13:16:39,535 ] - |     TRAIN|         8|      1100|    33.172|0.00083732|
+[ INFO : 2026-04-03 13:19:07,163 ] - |     TRAIN|         8|      1200|    33.202| 0.0008369|
+[ INFO : 2026-04-03 13:23:50,774 ] - |     TRAIN|         8|      1300|    33.227|0.00083649|
+[ INFO : 2026-04-03 13:25:45,375 ] - |     TRAIN|         8|      1400|    33.268|0.00083608|
+[ INFO : 2026-04-03 13:27:39,133 ] - |     TRAIN|         8|      1500|    33.298|0.00083567|
+[ INFO : 2026-04-03 13:29:36,087 ] - |     TRAIN|         8|      1600|    33.292|0.00083526|
+[ INFO : 2026-04-03 13:31:34,566 ] - |     TRAIN|         8|      1700|    33.312|0.00083485|
+[ INFO : 2026-04-03 13:33:33,128 ] - |     TRAIN|         8|      1800|    33.313|0.00083444|
+[ INFO : 2026-04-03 13:35:32,742 ] - |     TRAIN|         8|      1900|    33.326|0.00083403|
+[ INFO : 2026-04-03 13:37:42,935 ] - |     TRAIN|         8|      2000|    33.346|0.00083362|
+[ INFO : 2026-04-03 13:39:50,693 ] - |     TRAIN|         8|      2100|    33.375|0.00083321|
+[ INFO : 2026-04-03 13:42:08,932 ] - |     TRAIN|         8|      2200|    33.396| 0.0008328|
+[ INFO : 2026-04-03 13:45:14,723 ] - |     TRAIN|         8|      2300|    33.421|0.00083239|
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1285, in _try_get_data
+[rank0]:     data = self._data_queue.get(timeout=timeout)
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/queue.py", line 180, in get
+[rank0]:     self.not_empty.wait(remaining)
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/threading.py", line 324, in wait
+[rank0]:     gotit = waiter.acquire(True, timeout)
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/utils/data/_utils/signal_handling.py", line 73, in handler
+[rank0]:     _error_if_any_worker_fails()
+[rank0]: RuntimeError: DataLoader worker (pid 4150998) is killed by signal: Killed. 
+
+[rank0]: The above exception was the direct cause of the following exception:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train.py", line 354, in <module>
+[rank0]:     fire.Fire(train)
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/fire/core.py", line 135, in Fire
+[rank0]:     component_trace = _Fire(component, args, parsed_flag_args, context, name)
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/fire/core.py", line 468, in _Fire
+[rank0]:     component, remaining_args = _CallAndUpdateTrace(
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/fire/core.py", line 684, in _CallAndUpdateTrace
+[rank0]:     component = fn(*varargs, **kwargs)
+[rank0]:   File "/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/bin/train.py", line 266, in train
+[rank0]:     train_loss, _ = executor.train(
+[rank0]:   File "/share/workspace3/maduo/codebase/wesep_wenet/examples/visual/voxceleb2mix/wesep/utils/executor.py", line 104, in train
+[rank0]:     for i, batch in enumerate(dataloader):
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 734, in __next__
+[rank0]:     data = self._next_data()
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1492, in _next_data
+[rank0]:     idx, data = self._get_data()
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1444, in _get_data
+[rank0]:     success, data = self._try_get_data()
+[rank0]:   File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1298, in _try_get_data
+[rank0]:     raise RuntimeError(
+[rank0]: RuntimeError: DataLoader worker (pid(s) 4150998) exited unexpectedly
+Exception in thread Thread-15 (_pin_memory_loop):
+[rank0]:[W403 13:46:49.377442462 ProcessGroupNCCL.cpp:1538] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+E0403 13:48:23.159000 2944152 site-packages/torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 2944950) of binary: /share/home/maduo/.conda/envs/online_avcrossnet_mamba/bin/python3.10
+Traceback (most recent call last):
+  File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+  File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+  File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/share/home/maduo/.conda/envs/online_avcrossnet_mamba/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 277, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+wesep/bin/train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-04-03_13:48:23
+  host      : gpu01.hpc.com
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2944950)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
