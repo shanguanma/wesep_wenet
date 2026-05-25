@@ -1,10 +1,11 @@
 import io
 import json
-import logging
+#import logging
 import random
 import tarfile
 from subprocess import PIPE, Popen
 from urllib.parse import urlparse
+import functools
 
 import librosa
 import numpy as np
@@ -16,9 +17,10 @@ from scipy import signal
 from wesep.dataset.FRAM_RIR import single_channel as RIR_sim
 from wesep.dataset.lmdb_data import LmdbData
 from wesep.dataset.timeline import sample_num_speakers, timeline_generator, parse_timeline, parse_overlap_ratio
+from transformers.utils import logging
 
 AUDIO_FORMAT_SETS = {"flac", "mp3", "m4a", "ogg", "opus", "wav", "wma"}
-
+logger = logging.get_logger(__name__)
 
 def url_opener(data):
     """Give url or local file, return file descriptor
@@ -97,7 +99,17 @@ def tar_file_and_group(data):
                         num_speakers += 1
 
                     elif postfix in AUDIO_FORMAT_SETS:
-                        waveform, sr = torchaudio.load(f)
+                        try:
+                            from torchcodec.decoders import AudioDecoder
+                            samples = AudioDecoder(f)
+                            all_samples = samples.get_all_samples()
+                            waveform = all_samples.data
+                            sr = all_samples.sample_rate
+                        except:
+                            logger.warning_once("Failed to load audio with torchcodec, using torchaudio instead")
+                            import torchaudio
+                            # torchaudio.load defaultly normlize is True,[-1,1]
+                            waveform, sr = torchaudio.load(f)
 
                         if prefix.endswith("_spk1"):
                             example.setdefault("wav_spk1", []).append(waveform)
@@ -111,7 +123,7 @@ def tar_file_and_group(data):
 
                 except Exception as ex:
                     valid = False
-                    logging.warning(f"Failed to parse {name}: {ex}")
+                    logger.warning(f"Failed to parse {name}: {ex}")
 
             prev_prefix = prefix
 
@@ -161,14 +173,23 @@ def tar_file_and_group_single_spk(data):
                         example[postfix] = (
                             file_obj.read().decode("utf8").strip())
                     elif postfix in AUDIO_FORMAT_SETS:
-                        waveform, sample_rate = torchaudio.load(file_obj)
+                        try:
+                            from torchcodec.decoders import AudioDecoder
+                            samples = AudioDecoder(file_obj)
+                            all_samples = samples.get_all_samples()
+                            waveform = all_samples.data
+                            sample_rate = all_samples.sample_rate
+                        except:
+                            logger.warning_once("Failed to load audio with torchcodec, using torchaudio instead")
+                            import torchaudio
+                            waveform, sample_rate = torchaudio.load(file_obj)
                         example["wav"] = waveform
                         example["sample_rate"] = sample_rate
                     else:
                         example[postfix] = file_obj.read()
                 except Exception as ex:
                     valid = False
-                    logging.warning("error to parse {}".format(name))
+                    logger.warning("error to parse {}".format(name))
             prev_prefix = prefix
         if prev_prefix is not None:
             example["key"] = prev_prefix
@@ -209,7 +230,7 @@ def parse_raw(data):
         try:
             obj = json.loads(json_line)
         except Exception as ex:
-            logging.warning(f"Bad json line: {json_line}")
+            logger.warning(f"Bad json line: {json_line}")
             continue
 
         # --- required fields ---
@@ -224,7 +245,7 @@ def parse_raw(data):
         # current convention: use default channel, first path
         mix_paths = mix_dict.get("default", [])
         if len(mix_paths) == 0:
-            logging.warning(f"No mix path for sample {key}")
+            logger.warning(f"No mix path for sample {key}")
             continue
 
         #########################
@@ -235,9 +256,18 @@ def parse_raw(data):
 
         for ch_idx, mix_path in enumerate(mix_paths):
             try:
-                wav_ch, sr = torchaudio.load(mix_path)  # (1, T) or (T,)
+                try:
+                    from torchcodec.decoders import AudioDecoder
+                    samples = AudioDecoder(mix_path)
+                    all_samples = samples.get_all_samples()
+                    wav_ch = all_samples.data
+                    sr = all_samples.sample_rate
+                except:
+                    logger.warning_once("Failed to load audio with torchcodec, using torchaudio instead")
+                    import torchaudio   # torchaudio.load defaultly normlize is True,[-1,1]
+                    wav_ch, sr = torchaudio.load(mix_path)  # (1, T) or (T,)
             except Exception:
-                logging.warning(f"Failed to read mix wav: {mix_path}")
+                logger.warning(f"Failed to read mix wav: {mix_path}")
                 wav_list = []
                 break
 
@@ -245,7 +275,7 @@ def parse_raw(data):
             if wav_ch.dim() == 1:
                 wav_ch = wav_ch.unsqueeze(0)
             elif wav_ch.dim() != 2:
-                logging.warning(
+                logger.warning(
                     f"Unsupported number of channels in mix wav: {mix_path}, shape={tuple(wav_ch.shape)}"
                 )  # noqa
                 wav_list = []
@@ -256,7 +286,7 @@ def parse_raw(data):
                 min_len = wav_ch.size(-1)
             else:
                 if sr != sample_rate:
-                    logging.warning(f"Sample rate mismatch in {key}: "
+                    logger.warning(f"Sample rate mismatch in {key}: "
                                     f"mix={sample_rate}, ch{ch_idx}={sr}")
                 min_len = min(min_len, wav_ch.size(-1))
 
@@ -288,26 +318,35 @@ def parse_raw(data):
         # --- load sources ---
         for i, spk_id in enumerate(spk_ids, start=1):
             if spk_id not in src_dict:
-                logging.warning(
+                logger.warning(
                     f"Speaker {spk_id} not in src for sample {key}")
                 continue
 
             src_paths = src_dict[spk_id]
             if len(src_paths) == 0:
-                logging.warning(
+                logger.warning(
                     f"No src path for speaker {spk_id} in sample {key}")
                 continue
 
             src_path = src_paths[0]
 
             try:
-                wav_spk, sr = torchaudio.load(src_path)
+                try:
+                    from torchcodec.decoders import AudioDecoder
+                    samples = AudioDecoder(src_path)
+                    all_samples = samples.get_all_samples()
+                    wav_spk = all_samples.data
+                    sr = all_samples.sample_rate
+                except:
+                    logger.warning_once("Failed to load audio with torchcodec, using torchaudio instead")
+                    import torchaudio   # torchaudio.load defaultly normlize is True,[-1,1]
+                    wav_spk, sr = torchaudio.load(src_path)
             except Exception:
-                logging.warning(f"Failed to read src wav: {src_path}")
+                logger.warning(f"Failed to read src wav: {src_path}")
                 continue
 
             if sr != sample_rate:
-                logging.warning(f"Sample rate mismatch in {key}: "
+                logger.warning(f"Sample rate mismatch in {key}: "
                                 f"mix={sample_rate}, src={sr}")
 
             example[f"spk{i}"] = spk_id
@@ -374,20 +413,33 @@ def parse_raw_single_spk(data):
 
         # -------- load audio --------
         try:
-            wav_ch, sr = torchaudio.load(wav_path)  # (C, T) or (T,)
+            try:
+                from torchcodec.decoders import AudioDecoder
+                samples = AudioDecoder(wav_path)
+                all_samples = samples.get_all_samples()
+                wav_ch = all_samples.data
+                sr = all_samples.sample_rate
+            except:
+                logger.warning_once("Failed to load audio with torchcodec, using torchaudio instead")
+                import torchaudio   # torchaudio.load defaultly normlize is True,[-1,1]
+                wav_ch, sr = torchaudio.load(wav_path)  # (C, T) or (T,)
         except Exception:
-            logging.warning(f"Failed to read wav: {wav_path}")
+            logger.warning(f"Failed to read wav: {wav_path}")
             continue
 
         # -------- normalize shape to [1, T] --------
         if wav_ch.dim() == 1:
             wav = wav_ch.unsqueeze(0)
         else:
-            if wav_ch.size(0) != 1:
-                raise NotImplementedError(
-                    f"Multi-channel wav is not supported yet: "
-                    f"{wav_path}, shape={tuple(wav_ch.shape)}")
-            wav = wav_ch
+            if wav_ch.size(0) > 1:
+                # Stereo / multi-channel (common for MP4): mono downmix for TSE.
+                logger.warning_once(
+                    "Multi-channel audio downmixed to mono (mean over channels) "
+                    "in parse_raw_single_spk"
+                )
+                wav = wav_ch.mean(dim=0, keepdim=True)
+            else:
+                wav = wav_ch
 
         yield {
             "key": sample["key"],
@@ -418,7 +470,7 @@ def sample_speaker_group(data,
     for sample in data:
         buf.append(sample)
         if len(buf) >= shuffle_size:
-            random.shuffle(buf)
+            rng.shuffle(buf)
             for x in buf:
                 num_speaker = sample_num_speakers(num_speakers, rng)
                 if timeline_conf is not None:
@@ -447,9 +499,9 @@ def sample_speaker_group(data,
                 key = "mix_" + x["key"]
                 interference_idx = 1
                 while interference_idx < num_speaker:
-                    interference = random.choice(buf)
+                    interference = rng.choice(buf)
                     while interference["spk"] == cur_spk:
-                        interference = random.choice(buf)
+                        interference = rng.choice(buf)
                     key = key + "_" + interference["key"]
                     interference_idx += 1
                     # attach timeline for this slot
@@ -468,7 +520,7 @@ def sample_speaker_group(data,
             buf = []
 
     # The samples left over
-    random.shuffle(buf)
+    rng.shuffle(buf)
     unique_spk = list({s["spk"] for s in buf})
     K = len(unique_spk)
     for x in buf:
@@ -500,9 +552,9 @@ def sample_speaker_group(data,
         key = "mix_" + x["key"]
         interference_idx = 1
         while interference_idx < num_speaker:
-            interference = random.choice(buf)
+            interference = rng.choice(buf)
             while interference["spk"] == cur_spk:
-                interference = random.choice(buf)
+                interference = rng.choice(buf)
             key = key + "_" + interference["key"]
             interference_idx += 1
             # attach timeline for this slot
@@ -511,6 +563,116 @@ def sample_speaker_group(data,
             ])
             example["wav_spk" + str(interference_idx)] = interference["wav"]
             example["spk" + str(interference_idx)] = interference["spk"]
+        example["key"] = key
+        yield example
+
+
+def sample_speaker_group_without_repeat(data,
+                                      num_speakers=None,
+                                      shuffle_size=1000,
+                                      timeline_conf=None,
+                                      rng=random):
+    """Like :func:`sample_speaker_group`, but each mixture slot uses a
+    **distinct** speaker ID (no reuse of interference speakers).
+
+    Also caps ``num_speaker`` by the number of distinct speaker IDs in the
+    current buffer (main branch), matching the leftover-branch behaviour.
+
+    Use this when generating or training on N-way mixes where each track must
+    be a different person; the original :func:`sample_speaker_group` only
+    excludes the primary speaker from interference draws and may repeat IDs.
+    """
+    assert num_speakers is not None
+
+    buf = []
+    for sample in data:
+        buf.append(sample)
+        if len(buf) >= shuffle_size:
+            rng.shuffle(buf)
+            max_distinct_spk = len({s["spk"] for s in buf})
+            for x in buf:
+                num_speaker = sample_num_speakers(num_speakers, rng)
+                num_speaker = min(num_speaker, max_distinct_spk)
+                if timeline_conf is not None:
+                    timeline, overlap_ratio = timeline_generator(
+                        timeline_conf, num_speaker, rng)
+                else:
+                    timeline = [{
+                        "speaker": i,
+                        "start": 0.0,
+                        "end": 1.0
+                    } for i in range(num_speaker)]
+                    overlap_ratio = {"overlap_ratio": 1.0}
+
+                cur_spk = x["spk"]
+                example = {
+                    "key": x["key"],
+                    "wav_spk1": x["wav"],
+                    "spk1": x["spk"],
+                    "sample_rate": x["sample_rate"],
+                    "num_speaker": num_speaker,
+                    "overlap_ratio_2spk": parse_overlap_ratio(overlap_ratio),
+                }
+                example["timeline_spk1"] = parse_timeline(
+                    [t for t in timeline if t["speaker"] == 0])
+                key = "mix_" + x["key"]
+                used_spk_ids = {cur_spk}
+                for slot in range(2, num_speaker + 1):
+                    candidates = [s for s in buf if s["spk"] not in used_spk_ids]
+                    interference = rng.choice(candidates)
+                    used_spk_ids.add(interference["spk"])
+                    key = key + "_" + interference["key"]
+                    example["timeline_spk" + str(slot)] = parse_timeline([
+                        t for t in timeline
+                        if t["speaker"] == (slot - 1)
+                    ])
+                    example["wav_spk" + str(slot)] = interference["wav"]
+                    example["spk" + str(slot)] = interference["spk"]
+                example["key"] = key
+                yield example
+
+            buf = []
+
+    rng.shuffle(buf)
+    unique_spk = list({s["spk"] for s in buf})
+    K = len(unique_spk)
+    for x in buf:
+        num_speaker = sample_num_speakers(num_speakers, rng)
+        num_speaker = min(num_speaker, K)
+        if timeline_conf is not None:
+            timeline, overlap_ratio = timeline_generator(
+                timeline_conf, num_speaker, rng)
+        else:
+            timeline = [{
+                "speaker": i,
+                "start": 0.0,
+                "end": 1.0
+            } for i in range(num_speaker)]
+            overlap_ratio = {"overlap_ratio": 1.0}
+
+        cur_spk = x["spk"]
+        example = {
+            "key": x["key"],
+            "wav_spk1": x["wav"],
+            "spk1": x["spk"],
+            "sample_rate": x["sample_rate"],
+            "num_speaker": num_speaker,
+            "overlap_ratio_2spk": parse_overlap_ratio(overlap_ratio),
+        }
+        example["timeline_spk1"] = parse_timeline(
+            [t for t in timeline if t["speaker"] == 0])
+        key = "mix_" + x["key"]
+        used_spk_ids = {cur_spk}
+        for slot in range(2, num_speaker + 1):
+            candidates = [s for s in buf if s["spk"] not in used_spk_ids]
+            interference = rng.choice(candidates)
+            used_spk_ids.add(interference["spk"])
+            key = key + "_" + interference["key"]
+            example["timeline_spk" + str(slot)] = parse_timeline([
+                t for t in timeline if t["speaker"] == (slot - 1)
+            ])
+            example["wav_spk" + str(slot)] = interference["wav"]
+            example["spk" + str(slot)] = interference["spk"]
         example["key"] = key
         yield example
 
@@ -674,12 +836,14 @@ def resample(data, resample_rate=16000):
         yield sample
 
 
-def get_random_chunk(data_list, chunk_len):
+def get_random_chunk(data_list, chunk_len, rng=random):
     """
     Args:
         data_list: list[Tensor], shapes like
                    mix, targets: [1, C, T] or [1, T]
         chunk_len: int
+        rng: ``random.Random`` (preferred for reproducible online pipelines) or
+            the ``random`` module for legacy callers.
 
     Returns:
         list[Tensor], same leading dims, last dim = chunk_len
@@ -697,14 +861,14 @@ def get_random_chunk(data_list, chunk_len):
 
     # 3. random chunk if possible
     if T >= chunk_len:
-        chunk_start = random.randint(0, T - chunk_len)
+        chunk_start = rng.randint(0, T - chunk_len)
 
         out = []
         for d in normed:
             chunk = d[..., chunk_start:chunk_start + chunk_len]
 
             while torch.all(chunk == 0):
-                chunk_start = random.randint(0, T - chunk_len)
+                chunk_start = rng.randint(0, T - chunk_len)
                 chunk = d[..., chunk_start:chunk_start + chunk_len]
 
             out.append(chunk.clone())
@@ -767,12 +931,13 @@ def filter_len(
         yield sample
 
 
-def random_chunk(data, chunk_len):
+def random_chunk(data, chunk_len, rng=random):
     """Random chunk the data into chunk_len
 
     Args:
         data: Iterable[{key, wav/feat, label}]
         chunk_len: chunk length for each sample
+        rng: ``random.Random`` or ``random`` module; forwarded to :func:`get_random_chunk`.
 
     Returns:
         Iterable[{key, wav/feat, label}]
@@ -781,7 +946,7 @@ def random_chunk(data, chunk_len):
         assert "key" in sample
         wav_keys = [key for key in list(sample.keys()) if "wav" in key]
         wav_data_list = [sample[key] for key in wav_keys]
-        wav_data_list, ratio = get_random_chunk(wav_data_list, chunk_len)
+        wav_data_list, ratio = get_random_chunk(wav_data_list, chunk_len, rng)
         sample.update(zip(wav_keys, wav_data_list))
         sample["chunk_ratio"] = ratio
         yield sample
@@ -876,7 +1041,7 @@ def add_noise(
             # noise: (Nmic, Time)
             noise = noise.T
             if tgt_fs and fs != tgt_fs:
-                logging.warning(
+                logger.warning(
                     f"Resampling noise to match the sampling rate ({fs} -> {tgt_fs} Hz)"  # noqa
                 )
                 noise = librosa.resample(noise,

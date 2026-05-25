@@ -1,8 +1,40 @@
+import re
 import torch
 import torch.nn as nn
 import torchaudio.compliance.kaldi as kaldi
 
-from wespeaker.models.speaker_model import get_speaker_model
+# s3prl (pulled in by wespeaker) still uses torchaudio APIs removed around 2.8+.
+_TORCHAUDIO_WESPEAKER_MAX_EXCL = (2, 8, 0)
+
+
+def _torchaudio_version_tuple() -> tuple[int, int, int]:
+    import torchaudio
+
+    raw = torchaudio.__version__.split("+", 1)[0].strip()
+    m = re.match(r"^(\d+)\.(\d+)(?:\.(\d+))?", raw)
+    if not m:
+        return (0, 0, 0)
+    return int(m.group(1)), int(m.group(2)), int(m.group(3) or 0)
+
+
+def _import_get_speaker_model():
+    """
+    WeSpeaker imports s3prl, which expects pre-2.8 torchaudio (e.g. sox_effects,
+    set_audio_backend). Refuse on newer torchaudio to avoid half-broken imports.
+    """
+    if _torchaudio_version_tuple() >= _TORCHAUDIO_WESPEAKER_MAX_EXCL:
+        raise RuntimeError(
+            "torchaudio>=2.8: WeSpeaker/s3prl are not imported (s3prl still uses "
+            "removed torchaudio APIs). 可选：将 torchaudio 固定到 <2.8 以使用 "
+            "SpeakerEncoder+WeSpeaker，或改用不实例化 ``SpeakerEncoder`` 的模型。"
+        )
+    try:
+        from wespeaker.models.speaker_model import get_speaker_model
+    except ImportError as err:
+        raise ImportError(
+            "SpeakerEncoder needs the ``wespeaker`` package when torchaudio<2.8."
+        ) from err
+    return get_speaker_model
 
 
 class Fbank_kaldi(nn.Module):
@@ -97,6 +129,8 @@ class SpeakerEncoder(nn.Module):
             freeze = conf.get("freeze", True)
         else:
             freeze = conf.get("freeze", False)
+
+        get_speaker_model = _import_get_speaker_model()
 
         # 1. build model
         self.spk_model = get_speaker_model(model_name)(**spk_args)

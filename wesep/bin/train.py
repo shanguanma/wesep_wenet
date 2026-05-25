@@ -18,6 +18,12 @@ import os
 import re
 from pprint import pformat
 
+# Before importing torch: steer BLAS/cuBLAS away from problematic LT / mixed CUDA paths
+# (symptoms: ``CUBLAS_STATUS_NOT_INITIALIZED`` in ``F.linear`` on first train step).
+os.environ.setdefault("DISABLE_ADDMM_CUDA_LT", "1")
+os.environ.setdefault("TORCH_BLAS_PREFER_CUBLASLT", "0")
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+
 import fire
 import matplotlib.pyplot as plt
 import tableprint as tp
@@ -48,6 +54,28 @@ MAX_NUM_log_files = 100  # The maximum number of log-files to be kept
 logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
 
 
+def _install_linear_cublas_workaround() -> None:
+    """Force ``nn.Linear`` on CUDA through matmul (same idea as eval_test_corpora)."""
+    if getattr(torch.nn.Linear, "_wesep_patched", False):
+        return
+    _orig_forward = torch.nn.Linear.forward
+
+    def _patched_forward(self, input):  # type: ignore[no-redef]
+        if input.is_cuda:
+            x = input if input.is_contiguous() else input.contiguous()
+            out = x @ self.weight.t()
+            if self.bias is not None:
+                out = out + self.bias
+            return out
+        return _orig_forward(self, input)
+
+    torch.nn.Linear.forward = _patched_forward
+    torch.nn.Linear._wesep_patched = True
+
+
+_install_linear_cublas_workaround()
+
+
 def train(config="conf/config.yaml", **kwargs):
     """Trains a model on the given features and spk labels.
 
@@ -55,6 +83,14 @@ def train(config="conf/config.yaml", **kwargs):
              config can also be manually adjusted with --ARG VALUE
     :returns: None
     """
+    # Large CPU tensors (e.g. decoded video) cross processes via shared memory.
+    # Default strategy uses /dev/shm; small limits cause worker Bus errors. Use
+    # file-backed sharing instead (see PyTorch DataLoader + shm notes).
+    try:
+        torch.multiprocessing.set_sharing_strategy("file_system")
+    except RuntimeError:
+        pass
+
     # print(kwargs)
     configs = parse_config_or_kwargs(config, **kwargs)
     checkpoint = configs.get("checkpoint", None)

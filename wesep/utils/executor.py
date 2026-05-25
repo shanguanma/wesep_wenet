@@ -108,7 +108,7 @@ class Executor:
 
                 mix, cues, target = self._extract_model_inputs(batch, device)
 
-                with torch.cuda.amp.autocast(enabled=enable_amp):
+                with torch.amp.autocast("cuda", enabled=enable_amp):
                     # ---- forward ----
                     if cues is None:
                         outputs = model(mix)
@@ -184,7 +184,7 @@ class Executor:
 
                 mix, cues, target = self._extract_model_inputs(batch, device)
 
-                with torch.cuda.amp.autocast(enabled=enable_amp):
+                with torch.amp.autocast("cuda", enabled=enable_amp):
                     if cues is None:
                         outputs = model(mix)
                     else:

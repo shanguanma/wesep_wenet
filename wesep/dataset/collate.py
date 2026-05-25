@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+from typing import Optional
+
 import numpy as np
 
 import torch
@@ -167,6 +169,58 @@ def build_collect_keys(cues_conf, train_conf, base_table):
     return collect_keys
 
 
+def build_collect_keys_online(
+    train_conf: dict,
+    base_table: dict | None = None,
+    *,
+    tse_model_name: str | None = None,
+) -> dict:
+    """
+    Build ``collect_keys`` without a separate ``cues.yaml`` file (e.g. online-mix training).
+
+    Offline training uses a cues YAML so :func:`build_collect_keys` can cross-check
+    ``dataset_args.cues`` against file-backed cue definitions. For online pipelines
+    that attach tensors in-process (e.g. ``visual_spk*``), only the **modality list**
+    and **required** flags from ``dataset_args["cues"]`` matter for collation.
+
+    This function synthesizes a minimal ``cues`` dict (``scope: speaker``,
+    ``guaranteed`` aligned with ``required``) and calls :func:`build_collect_keys`.
+
+    If ``dataset_args.cues`` has no ``use: true`` entry and ``tse_model_name`` contains
+    ``"VISUAL"`` (case-insensitive), defaults to a single visual cue (use + required).
+
+    Raises:
+        ValueError: if no usable cue configuration can be inferred.
+    """
+    base_table = base_table or BASE_COLLECT_KEYS
+    cues = dict(train_conf.get("cues") or {})
+    tc = {**train_conf, "cues": cues}
+
+    def _any_used() -> bool:
+        return any(bool(w.get("use")) for w in cues.values())
+
+    if not _any_used():
+        if tse_model_name and "VISUAL" in tse_model_name.upper():
+            cues["visual"] = {"use": True, "required": True}
+        else:
+            raise ValueError(
+                "[collect_keys] Online mode without train_cues: set dataset_args.cues in "
+                "the experiment YAML (e.g. visual: {use: true, required: true}), or use a "
+                "visual TSE model name, or pass --train_cues to a cues YAML file."
+            )
+    tc["cues"] = cues
+
+    synthetic = {"cues": {}}
+    for cue_name, want in cues.items():
+        if not want.get("use", False):
+            continue
+        synthetic["cues"][cue_name] = {
+            "scope": "speaker",
+            "guaranteed": bool(want.get("required", False)),
+        }
+    return build_collect_keys(synthetic, tc, base_table)
+
+
 def _to_tensor(x):
     if x is None:
         return None
@@ -191,7 +245,7 @@ def _pad_or_crop_to_len(x, target_len):
     return torch.cat([x, pad], dim=-1)
 
 
-def tse_collate_fn(batch, collect_keys):
+def tse_collate_fn(batch, collect_keys, visual_max_frames: Optional[int] = None):
     """
     Speaker-axis collate:
       - each mix generates num_speaker batch samples
@@ -202,6 +256,9 @@ def tse_collate_fn(batch, collect_keys):
     Args:
         batch: list[dict]
         collect_keys: dict
+        visual_max_frames: If set, cap the **last** dimension of ``visual_aux``
+            after ``align`` (usually video time ``T`` for shape ``[..., T]``).
+            Reduces GPU memory when batches pad to a very long clip.
 
     Returns:
         new_batch: dict
@@ -329,6 +386,9 @@ def tse_collate_fn(batch, collect_keys):
                 target_len = min(flat_lens)
             else:
                 raise ValueError(f"[collate] Unknown align mode: {align}")
+
+            if out_key == "visual_aux" and visual_max_frames is not None:
+                target_len = min(target_len, int(visual_max_frames))
 
         # ---- 2.4) pad / crop / fill ----
         out_feats = []

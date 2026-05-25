@@ -160,8 +160,8 @@ def scoring(
                     extended=True,
                 )
                 si_snr_score = cal_SISNR(
-                    ref[i],
                     inf[int(perm[i])],
+                    ref[i],
                 )
 
                 if dnsmos:

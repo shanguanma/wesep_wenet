@@ -70,6 +70,11 @@ class DNSMOS_local:
     ):
         self.convert_to_torch = convert_to_torch
         self.use_gpu = use_gpu
+        # Parallel scoring passes JOB index as device id; fold onto available GPUs.
+        if use_gpu and gpu_device is not None and torch.cuda.is_available():
+            nd = torch.cuda.device_count()
+            if nd > 0:
+                gpu_device = int(gpu_device) % nd
         self.gpu_device = gpu_device
 
         if convert_to_torch:
@@ -111,11 +116,11 @@ class DNSMOS_local:
                 if self.gpu_device is not None:
                     self.onnx_sess.set_providers([prvd],
                                                  [{
-                                                     "device_id": gpu_device
+                                                     "device_id": self.gpu_device
                                                  }])
                     self.p808_onnx_sess.set_providers(
                         [prvd], [{
-                            "device_id": gpu_device
+                            "device_id": self.gpu_device
                         }])
 
     def audio_melspec(

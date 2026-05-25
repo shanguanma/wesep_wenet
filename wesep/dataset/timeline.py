@@ -27,15 +27,39 @@ def timeline_generator(conf, num_spk=2, rng=random):
 
 
 def sample_num_speakers(conf, rng):
-    probs = conf["distribution"]
+    """Sample mixture size (1, 2, or 3+ speakers).
+
+    ``distribution`` is three probabilities for buckets **1 / 2 / 3+** speakers.
+    The 3+ bucket draws uniformly from ``3 .. max_speakers``.
+
+    If ``max_speakers < 3``, the 3+ bucket is impossible — probability mass is
+    renormalized onto feasible buckets so callers can safely set e.g.
+    ``max_speakers=2`` without also hand-editing the distribution.
+    """
+    probs = list(conf["distribution"])
     assert len(probs) == 3
     assert abs(sum(probs) - 1.0) < 1e-6
 
-    bucket = rng.choices([1, 2, 3], probs)[0]
+    max_spk = max(1, int(conf.get("max_speakers", 4)))
+
+    feasible = (max_spk >= 1, max_spk >= 2, max_spk >= 3)
+    weights = [probs[i] for i in range(3) if feasible[i]]
+    sw = sum(weights)
+    if sw <= 0.0:
+        return min(max_spk, 2) if max_spk >= 2 else 1
+
+    new_probs = [0.0, 0.0, 0.0]
+    j = 0
+    for i in range(3):
+        if feasible[i]:
+            new_probs[i] = weights[j] / sw
+            j += 1
+
+    bucket = rng.choices([1, 2, 3], new_probs)[0]
 
     if bucket == 3:
-        return rng.randint(3, conf.get("max_speakers", 3))
-    return bucket
+        return rng.randint(3, max_spk)
+    return min(bucket, max_spk)
 
 
 # ===== timeline is always in [0, 1] =====

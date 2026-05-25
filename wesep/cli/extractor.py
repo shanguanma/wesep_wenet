@@ -91,10 +91,29 @@ class Extractor:
         return feat
 
     def extract_speech(self, audio_path: str, audio_path_2: str):
-        pcm_mix, sample_rate_mix = torchaudio.load(audio_path,
+        try:
+            from torchcodec.decoders import AudioDecoder
+            samples = AudioDecoder(audio_path)
+            all_samples = samples.get_all_samples()
+            pcm_mix = all_samples.data
+            sample_rate_mix = all_samples.sample_rate
+        except:
+            print(f"Failed to load {audio_path} with torchcodec, using torchaudio instead")
+            import torchaudio
+            pcm_mix, sample_rate_mix = torchaudio.load(audio_path,
+                                                       normalize=self.wavform_norm)
+        try:
+            from torchcodec.decoders import AudioDecoder
+            samples = AudioDecoder(audio_path_2)
+            all_samples = samples.get_all_samples()
+            pcm_enroll = all_samples.data
+            sample_rate_enroll = all_samples.sample_rate
+        except:
+            print(f"Failed to load {audio_path_2} with torchcodec, using torchaudio instead")
+            import torchaudio
+            pcm_enroll, sample_rate_enroll = torchaudio.load(audio_path_2,
                                                    normalize=self.wavform_norm)
-        pcm_enroll, sample_rate_enroll = torchaudio.load(
-            audio_path_2, normalize=self.wavform_norm)
+           
         return self.extract_speech_from_pcm(pcm_mix, sample_rate_mix,
                                             pcm_enroll, sample_rate_enroll)
 

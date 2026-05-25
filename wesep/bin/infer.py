@@ -1,7 +1,42 @@
 from __future__ import print_function
 
 import os
+import re
 import time
+
+import numpy as np
+
+# Toolkit CUDA on LD_LIBRARY_PATH shadows PyTorch's bundled cuBLAS and triggers
+# CUBLAS_STATUS_NOT_INITIALIZED in nn.Linear (same fix as run_md_sribd.sh stage 3).
+_SYSTEM_CUDA_LD_PREFIX = re.compile(
+    r"^(/maduo/software/cuda[0-9]+\.[0-9]+\.[0-9]+|/usr/local/cuda)")
+
+
+def _sanitize_ld_library_path_for_torch():
+    lp = os.environ.get("LD_LIBRARY_PATH", "")
+    if not lp:
+        return
+    kept = [
+        p for p in lp.split(":") if p and not _SYSTEM_CUDA_LD_PREFIX.match(p)
+    ]
+    os.environ["LD_LIBRARY_PATH"] = ":".join(kept)
+
+
+_sanitize_ld_library_path_for_torch()
+
+# Honor shell overrides (e.g. run_md_sribd.sh exports CUDA_LAUNCH_BLOCKING=0).
+os.environ.setdefault("CUDA_LAUNCH_BLOCKING", "1")
+
+
+def _wav_np_1d(arr):
+    """Mono waveform as shape (T,) for SI-SNR / soundfile."""
+    x = np.squeeze(np.asarray(arr))
+    if x.ndim != 1:
+        raise ValueError(
+            "infer expects mono waveform [T] or [1, T] per row; got shape "
+            + str(np.asarray(arr).shape))
+    return x
+
 
 import fire
 import soundfile
@@ -26,8 +61,35 @@ from wesep.utils.utils import (
     set_seed,
 )
 
-os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
-os.environ["TORCH_USE_CUDA_DSA"] = "1"
+
+def _resolve_infer_checkpoint(configs):
+    """Path to weights for inference.
+
+    Prefer explicit ``configs['checkpoint']`` (CLI ``--checkpoint``). If absent,
+    search common locations under ``exp_dir`` so ``run_md_sribd.sh`` stage 5
+    can omit ``--checkpoint`` when only the default averaged model exists.
+    """
+    ckpt = configs.get("checkpoint")
+    if ckpt:
+        path = os.path.expanduser(os.path.expandvars(str(ckpt)))
+        if not os.path.isfile(path):
+            raise FileNotFoundError(f"checkpoint not found: {path}")
+        return path
+    exp_dir = configs.get("exp_dir") or "."
+    candidates = [
+        os.path.join(exp_dir, "models", "avg_best_model.pt"),
+        os.path.join(exp_dir, "avg_best_model.pt"),
+        os.path.join(exp_dir, "models", "latest_checkpoint.pt"),
+        os.path.join(exp_dir, "ema_model.pt"),
+    ]
+    for path in candidates:
+        if os.path.isfile(path):
+            return path
+    raise ValueError(
+        "infer: missing checkpoint — pass --checkpoint /path/to.pt, or place one of "
+        f"avg_best_model.pt / latest_checkpoint.pt / ema_model.pt under {exp_dir!r}. "
+        f"Tried: {candidates}"
+    )
 
 
 def infer(config="confs/conf.yaml", **kwargs):
@@ -43,7 +105,11 @@ def infer(config="confs/conf.yaml", **kwargs):
 
     rank = 0
     set_seed(configs["seed"] + rank)
-    gpu = configs["gpus"]
+    raw_gpu = configs["gpus"]
+    try:
+        gpu = int(raw_gpu)
+    except (TypeError, ValueError):
+        gpu = -1
     device = (torch.device("cuda:{}".format(gpu))
               if gpu >= 0 else torch.device("cpu"))
 
@@ -57,7 +123,7 @@ def infer(config="confs/conf.yaml", **kwargs):
         configs['model_args']['tse_model']['spk_model_init'] = False
     model = get_model(configs["model"]["tse_model"])(
         configs["model_args"]["tse_model"])
-    model_path = os.path.join(configs["checkpoint"])
+    model_path = _resolve_infer_checkpoint(configs)
     load_pretrained_model(model, model_path)
 
     logger = get_logger(configs["exp_dir"], "infer.log")
@@ -77,6 +143,15 @@ def infer(config="confs/conf.yaml", **kwargs):
 
     model = model.to(device)
     model.eval()
+
+    if device.type == "cuda":
+        torch.cuda.set_device(device.index if device.index is not None else 0)
+        # Force CUDA context + cuBLAS handle creation before first forward
+        # (avoids sporadic CUBLAS_STATUS_NOT_INITIALIZED on first GEMM).
+        with torch.cuda.device(device):
+            _warm = torch.zeros(32, 32, device=device, dtype=torch.float32)
+            _ = _warm @ _warm
+        torch.cuda.synchronize(device)
 
     configs["dataset_args"]["whole_utt"] = True
     test_dataset = Dataset(
@@ -123,47 +198,46 @@ def infer(config="confs/conf.yaml", **kwargs):
             else:
                 outputs = outputs.cpu().numpy()
 
-            if sign_save_wav:
-                file1 = os.path.join(
-                    save_audio_dir,
-                    f"Utt{total_cnt + 1}-{key[0]}-T{spk[0]}.wav",
-                )
-                soundfile.write(file1, outputs[0], sample_rate)
-                file2 = os.path.join(
-                    save_audio_dir,
-                    f"Utt{total_cnt + 1}-{key[1]}-T{spk[1]}.wav",
-                )
-                soundfile.write(file2, outputs[1], sample_rate)
-
             ref = target.cpu().numpy()
-            ests = outputs
-            mix = mix.cpu().numpy()
+            ests = np.asarray(outputs)
+            mix_np = mix.cpu().numpy()
 
-            min_len = min(ref.shape[-1], ests.shape[-1], mix.shape[-1])
-            ref = ref[..., :min_len]
-            ests = ests[..., :min_len]
-            mix = mix[..., :min_len]
+            # tse_collate_fn stacks one row per target speaker (wav_mix duplicated).
+            n_rows = int(ref.shape[0])
+            if ests.ndim == 1:
+                ests = ests.reshape(1, -1)
+            if ests.shape[0] != n_rows or mix_np.shape[0] != n_rows:
+                raise ValueError(
+                    "infer batch shape mismatch -- ref {}, estimates {}, mix {}".format(
+                        ref.shape, ests.shape, mix_np.shape))
 
-            SISNR1, delta1 = cal_SISNRi(ests[0], ref[0], mix[0])
+            wav_utt_tag = total_cnt + 1
+            if sign_save_wav:
+                for si in range(n_rows):
+                    wf = os.path.join(
+                        save_audio_dir,
+                        f"Utt{wav_utt_tag}-{key[si]}-T{spk[si]}.wav",
+                    )
+                    soundfile.write(wf, _wav_np_1d(ests[si]), sample_rate)
 
-            logger.info(
-                "Num={} | Utt={} | Target speaker={} | SI-SNR={:.2f} | SI-SNRi={:.2f}"
-                .format(total_cnt + 1, key[0], spk[0], SISNR1, delta1))
-            total_SISNR += SISNR1
-            total_SISNRi += delta1
-            total_cnt += 1
-            if delta1 > 1:
-                accept_cnt += 1
+            for si in range(n_rows):
+                ei = np.asarray(ests[si])
+                ri = np.asarray(ref[si])
+                mi = np.asarray(mix_np[si])
+                min_len = min(ei.shape[-1], ri.shape[-1], mi.shape[-1])
+                ei = _wav_np_1d(ei[..., :min_len])
+                ri = _wav_np_1d(ri[..., :min_len])
+                mi = _wav_np_1d(mi[..., :min_len])
+                sisnr, delta = cal_SISNRi(ei, ri, mi)
 
-            SISNR2, delta2 = cal_SISNRi(ests[1], ref[1], mix[1])
-            logger.info(
-                "Num={} | Utt={} | Target speaker={} | SI-SNR={:.2f} | SI-SNRi={:.2f}"
-                .format(total_cnt + 1, key[1], spk[1], SISNR2, delta2))
-            total_SISNR += SISNR2
-            total_SISNRi += delta2
-            total_cnt += 1
-            if delta2 > 1:
-                accept_cnt += 1
+                logger.info(
+                    "Num={} | Utt={} | Target speaker={} | SI-SNR={:.2f} | SI-SNRi={:.2f}"
+                    .format(total_cnt + 1, key[si], spk[si], sisnr, delta))
+                total_SISNR += sisnr
+                total_SISNRi += delta
+                total_cnt += 1
+                if delta > 1:
+                    accept_cnt += 1
 
         end = time.time()
     # generate the scp file of the enhanced speech for scoring

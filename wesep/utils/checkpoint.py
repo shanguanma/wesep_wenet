@@ -1,3 +1,4 @@
+import pathlib
 from typing import List, Optional
 
 import torch
@@ -5,14 +6,59 @@ import torch
 from wesep.utils.schedulers import BaseClass
 
 
+def _load_states_for_pretrained(path: str) -> dict:
+    """Return a dict matching the wesep checkpoint contract
+    (``{"models": [state_dict, ...], ...}``) regardless of whether ``path``
+    points to:
+
+    1. A wesep checkpoint produced by :func:`save_checkpoint`
+       (``{"models": [...], "optimizers": [...], ...}``). Returned as-is, so
+       behavior for stages 1–88 is bit-for-bit unchanged.
+    2. A HuggingFace ``model.safetensors`` file. Wrapped into
+       ``{"models": [state_dict]}`` so generator-style consumers work.
+    3. A raw ``state_dict`` saved via ``torch.save(state_dict, ...)``
+       (e.g. HuggingFace ``pytorch_model.bin``). Wrapped the same way.
+
+    Only the new (2) and (3) branches are additive; the wesep branch (1) is
+    detected by the presence of a top-level ``"models"`` list and short-
+    circuits before any reformatting.
+    """
+    p = pathlib.Path(path)
+    if p.suffix == ".safetensors":
+        try:
+            from safetensors.torch import load_file
+        except ImportError as exc:
+            raise ImportError(
+                "Loading a .safetensors checkpoint requires the 'safetensors' "
+                "package; install via `pip install safetensors`."
+            ) from exc
+        sd = load_file(str(p))
+        return {"models": [sd]}
+
+    obj = torch.load(str(p), map_location="cpu", weights_only=False)
+
+    # (1) Native wesep format — leave untouched so existing call sites
+    # (load_checkpoint, downstream key access like states["optimizers"]) keep
+    # seeing the exact same object.
+    if isinstance(obj, dict) and "models" in obj and isinstance(obj["models"], list):
+        return obj
+
+    # (3) Raw state_dict (every value is a Tensor). Wrap it.
+    if isinstance(obj, dict) and obj and all(torch.is_tensor(v) for v in obj.values()):
+        return {"models": [obj]}
+
+    raise ValueError(
+        f"Unrecognized checkpoint format at {p}: expected a wesep checkpoint "
+        f"({{'models': [...]}}) , a safetensors file, or a raw state_dict, "
+        f"but top-level object was {type(obj).__name__}"
+    )
+
+
 def load_pretrained_model(model: torch.nn.Module,
                           path: str,
                           type: str = "generator"):
     assert type in ["generator", "discriminator"]
-    states = torch.load(
-        path,
-        map_location="cpu",
-    )
+    states = _load_states_for_pretrained(path)
     if type == "generator":
         state = states["models"][0]
     else:
@@ -40,6 +86,7 @@ def load_checkpoint(
     states = torch.load(
         path,
         map_location="cpu",
+        weights_only=False,
     )
     if mode == "generator":
         model_state, optimizer_state, scheduler_state = (

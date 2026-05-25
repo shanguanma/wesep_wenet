@@ -13,8 +13,31 @@ from wesep.modules.separator.bsrnn import BSRNN
 from wesep.modules.common.deep_update import deep_update
 from wesep.modules.visual.visual_frontend import VisualFrontend
 
+# Old checkpoints: visual encoders lived under ``visual_ft.{muse,blaze}_visual``.
+# Current ``VisualFrontend`` registers them as ``visual_ft.features.{muse,blaze}_visual``.
+_VISUAL_CKPT_PREFIX_REMAPS = (
+    ("module.visual_ft.muse_visual.", "module.visual_ft.features.muse_visual."),
+    ("module.visual_ft.blaze_visual.", "module.visual_ft.features.blaze_visual."),
+    ("visual_ft.muse_visual.", "visual_ft.features.muse_visual."),
+    ("visual_ft.blaze_visual.", "visual_ft.features.blaze_visual."),
+)
+
+
+def _remap_visual_frontend_checkpoint_keys(state_dict):
+    out = {}
+    for key, value in state_dict.items():
+        new_key = key
+        for old_prefix, new_prefix in _VISUAL_CKPT_PREFIX_REMAPS:
+            if new_key.startswith(old_prefix):
+                new_key = new_prefix + new_key[len(old_prefix):]
+                break
+        out[new_key] = value
+    return out
+
 
 class TSE_BSRNN_VISUAL(nn.Module):
+    # Transformers Trainer reads this when resuming (see Trainer._issue_warnings_after_load).
+    _keys_to_ignore_on_save = None
 
     def __init__(self, config):
         super().__init__()
@@ -41,7 +64,16 @@ class TSE_BSRNN_VISUAL(nn.Module):
                     "upsample": True,
                     "mix_dim": sep_configs["feature_dim"],
                     "fusion": "concat",
-                }
+                },
+                "blaze_visual": {
+                    "enabled": False,
+                    "causal": True,
+                    "image_size": 128,
+                    "embed_dim": 224,
+                    "upsample": True,
+                    "mix_dim": sep_configs["feature_dim"],
+                    "fusion": "concat",
+                },
             }
         }
         self.visual_configs = deep_update(visual_configs, config['visual'])
@@ -51,12 +83,16 @@ class TSE_BSRNN_VISUAL(nn.Module):
         # ===== Visual Loading =====
         self.visual_ft = VisualFrontend(self.visual_configs)
 
+    def load_state_dict(self, state_dict, strict=True):
+        remapped = _remap_visual_frontend_checkpoint_keys(dict(state_dict))
+        return super().load_state_dict(remapped, strict=strict)
+
     def forward(self, mix, enroll):
         """
         Args:
             mix:  Tensor [B, 1, T]
             enroll: list[Tensor]
-                each Tensor: [B, 1, T]
+                each Tensor: [B, H, W, 3, T_image], if 1s video,its T_image is 25,T is 16000
         """
 
         if mix.dim() == 3 and mix.size(1) == 1:
@@ -79,15 +115,12 @@ class TSE_BSRNN_VISUAL(nn.Module):
         subband_feature = self.sep_model.subband_norm(
             subband_spec)  # (B, nband, feat, T)
         ###########################################################
-        # V1. Feature: muse_visual
-        if self.visual_configs['features']['muse_visual']['enabled']:
-            # V1.1 Compute visual feature
-            visual_feat = self.visual_ft.muse_visual.compute(
-                visual_enroll, mix=subband_feature)  # (B, F_v, T)
-            # V1.2 Fuse the muse_vitual into the mix_repr
+        # V1. Visual cue (Muse or BlazeNet64 via ``VisualFrontend.active_visual_encoder``)
+        visual_enc = self.visual_ft.active_visual_encoder()
+        if visual_enc is not None:
+            visual_feat = visual_enc.compute(visual_enroll, mix=subband_feature)
             visual_feat = visual_feat.unsqueeze(1)  # (B, 1, F_v, T)
-            subband_feature = self.visual_ft.muse_visual.post(
-                subband_feature, visual_feat)  # (B, nband, feat, T)
+            subband_feature = visual_enc.post(subband_feature, visual_feat)
         ###########################################################
         # S4. Separation
         sep_output = self.sep_model.separator(
