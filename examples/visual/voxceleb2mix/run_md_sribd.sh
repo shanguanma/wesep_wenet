@@ -1719,6 +1719,77 @@ torchrun --standalone --nnodes=1 --nproc_per_node=$num_gpus \
 fi
 
 
+## stage117: AV-MossFormer2 TSE with ResNet18 visual frontend (ported from ClearerVoice-Studio)
+## Based on stage115 config, replacing BSRNN with MossFormer2 separator + ResNet18 lip encoder
+## visual_backbone is set in confs/tse_mossformer2_visual_model.yaml ("resnet18" or "muse")
+if [ ${stage} -le 117 ] && [ ${stop_stage} -ge 117 ]; then
+data_path_of_voxceleb2=/F00120240032/voxceleb2_zk_mixture/mp4/train
+exp_dir=/maduo/exp/wesep_wenet/TSE_MOSSFORMER2_VISUAL_stage117
+num_gpus=1
+export TENSORBOARD_LOGGING_DIR=$exp_dir/logs
+export OMP_NUM_THREADS=8
+torchrun --standalone --nnodes=1 --nproc_per_node=$num_gpus \
+    wesep/bin/train_with_transformers_multi_data_online.py \
+    --model_config confs/tse_mossformer2_visual_model.yaml \
+    --mp4_dir_of_voxceleb2 $data_path_of_voxceleb2 \
+    --use_voxceleb2 True \
+    --use_lrs3 True \
+    --use_chinese_lips False \
+    --lrs3_root /F00120240032/lrs3/trainval \
+    --chinese_lips_root /F00120240032/Chinese_lips \
+    --train_speaker_fraction 0.8 \
+    --output_dir $exp_dir \
+    --tse_model 'TSE_MOSSFORMER2_VISUAL' \
+    --loss_type 'SISDR_MRSTFT' \
+    --resnet18_visual_causal false \
+    --resnet18_visual_pretrained /maduo/model_hub/alibabasglab_lip_reading_resnet18/resnet18.pth \
+    --visual_frontend "resnet18" \
+    --visual_resize 112\
+    --separator_causal false \
+    --sample_num_per_epoch 60000 \
+    --sample_num_per_epoch_val 3000 \
+    --noise_lmdb_file /maduo/exp/wesep_wenet/datasets/voxceleb2mix/data/musan/lmdb \
+    --noise_prob 0.0 \
+    --online_mix_deterministic true \
+    --online_av_align true \
+    --num_speakers_max 2\
+    --num_speakers_distribution 0,1,0\
+    --max_steps 200000 \
+    --num_train_epochs 200000 \
+    --per_device_train_batch_size 6 \
+    --gradient_accumulation_steps 8 \
+    --dataloader_num_workers 2 \
+    --learning_rate 3.0e-4 \
+    --lr_scheduler_type cosine \
+    --warmup_steps 3000 \
+    --weight_decay 0.01 \
+    --max_grad_norm 5.0 \
+    --mrstft_weight 0.1 \
+    --mrstft_warmup_steps 5000 \
+    --cue_discrim_weight 0.001 \
+    --cue_discrim_warmup_steps 15000 \
+    --cue_discrim_temperature 8.0 \
+    --passthrough_penalty_weight 0.5 \
+    --passthrough_penalty_threshold 0.0 \
+    --eval_loss_type SISDR \
+    --eval_extra_stats true \
+    --eval_clearervoice_metrics true \
+    --eval_audio_sr 16000 \
+    --train_log_clearervoice_sisnri true \
+    --visual_cue_dropout 0.15 \
+    --use_ema false \
+    --ema_decay 0.999 \
+    --logging_steps 100 \
+    --save_steps 1000 \
+    --save_total_limit 3 \
+    --save_strategy steps \
+    --eval_strategy steps \
+    --eval_steps 1000 \
+    --bf16 true \
+    --visual_max_frames 75
+fi
+
+
 if [ ${stage} -le 116 ] && [ ${stop_stage} -ge 116 ]; then
 data_path_of_voxceleb2=/F00120240032/voxceleb2_zk_mixture/mp4/train
 exp_dir=/maduo/exp/wesep_wenet/TSE_BSRNN_VISUAL_stage111_av_align_big_batch_lr_with_noise_reverb

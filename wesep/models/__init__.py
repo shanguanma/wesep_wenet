@@ -3,6 +3,7 @@ import wesep.models.tse_bsrnn_visual as bsrnn_visual
 import wesep.models.tse_bsrnn_spatial as bsrnn_spatial
 import wesep.models.tse_nbc2_spatial as nbc2_spatial
 from wesep.models.tse_online_avcrossnet_mamba_visual import OnlineAVCrossNetMamba
+from wesep.models.tse_mossformer2_visual import TSE_MOSSFORMER2_VISUAL
 
 
 def get_model(model_name: str):
@@ -16,6 +17,8 @@ def get_model(model_name: str):
         return getattr(nbc2_spatial, model_name)
     elif model_name.startswith("TSE_ONLINE_AVCROSSNET_MAMBA_VISUAL"):
         return OnlineAVCrossNetMamba
+    elif model_name.startswith("TSE_MOSSFORMER2_VISUAL"):
+        return TSE_MOSSFORMER2_VISUAL
     else:  # model_name error !!!
         print(model_name + " not found !!!")
         exit(1)

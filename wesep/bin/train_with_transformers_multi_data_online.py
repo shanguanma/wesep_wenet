@@ -30,9 +30,10 @@ via ``--sample_num_per_epoch_val``.
 
 **YAML:** ``--model_config`` model-only (``model`` + ``model_args``).
 
-Optional overrides: ``--visual_frontend muse|blaze`` (mutually exclusive
-``muse_visual.enabled`` / ``blaze_visual.enabled``), ``--blaze_visual_causal true|false``,
-``--separator_causal true|false`` (``model_args.tse_model.separator.causal``).
+Optional overrides: ``--visual_frontend muse|blaze|resnet18`` (mutually exclusive
+``muse_visual.enabled`` / ``blaze_visual.enabled`` / ``resnet18_visual.enabled``),
+``--blaze_visual_causal true|false``, ``--separator_causal true|false``,
+``--resnet18_visual_causal true|false``, ``--resnet18_visual_pretrained <path>``.
 
 Requires ``--sample_num_per_epoch`` > 0 (default 20000). Enable sources with
 ``--use_voxceleb2``, ``--use_lrs3``, ``--use_chinese_lips`` and set roots.
@@ -264,95 +265,6 @@ class ClearerVoicePlateauHalvingCallback(TrainerCallback):
                 self.min_delta,
                 new_lrs[:4],
             )
-        return control
-
-
-class EMACallback(TrainerCallback):
-    """
-    Exponential Moving Average of model weights, saved alongside primary
-    checkpoints into ``<output_dir>/ema_model.pt`` (overwritten at each
-    ``save_steps`` event) and ``<output_dir>/ema_final.pt`` at train end.
-
-    Notes
-    -----
-    * The shadow lives on CPU to keep VRAM unchanged.
-    * Only floating-point parameters are EMA-updated; integer buffers are
-      copied as-is.
-    * Resume from EMA snapshot is **not** automatic; for stage 98 we run
-      from scratch so this is fine. To inspect the EMA model later, load
-      ``ema_model.pt`` (or ``ema_final.pt``) into a fresh model instance.
-    * Single-GPU / DDP both supported via ``accelerator.unwrap_model``.
-    """
-
-    def __init__(self, decay: float, save_filename: str = "ema_model.pt"):
-        self.decay = float(decay)
-        self.save_filename = save_filename
-        self._shadow: dict[str, torch.Tensor] | None = None
-        self._trainer = None
-
-    def attach_trainer(self, trainer: "TSETrainer") -> None:
-        self._trainer = trainer
-
-    def _unwrap_model(self):
-        m = self._trainer.model
-        try:
-            return self._trainer.accelerator.unwrap_model(m)
-        except Exception:
-            inner = getattr(m, "module", m)
-            return getattr(inner, "model", inner)
-
-    def on_train_begin(self, args, state, control, **kwargs):
-        if self._trainer is None:
-            return control
-        m_inner = self._unwrap_model()
-        self._shadow = {
-            k: v.detach().clone().cpu()
-            for k, v in m_inner.state_dict().items()
-        }
-        if self._trainer.is_world_process_zero():
-            n_float = sum(1 for v in self._shadow.values() if v.dtype.is_floating_point)
-            logger.info(
-                "EMA: initialized shadow weights (decay=%.4f, %d float tensors).",
-                self.decay,
-                n_float,
-            )
-        return control
-
-    def on_step_end(self, args, state, control, **kwargs):
-        if self._shadow is None or self._trainer is None:
-            return control
-        m_inner = self._unwrap_model()
-        d = self.decay
-        with torch.no_grad():
-            for k, v in m_inner.state_dict().items():
-                s = self._shadow.get(k)
-                if s is None:
-                    continue
-                if v.dtype.is_floating_point:
-                    s.mul_(d).add_(v.detach().to(device=s.device, dtype=s.dtype),
-                                   alpha=1.0 - d)
-                else:
-                    s.copy_(v.detach().to(device=s.device))
-        return control
-
-    def _save(self, args, filename: str) -> None:
-        if self._shadow is None:
-            return
-        if self._trainer is not None and not self._trainer.is_world_process_zero():
-            return
-        try:
-            out = pathlib.Path(args.output_dir) / filename
-            torch.save(self._shadow, out)
-            logger.info("EMA: saved shadow weights to %s", out)
-        except Exception as e:
-            logger.warning("EMA save to %s failed: %s", filename, e)
-
-    def on_save(self, args, state, control, **kwargs):
-        self._save(args, self.save_filename)
-        return control
-
-    def on_train_end(self, args, state, control, **kwargs):
-        self._save(args, "ema_final.pt")
         return control
 
 
@@ -1647,22 +1559,6 @@ class TSEOnlineDataArguments:
             "Default false preserves legacy grouping/visual decode.",
         },
     )
-    #force_two_speaker_only: bool = field(
-    #    default=False,
-    #    metadata={
-    #        "help": "If True, force exactly two speakers per mixture (distribution 0,1,0), "
-    #        "paper-style 2-spk TSE without 1- or 4-spk buckets.",
-    #    },
-    #)
-    #online_mix_clean_dry: bool = field(
-    #    default=False,
-    #    metadata={
-    #        "help": "If True, disable MUSAN/reverb and set SNR/gain jitter to 0 dB "
-    #        "(clean dry sum of two sources after timeline masking). "
-    #        "Still uses random_chunk / timeline randomness unless you also set "
-    #        "--whole_utt true and a fixed timeline (not implemented here).",
-    #    },
-    #)
     num_speakers_max: int = field(default=4, metadata={"help": "Max speakers per mixture."})
     num_speakers_distribution: str = field(
         default="0.1,0.75,0.15",
@@ -1715,8 +1611,8 @@ class TSEOnlineDataArguments:
     visual_frontend: str | None = field(
         default=None,
         metadata={
-            "help": "If muse or blaze (case-insensitive), override model YAML "
-            "model_args.tse_model.visual.features: enable one frontend and disable the other.",
+            "help": "If muse, blaze, or resnet18 (case-insensitive), override model YAML "
+            "model_args.tse_model.visual.features: enable one frontend and disable the others.",
         },
     )
     blaze_visual_causal: str | None = field(
@@ -1729,6 +1625,19 @@ class TSEOnlineDataArguments:
         default=None,
         metadata={
             "help": "If true or false, override model_args.tse_model.separator.causal.",
+        },
+    )
+    resnet18_visual_causal: str | None = field(
+        default=None,
+        metadata={
+            "help": "If true or false, override model_args.tse_model.visual.features.resnet18_visual.causal.",
+        },
+    )
+    resnet18_visual_pretrained: str | None = field(
+        default=None,
+        metadata={
+            "help": "Path to pretrained resnet18.pth, override model_args.tse_model.visual.features.resnet18_visual.pretrained_path. you can use the command download it, `hf download alibabasglab/lip_reading_resnet18 --local-dir /maduo/model_hub/alibabasglab_lip_reading_resnet18`",
+
         },
     )
     loss_type: str = field(
@@ -1899,20 +1808,6 @@ class TSETrainingArguments(TrainingArguments):
         },
     )
 
-    use_ema: bool = field(
-        default=False,
-        metadata={
-            "help": "Maintain an Exponential Moving Average of model weights and "
-            "save it to <output_dir>/ema_model.pt at every save_steps and at "
-            "train end. Disabled by default; does not affect the primary "
-            "checkpoint stream."
-        },
-    )
-    ema_decay: float = field(
-        default=0.999,
-        metadata={"help": "EMA decay (only used when --use_ema true)."},
-    )
-
     # ---- Stage-100+ opt-in loss / eval diagnostics. Defaults preserve stage 98/99
     # behavior bit-for-bit (mrstft_weight=0.5 matches the previously hardcoded
     # 0.5 in loss_function::SISDR_MRSTFT; eval_loss_type=None preserves pure
@@ -2074,18 +1969,20 @@ def apply_tse_model_yaml_cli_overrides(
 
     if data_args.visual_frontend is not None:
         c = str(data_args.visual_frontend).strip().lower()
-        if c not in ("muse", "blaze"):
+        if c not in ("muse", "blaze", "resnet18"):
             raise ValueError(
-                f"--visual_frontend must be muse or blaze (got {data_args.visual_frontend!r}); "
+                f"--visual_frontend must be muse, blaze, or resnet18 (got {data_args.visual_frontend!r}); "
                 "omit the flag to keep model YAML settings."
             )
         feats = tma.setdefault("visual", {}).setdefault("features", {})
         muse = feats.setdefault("muse_visual", {})
         blaze = feats.setdefault("blaze_visual", {})
+        resnet18 = feats.setdefault("resnet18_visual", {})
         muse["enabled"] = c == "muse"
         blaze["enabled"] = c == "blaze"
-        applied.append(f"visual.features: muse_visual.enabled={muse['enabled']} "
-                       f"blaze_visual.enabled={blaze['enabled']}")
+        resnet18["enabled"] = c == "resnet18"
+        applied.append(f"visual.features: muse={muse['enabled']} "
+                       f"blaze={blaze['enabled']} resnet18={resnet18['enabled']}")
 
     bc = _parse_cli_bool(data_args.blaze_visual_causal)
     if bc is not None:
@@ -2098,6 +1995,22 @@ def apply_tse_model_yaml_cli_overrides(
     if sc is not None:
         tma.setdefault("separator", {})["causal"] = sc
         applied.append(f"separator.causal={sc}")
+
+    rc = _parse_cli_bool(data_args.resnet18_visual_causal)
+    if rc is not None:
+        tma.setdefault("visual", {}).setdefault("features", {}).setdefault(
+            "resnet18_visual", {}
+        )["causal"] = rc
+        applied.append(f"visual.features.resnet18_visual.causal={rc}")
+
+    if data_args.resnet18_visual_pretrained is not None:
+        rp = str(data_args.resnet18_visual_pretrained).strip()
+        if rp.lower() in ("none", "null", ""):
+            rp = None
+        tma.setdefault("visual", {}).setdefault("features", {}).setdefault(
+            "resnet18_visual", {}
+        )["pretrained_path"] = rp
+        applied.append(f"visual.features.resnet18_visual.pretrained_path={rp}")
 
     if applied:
         logger.info("CLI overrides on model YAML model_args.tse_model: %s", "; ".join(applied))
@@ -2198,12 +2111,10 @@ def train() -> None:
     )
     if _is_dist_rank0():
         logger.info(
-            "Online mix flags: deterministic=%s av_align=%s force_two_speaker=%s "
-            "clean_dry=%s noise_prob=%s reverb_prob=%s snr_range=%s gain_range=%s dist=%s",
+            "Online mix flags: deterministic=%s av_align=%s "
+            "noise_prob=%s reverb_prob=%s snr_range=%s gain_range=%s dist=%s",
             dataset_args.get("online_mix_deterministic"),
             dataset_args.get("online_av_align", False),
-            getattr(data_args, "force_two_speaker_only", False),
-            getattr(data_args, "online_mix_clean_dry", False),
             dataset_args.get("noise_prob"),
             dataset_args.get("reverb_prob"),
             dataset_args.get("snr_conf", {}).get("range"),
@@ -2429,11 +2340,6 @@ def train() -> None:
         )
         callbacks.append(plateau_cb)
 
-    ema_cb: EMACallback | None = None
-    if bool(getattr(training_args, "use_ema", False)):
-        ema_cb = EMACallback(decay=float(training_args.ema_decay))
-        callbacks.append(ema_cb)
-
     vf_unfreeze_cb: VisualUnfreezeCallback | None = None
     _vf_mode = getattr(training_args, "visual_unfreeze_mode", "none").strip().lower()
     if _vf_mode in ("metric", "step"):
@@ -2474,8 +2380,6 @@ def train() -> None:
     )
     if plateau_cb is not None:
         plateau_cb.attach_trainer(trainer)
-    if ema_cb is not None:
-        ema_cb.attach_trainer(trainer)
     if vf_unfreeze_cb is not None:
         vf_unfreeze_cb.attach_trainer(trainer)
 

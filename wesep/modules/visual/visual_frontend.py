@@ -20,6 +20,7 @@ from wesep.modules.visual.muse_visual_frontend import (
     Muse_load_model,
     Muse_VisualConv1D,
 )
+from wesep.modules.visual.resnet18_visual import ResNet18VisualEncoder
 
 
 class BaseVisualFeature(nn.Module):
@@ -218,6 +219,75 @@ class BlazeVisualFeature(BaseVisualFeature):
         return self.fusionLayer(mix_repr, feat_repr)
 
 
+class ResNet18VisualFeature(BaseVisualFeature):
+    """ResNet18 lip-reading visual encoder (ClearerVoice-Studio style).
+
+    Input: (B, H, W, 3, T_v) RGB video — auto-converted to grayscale 112x112 lip ROI.
+    Output: (B, emb_size, T_v) visual embedding.
+
+    Config keys:
+        enabled: bool
+        emb_size: int (default 256)
+        causal: bool (default False)
+        pretrained_path: str or null
+        freeze_frontend: bool (default True)
+        vtcn_layers: int (default 5)
+        mix_dim: int (feature dim of audio for fusion)
+        fusion: str ("concat" or "add")
+    """
+
+    def __init__(self, config):
+        super().__init__()
+        self.emb_size = int(config.get("emb_size", 256))
+        causal = bool(config.get("causal", False))
+        pretrained_path = config.get("pretrained_path", None)
+        freeze_frontend = bool(config.get("freeze_frontend", True))
+        vtcn_layers = int(config.get("vtcn_layers", 5))
+
+        self.encoder = ResNet18VisualEncoder(
+            emb_size=self.emb_size,
+            causal=causal,
+            pretrained_path=pretrained_path,
+            freeze_frontend=freeze_frontend,
+            vtcn_layers=vtcn_layers,
+        )
+
+        self.fusionLayer = SpeakerFuseLayer(
+            embed_dim=self.emb_size,
+            feat_dim=config.get("mix_dim", 128),
+            fuse_type=config.get("fusion", "concat"),
+        )
+
+    def compute(self, video, mix=None):
+        """
+        Args:
+            video: (B, H, W, 3, T_v) RGB video OR (B, T_v, 112, 112) grayscale lip ROI
+
+        Returns:
+            (B, emb_size, T_v) visual embedding
+        """
+        if video.dim() == 5 and video.size(3) == 3:
+            video = self._rgb_to_grayscale_lip(video)
+        # video: (B, T_v, 112, 112)
+        return self.encoder(video)
+
+    def post(self, mix_repr, feat_repr):
+        return self.fusionLayer(mix_repr, feat_repr)
+
+    @staticmethod
+    def _rgb_to_grayscale_lip(video):
+        """Convert (B, H, W, 3, T_v) RGB to (B, T_v, 112, 112) grayscale."""
+        B, H, W, C, T_v = video.shape
+        # (B, H, W, 3, T_v) -> (B, T_v, 3, H, W)
+        video = video.permute(0, 4, 3, 1, 2).contiguous()
+        gray = 0.2989 * video[:, :, 0] + 0.5870 * video[:, :, 1] + 0.1140 * video[:, :, 2]
+        if H != 112 or W != 112:
+            gray = gray.view(B * T_v, 1, H, W)
+            gray = F.interpolate(gray, size=(112, 112), mode='bilinear', align_corners=False)
+            gray = gray.view(B, T_v, 112, 112)
+        return gray
+
+
 class VisualFrontend(nn.Module):
 
     def __init__(self, config):
@@ -243,6 +313,16 @@ class VisualFrontend(nn.Module):
                     "mix_dim": 128,
                     "fusion": "concat",
                 },
+                "resnet18_visual": {
+                    "enabled": False,
+                    "emb_size": 256,
+                    "causal": False,
+                    "pretrained_path": None,
+                    "freeze_frontend": True,
+                    "vtcn_layers": 5,
+                    "mix_dim": 128,
+                    "fusion": "concat",
+                },
             }
         }
 
@@ -251,10 +331,12 @@ class VisualFrontend(nn.Module):
 
         muse_on = bool(feats.get("muse_visual", {}).get("enabled"))
         blaze_on = bool(feats.get("blaze_visual", {}).get("enabled"))
-        if muse_on and blaze_on:
+        resnet18_on = bool(feats.get("resnet18_visual", {}).get("enabled"))
+        enabled_count = sum([muse_on, blaze_on, resnet18_on])
+        if enabled_count > 1:
             raise ValueError(
-                "Enable only one of visual.features.muse_visual and "
-                "visual.features.blaze_visual (set the other to enabled: false)."
+                "Enable only one of visual.features: muse_visual, blaze_visual, "
+                "or resnet18_visual (set the others to enabled: false)."
             )
 
         self.features = nn.ModuleDict()
@@ -262,6 +344,8 @@ class VisualFrontend(nn.Module):
             self.features["muse_visual"] = MuseVisualFeature(feats["muse_visual"])
         if blaze_on:
             self.features["blaze_visual"] = BlazeVisualFeature(feats["blaze_visual"])
+        if resnet18_on:
+            self.features["resnet18_visual"] = ResNet18VisualFeature(feats["resnet18_visual"])
 
     @property
     def muse_visual(self) -> Optional[MuseVisualFeature]:
@@ -278,6 +362,8 @@ class VisualFrontend(nn.Module):
         return None
 
     def active_visual_encoder(self) -> Optional[BaseVisualFeature]:
+        if "resnet18_visual" in self.features:
+            return self.features["resnet18_visual"]
         if "blaze_visual" in self.features:
             return self.features["blaze_visual"]
         if "muse_visual" in self.features:

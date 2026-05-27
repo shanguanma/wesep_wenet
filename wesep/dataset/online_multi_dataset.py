@@ -208,16 +208,11 @@ def build_dataset_args_from_tse_online_data_args(o: Any) -> dict[str, Any]:
         raise ValueError(
             "num_speakers_distribution must be three comma-separated floats, e.g. 0.1,0.7,0.2"
         )
-    #if bool(getattr(o, "force_two_speaker_only", False)):
-    #    parts = [0.0, 1.0, 0.0]
 
     snr_lo = float(getattr(o, "snr_range_low", -5.0))
     snr_hi = float(getattr(o, "snr_range_high", 10.0))
     gain_lo = float(getattr(o, "gain_range_low", -12.0))
     gain_hi = float(getattr(o, "gain_range_high", 0.0))
-    #if bool(getattr(o, "online_mix_clean_dry", False)):
-    #    snr_lo = snr_hi = 0.0
-    #    gain_lo = gain_hi = 0.0
 
     snr_conf = {
         "range": [snr_lo, snr_hi],
@@ -247,11 +242,6 @@ def build_dataset_args_from_tse_online_data_args(o: Any) -> dict[str, Any]:
             }
         },
     }
-    #if bool(getattr(o, "online_mix_clean_dry", False)):
-    #    da["reverb_prob"] = 0.0
-    #    da["noise_prob"] = 0.0
-    #if bool(getattr(o, "force_two_speaker_only", False)):
-    #    da["num_speakers"]["max_speakers"] = 2
     snv = getattr(o, "sample_num_per_epoch_val", None)
     if snv is not None:
         da["sample_num_per_epoch_val"] = int(snv)
