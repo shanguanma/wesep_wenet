@@ -90,7 +90,7 @@ from wesep.utils.checkpoint import (
 from wesep.utils.funcs import clip_gradients
 from wesep.utils.losses import parse_loss
 from wesep.utils.utils import set_seed, setup_logger
-from wesep.utils.file_utils import load_yaml
+from wesep.utils.file_utils import load_yaml, resolve_config_path
 from wesep.utils.executor import Executor
 import transformers
 from transformers import (
@@ -134,6 +134,21 @@ class CustomLoggingCallback(TrainerCallback):
 def load_yaml_config(path: str) -> dict:
     with open(path, encoding="utf-8") as f:
         return yaml.load(f, Loader=yaml.FullLoader)
+
+
+def resolve_tse_model_config_paths(configs: dict, config_path: str) -> None:
+    """Resolve relative file paths in model YAML against cwd and YAML directory."""
+    tma = configs.get("model_args", {}).get("tse_model", {})
+    vf = (
+        tma.get("visual", {})
+        .get("features", {})
+        .get("muse_visual", {})
+        .get("vf_pretrained")
+    )
+    if vf is not None:
+        tma.setdefault("visual", {}).setdefault("features", {}).setdefault(
+            "muse_visual", {}
+        )["vf_pretrained"] = resolve_config_path(vf, config_path)
 
 
 def normalize_dataloader_args(da: dict) -> None:
@@ -2158,6 +2173,8 @@ def train() -> None:
     configs = {"model": raw["model"], "model_args": raw["model_args"]}
     if "model_init" in raw:
         configs["model_init"] = raw["model_init"]
+
+    resolve_tse_model_config_paths(configs, cfg_path)
 
     apply_tse_model_yaml_cli_overrides(data_args, configs)
 

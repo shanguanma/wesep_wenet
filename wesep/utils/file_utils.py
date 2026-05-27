@@ -15,6 +15,20 @@ def load_yaml(path):
         return yaml.safe_load(f)
 
 
+def resolve_config_path(path: Union[str, Path, None], config_path: Union[str, Path]) -> Optional[str]:
+    """Resolve a config path: absolute paths unchanged; relative paths vs cwd then YAML dir."""
+    if path is None:
+        return None
+    path = str(path)
+    if not path or Path(path).is_absolute():
+        return path
+    if Path(path).is_file():
+        return str(Path(path).resolve())
+    yaml_dir = Path(config_path).resolve().parent
+    candidate = (yaml_dir / path).resolve()
+    return str(candidate)
+
+
 def load_json(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
